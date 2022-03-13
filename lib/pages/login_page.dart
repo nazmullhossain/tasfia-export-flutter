@@ -9,6 +9,7 @@ import '../variables/variable.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/round_gradient_button.dart';
 import '../widgets/text_field_tile.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -160,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                       Positioned(
                         right: dynamicSize(.05),
                         child: RoundGradientButton(
-                          onTab: ()=> Get.to(()=>HomePage()),
+                          onTab: ()=> Get.to(()=>const HomePage()),
                           child: Icon(LineAwesomeIcons.arrow_right,
                               color: AllColor.whiteColor, size: dynamicSize(.07)),
                         ),
