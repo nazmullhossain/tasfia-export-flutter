@@ -25,14 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
       builder: (publicController) {
         if(publicController.size.value<=0.0) publicController.initApp(context);
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xffF7F7F7),
           body: Center(
-            child: Text('Tashfia Export',
-                style: TextStyle(fontSize: dynamicSize(.05),
-                    color: Theme.of(context).primaryColor)),
-            // child: Image.asset('assets/sukhtara_logo.jpg',
-            //     height:dynamicSize(.7),
-            //     fit: BoxFit.cover),
+            child: Image.asset('assets/flash_logo.jpeg',
+                width: double.infinity,
+                fit: BoxFit.cover),
           ),
         );
       }

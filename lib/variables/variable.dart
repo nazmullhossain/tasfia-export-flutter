@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../controller/public_controller.dart';
 import 'color_variable.dart';
 
 class Variables {
+
+  static const String baseUrl = 'https://erp.tashfiaexport.com/api/';
+
+  final Map<String, String> authHeader = {
+    "Content-Type": "application/json",
+    'Authorization': 'Bearer ${PublicController.pc.loginResponse.value.token}',
+  };
 
   static var statusBarTheme = SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -37,11 +45,11 @@ class Variables {
       )
   );
 
-  static List<String> userList= ['Aggregator','Merchant','Super User'];
+  static const List<String> userList= ['Aggregator','Merchant','Super User'];
 
   static const String userCollection='user';
   static const String transactionCollection='transaction_list';
-  static List<String> statusList = ['success','pending','deny'];
+  static const List<String> statusList = ['success','pending','deny'];
 }
 
 void showToast(message) => Fluttertoast.showToast(

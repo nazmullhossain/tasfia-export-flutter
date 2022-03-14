@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:tashfia_export/util/decoration.dart';
+import 'package:tashfia_export/widgets/loading_widget.dart';
 import '../controller/public_controller.dart';
 import '../model/home_menu_model.dart';
 import '../variables/color_variable.dart';
@@ -22,16 +23,27 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _initData();
   }
 
+  Future<void> _initData()async{
+    await Future.delayed(const Duration(milliseconds: 50));
+    PublicController.pc.getAllCustomer();
+    PublicController.pc.getAllSupplier();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PublicController>(
       builder: (pc) {
-        return Scaffold(
-          key: _scaffoldKey,
-          body: _bodyUI(pc),
+        return Stack(
+          children: [
+            Scaffold(
+              key: _scaffoldKey,
+              body: _bodyUI(pc),
+            ),
+            if(pc.loading.value) const LoadingWidget()
+          ],
         );
       }
     );
@@ -102,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSpacing: dynamicSize(.05)),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: HomeMenuModel.superUserHomeMenuDataList.map((element) => HomeMenuTile(model: element)).toList(),
+                children: HomeMenuModel.homeMenuDataList.map((element) => HomeMenuTile(model: element)).toList(),
               )
 
             ],

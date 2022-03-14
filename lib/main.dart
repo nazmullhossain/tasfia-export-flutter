@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tashfia_export/pages/splash_screen.dart';
 import 'package:tashfia_export/variables/variable.dart';
-
 import 'controller/public_controller.dart';
 
 void main() async{
