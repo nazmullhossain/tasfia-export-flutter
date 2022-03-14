@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tashfia_export/pages/dashboard_page.dart';
 import '../../variables/config.dart';
 import '../controller/public_controller.dart';
 import '../model/home_menu_model.dart';
@@ -14,7 +15,9 @@ class HomeMenuTile extends StatelessWidget {
     return GetBuilder<PublicController>(
       builder: (pc) {
         return  InkWell(
-            onTap: (){},
+            onTap: (){
+              if(model.title=='Dashboard') Get.to(()=> const DashboardPage());
+            },
             child: Container(
               alignment: Alignment.center,
               padding: EdgeInsets.all(dynamicSize(.04)),
@@ -27,9 +30,9 @@ class HomeMenuTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    child: Icon(model.icon,color: model.color,size: dynamicSize(.1)),
+                    child: Icon(model.icon,color: model.color,size: dynamicSize(.12)),
                     backgroundColor: Colors.white,
-                    radius: dynamicSize(.07),
+                    radius: dynamicSize(.09),
                   ),
                   SizedBox(height: dynamicSize(.02)),
                   Text(model.title,

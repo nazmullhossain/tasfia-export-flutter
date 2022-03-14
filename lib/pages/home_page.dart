@@ -65,25 +65,43 @@ class _HomePageState extends State<HomePage> {
               PopupMenuButton<int>(
                 key: _key,
                 icon: Icon(LineAwesomeIcons.vertical_ellipsis,size: dynamicSize(.07)),
-                onSelected: (int val)async=> await PublicController.pc.logout(),
+                onSelected: (int val)async{
+                  if(val==1){}
+                  else if(val==2){
+                    await pc.logout();
+                  }
+                },
                 itemBuilder: (context) {
                   return <PopupMenuEntry<int>>[
                     PopupMenuItem(
                         child: Row(
                           children: [
-                            Icon(LineAwesomeIcons.alternate_sign_out,color: AllColor.textColor,size: dynamicSize(.06)),
+                            Icon(LineAwesomeIcons.key,color: AllColor.textColor,size: dynamicSize(.06)),
                             SizedBox(width: dynamicSize(.02)),
-                            Text('Logout',
+                            Text('Change Password',
                             style: TextStyle(fontSize: dynamicSize(.045),
                                 color: AllColor.textColor)),
                           ],
                         ), value: 1,
                       padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 10),
                     ),
+
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          Icon(LineAwesomeIcons.alternate_sign_out,color: AllColor.textColor,size: dynamicSize(.06)),
+                          SizedBox(width: dynamicSize(.02)),
+                          Text('Logout',
+                              style: TextStyle(fontSize: dynamicSize(.045),
+                                  color: AllColor.textColor)),
+                        ],
+                      ), value: 2,
+                      padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 10),
+                    ),
                   ];
                 },
                 padding: const EdgeInsets.all(0.0),
-                tooltip: 'Logout',
+                tooltip: 'Select an option',
                 offset: Offset(0,dynamicSize(.1)),
               ),
             ],
@@ -91,33 +109,15 @@ class _HomePageState extends State<HomePage> {
         ),
 
         Expanded(
-          child: ListView(
+          child: GridView(
+            scrollDirection: Axis.vertical,
+            padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: dynamicSize(.05),
+              mainAxisSpacing: dynamicSize(.05)),
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.04)),
-            children: [
-              SizedBox(height: dynamicSize(.04)),
-
-              Text( 'Hi Fahim ! \u263A',style: TextStyle(
-              fontSize: dynamicSize(.065),
-              fontWeight: FontWeight.w600
-              )),
-              Text('Welcome back on Tashfia Export',style: StDecoration.normalTextStyle.copyWith(
-                fontSize: dynamicSize(.04),
-                color: Colors.grey,
-              )),
-              SizedBox(height: dynamicSize(.05)),
-
-              ///Home Menu
-              GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: dynamicSize(.05),
-                mainAxisSpacing: dynamicSize(.05)),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: HomeMenuModel.homeMenuDataList.map((element) => HomeMenuTile(model: element)).toList(),
-              )
-
-            ],
+            children: HomeMenuModel.homeMenuDataList.map((element) => HomeMenuTile(model: element)).toList(),
           ),
         )
       ],

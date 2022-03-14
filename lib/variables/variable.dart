@@ -24,7 +24,7 @@ class Variables {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   static ThemeData themeData = ThemeData(
-      primarySwatch: Colors.blue,
+      primarySwatch: const MaterialColor(0xff602C85, AllColor.primaryColorMap),
       scaffoldBackgroundColor: AllColor.appBgColor,
       canvasColor: Colors.transparent,
       fontFamily: 'openSans',

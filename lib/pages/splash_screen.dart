@@ -10,13 +10,28 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
+
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 1350),
+    vsync: this,
+  )..repeat(reverse: true);
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeIn,
+  );
 
   @override
   initState(){
     super.initState();
-    Future.delayed(const Duration(seconds: 2)).then((value) =>
+    Future.delayed(const Duration(seconds: 4)).then((value) =>
         Get.offAll(()=>const LoginPage()));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -27,9 +42,28 @@ class _SplashScreenState extends State<SplashScreen> {
         return Scaffold(
           backgroundColor: const Color(0xffF7F7F7),
           body: Center(
-            child: Image.asset('assets/flash_logo.jpeg',
-                width: double.infinity,
-                fit: BoxFit.cover),
+            child: FadeTransition(
+              opacity: _animation,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset('assets/logo.png',
+                      width: double.infinity,
+                      fit: BoxFit.cover),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: TextStyle(color: const Color(0xffFF002D),fontSize: dynamicSize(.09),fontWeight: FontWeight.w900),
+                      children: const <TextSpan>[
+                        TextSpan(text: 'Tashfia'),
+                        TextSpan(text: ' Export', style: TextStyle(color: Colors.purple)),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         );
       }

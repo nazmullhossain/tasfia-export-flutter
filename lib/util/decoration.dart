@@ -3,8 +3,8 @@ import '../../variables/color_variable.dart';
 import '../../variables/config.dart';
 
 class StDecoration{
-  static BoxDecoration loginRegDecoration =BoxDecoration(
-      color: AllColor.whiteColor,
+  static BoxDecoration loginRegDecoration = BoxDecoration(
+      color: Colors.white,
       borderRadius: BorderRadius.only(
           topRight: Radius.circular(dynamicSize(.8)),
           bottomRight: Radius.circular(dynamicSize(.8))

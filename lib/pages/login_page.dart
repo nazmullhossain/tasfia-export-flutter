@@ -9,7 +9,6 @@ import '../variables/variable.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/round_gradient_button.dart';
 import '../widgets/text_field_tile.dart';
-import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -60,7 +59,8 @@ class _LoginPageState extends State<LoginPage> {
                           height: dynamicSize(.28),
                           width: size.width,
                           decoration: BoxDecoration(
-                              color: Colors.deepOrange.withOpacity(.2),
+                            color: AllColor.secondaryColor.withOpacity(.2),
+                              //color: Colors.deepOrange.withOpacity(.2),
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(size.width)
                               )
@@ -70,10 +70,10 @@ class _LoginPageState extends State<LoginPage> {
                           height: dynamicSize(.25),
                           width: size.width,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [
                                 Colors.yellow,
-                                Colors.deepOrange.shade400
+                                AllColor.secondaryColor,
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: dynamicSize(.28),
                           width: size.width,
                           decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(.2),
+                              color: AllColor.primaryColor.withOpacity(.2),
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(size.width)
                               )
@@ -108,10 +108,10 @@ class _LoginPageState extends State<LoginPage> {
                           height: dynamicSize(.25),
                           width: size.width,
                           decoration: BoxDecoration(
-                              gradient:LinearGradient(
+                              gradient:const LinearGradient(
                                 colors: [
-                                  Colors.cyanAccent,
-                                  Colors.lightBlue.shade600
+                                  Colors.purpleAccent,
+                                  AllColor.primaryColor
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 SizedBox(height: dynamicSize(.04)),
                                 TextFieldTile(controller: email,hintText: 'Email Address',
-                                  prefixIcon: LineAwesomeIcons.user),
+                                  prefixIcon: LineAwesomeIcons.user,textInputType: TextInputType.emailAddress),
                                 const Divider(),
                                 TextFieldTile(controller: password,hintText: 'Password',
                                     obscure: true,prefixIcon: LineAwesomeIcons.key),
@@ -166,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: RoundGradientButton(
                               onTab: ()=>verifyAndLogin(pc),
                               child: Icon(LineAwesomeIcons.arrow_right,
-                                  color: AllColor.whiteColor, size: dynamicSize(.07)),
+                                  color: Colors.white, size: dynamicSize(.07)),
                             ),
                           )
                         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tashfia_export/variables/color_variable.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({Key? key,this.color}) : super(key: key);
@@ -11,7 +12,7 @@ class LoadingWidget extends StatelessWidget {
       height: double.infinity,
       width: double.infinity,
       alignment: Alignment.center,
-      child: CircularProgressIndicator(color: color??Colors.cyanAccent),
+      child: CircularProgressIndicator(color: color??AllColor.secondaryColor),
     );
   }
 }

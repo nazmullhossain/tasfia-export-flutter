@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tashfia_export/controller/api_helper.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/pages/home_page.dart';
+import 'package:tashfia_export/pages/login_page.dart';
 
 import '../variables/variable.dart';
 
@@ -30,6 +31,9 @@ class PublicController extends GetxController{
   }
   Future<void> logout()async{
     await pref!.clear();
+    loading(false);
+    update();
+    Get.offAll(()=>const LoginPage());
   }
 
   Future<void> login(String email, String password)async{

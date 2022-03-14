@@ -15,5 +15,4 @@ class LoginResponse {
     success: json["success"],
     token: json["token"],
   );
-
 }
