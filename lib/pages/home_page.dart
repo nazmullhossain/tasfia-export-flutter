@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:tashfia_export/util/decoration.dart';
+import 'package:tashfia_export/pages/change_password_page.dart';
 import 'package:tashfia_export/widgets/loading_widget.dart';
 import '../controller/public_controller.dart';
 import '../model/home_menu_model.dart';
@@ -66,8 +66,9 @@ class _HomePageState extends State<HomePage> {
                 key: _key,
                 icon: Icon(LineAwesomeIcons.vertical_ellipsis,size: dynamicSize(.07)),
                 onSelected: (int val)async{
-                  if(val==1){}
-                  else if(val==2){
+                  if(val==1){
+                    Get.to(()=> ChangePasswordPage());
+                  } else if(val==2){
                     await pc.logout();
                   }
                 },

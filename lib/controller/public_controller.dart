@@ -3,10 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tashfia_export/controller/api_helper.dart';
+import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
+import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/pages/home_page.dart';
 import 'package:tashfia_export/pages/login_page.dart';
-
 import '../variables/variable.dart';
 
 class PublicController extends GetxController{
@@ -17,6 +18,8 @@ class PublicController extends GetxController{
   RxBool loading=false.obs;
 
   Rx<LoginResponse> loginResponse = LoginResponse().obs;
+  Rx<CustomerModel> customerModel = CustomerModel().obs;
+  Rx<SupplierModel> supplierModel = SupplierModel().obs;
 
 
   Future<void> initApp(BuildContext context) async {

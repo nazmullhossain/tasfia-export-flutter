@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tashfia_export/pages/supplier_list_page.dart';
+import 'package:tashfia_export/pages/customer_list_page.dart';
 import 'package:tashfia_export/pages/dashboard_page.dart';
 import '../../variables/config.dart';
 import '../controller/public_controller.dart';
@@ -16,7 +18,13 @@ class HomeMenuTile extends StatelessWidget {
       builder: (pc) {
         return  InkWell(
             onTap: (){
-              if(model.title=='Dashboard') Get.to(()=> const DashboardPage());
+              if(model.title=='Dashboard') {
+                Get.to(()=> const DashboardPage());
+              } else if(model.title=='Customer') {
+                Get.to(()=> const AllCustomerPage());
+              }else if(model.title=='Supplier') {
+                Get.to(()=> const SupplierListPage());
+              }
             },
             child: Container(
               alignment: Alignment.center,

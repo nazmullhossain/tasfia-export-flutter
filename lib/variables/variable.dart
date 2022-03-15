@@ -6,7 +6,8 @@ import 'color_variable.dart';
 
 class Variables {
 
-  static const String baseUrl = 'https://erp.tashfiaexport.com/api/';
+  //static const String baseUrl = 'https://erp.tashfiaexport.com/api/';
+  static const String baseUrl = 'http://tashfia.binduitsolutions.com/api/';
 
   final Map<String, String> authHeader = {
     "Content-Type": "application/json",

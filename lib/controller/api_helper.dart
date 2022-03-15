@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:tashfia_export/controller/public_controller.dart';
+import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
+import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/variables/variable.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,8 +39,9 @@ class ApiHelper{
           headers: Variables().authHeader
       );
       if(response.statusCode==200){
-        print(response.body);
-
+       PublicController.pc.customerModel(customerModelFromJson(response.body));
+       PublicController.pc.update();
+       print('Customers: ${PublicController.pc.customerModel.value.customers!.length}');
       }else{showToast('Customer get Failed');}
     }on SocketException{
       showToast('No internet connection');
@@ -56,8 +58,9 @@ class ApiHelper{
           headers: Variables().authHeader
       );
       if(response.statusCode==200){
-        print(response.body);
-
+        PublicController.pc.supplierModel(supplierModelFromJson(response.body));
+        PublicController.pc.update();
+        print('Suppliers: ${PublicController.pc.supplierModel.value.suppliers!.length}');
       }else{showToast('Suppliers get Failed');}
     }on SocketException{
       showToast('No internet connection');

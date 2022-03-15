@@ -51,15 +51,15 @@ class _TextFieldTileState extends State<TextFieldTile> {
       ),
       decoration: InputDecoration(
           border: const OutlineInputBorder(
-              borderSide: BorderSide.none,
+              borderSide: BorderSide(color: Colors.blueGrey,width: .5),
               borderRadius: BorderRadius.all(Radius.circular(5.0))
           ),
           enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide.none,
+              borderSide: BorderSide(color: Colors.blueGrey,width: .5),
               borderRadius: BorderRadius.all(Radius.circular(5.0))
           ),
           focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide.none,
+              borderSide: BorderSide(color: AllColor.primaryColor,width: 1.5),
               borderRadius: BorderRadius.all(Radius.circular(5.0))
           ),
           isDense: true,
