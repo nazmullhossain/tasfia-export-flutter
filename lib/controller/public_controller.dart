@@ -43,7 +43,7 @@ class PublicController extends GetxController{
     loading(true);update();
     bool result = await helper.getLoginResponse(email, password);
     loading(false);update();
-    if(result){
+    if(result==true){
       showToast('Login Success');
       Get.offAll(()=> const HomePage());
     }

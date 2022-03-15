@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:tashfia_export/pages/change_password_page.dart';
+import 'package:tashfia_export/util/decoration.dart';
 import 'package:tashfia_export/widgets/loading_widget.dart';
 import '../controller/public_controller.dart';
 import '../model/home_menu_model.dart';
@@ -79,9 +80,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Icon(LineAwesomeIcons.key,color: AllColor.textColor,size: dynamicSize(.06)),
                             SizedBox(width: dynamicSize(.02)),
-                            Text('Change Password',
-                            style: TextStyle(fontSize: dynamicSize(.045),
-                                color: AllColor.textColor)),
+                            Text('Change Password', style: StDecoration.normalTextStyle),
                           ],
                         ), value: 1,
                       padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 10),
@@ -90,11 +89,9 @@ class _HomePageState extends State<HomePage> {
                     PopupMenuItem(
                       child: Row(
                         children: [
-                          Icon(LineAwesomeIcons.alternate_sign_out,color: AllColor.textColor,size: dynamicSize(.06)),
+                          Icon(LineAwesomeIcons.power_off,color: AllColor.textColor,size: dynamicSize(.06)),
                           SizedBox(width: dynamicSize(.02)),
-                          Text('Logout',
-                              style: TextStyle(fontSize: dynamicSize(.045),
-                                  color: AllColor.textColor)),
+                          Text('Logout', style: StDecoration.normalTextStyle),
                         ],
                       ), value: 2,
                       padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 10),

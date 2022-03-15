@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/model/customer_model.dart';
@@ -13,11 +14,12 @@ class ApiHelper{
       var response = await http.post(
           Uri.parse(Variables.baseUrl+'login?email=$email&password=$password'));
       if(response.statusCode==200){
-        PublicController.pc.loginResponse(loginResponseFromJson(response.body));
-        PublicController.pc.pref!.setString('email', email);
-        PublicController.pc.pref!.setString('password', password);
-        print(PublicController.pc.loginResponse.value.token);
-        return true;
+        final jsonData = jsonDecode(response.body);
+          PublicController.pc.loginResponse(loginResponseFromJson(response.body));
+          PublicController.pc.pref!.setString('email', email);
+          PublicController.pc.pref!.setString('password', password);
+          print(PublicController.pc.loginResponse.value.token);
+          return true;
       }else{
         showToast('Invalid email or password');
         return false;

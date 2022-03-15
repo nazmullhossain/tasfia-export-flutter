@@ -21,6 +21,7 @@ class ChangePasswordPage extends StatelessWidget {
       return Stack(
         children: [
           Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               title: Text('Change Password', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,

@@ -151,10 +151,10 @@ class _LoginPageState extends State<LoginPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: dynamicSize(.04)),
-                                TextFieldTile(controller: email,hintText: 'Email Address',
+                                LoginTextFieldTile(controller: email,hintText: 'Email Address',
                                   prefixIcon: LineAwesomeIcons.user,textInputType: TextInputType.emailAddress),
                                 const Divider(),
-                                TextFieldTile(controller: password,hintText: 'Password',
+                                LoginTextFieldTile(controller: password,hintText: 'Password',
                                     obscure: true,prefixIcon: LineAwesomeIcons.key),
                                 SizedBox(height: dynamicSize(.04)),
                               ],
