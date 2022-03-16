@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset('assets/logo.png',
-                      width: double.infinity,
+                      width: dynamicSize(.7),
                       fit: BoxFit.cover),
                   RichText(
                     textAlign: TextAlign.center,

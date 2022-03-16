@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:tashfia_export/controller/public_controller.dart';
+import 'package:tashfia_export/model/account_summery_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
@@ -64,6 +65,23 @@ class ApiHelper{
         PublicController.pc.update();
         print('Suppliers: ${PublicController.pc.supplierModel.value.suppliers!.length}');
       }else{showToast('Suppliers get Failed');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      print(error.toString());
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> accountSummeryResponse(String fromDate, String toDate)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'account_summary?from_date=$fromDate&to_date=$toDate'),
+          headers: Variables().authHeader
+      );
+      if(response.statusCode==200){
+        PublicController.pc.accountSummery(accountSummeryModelFromJson(response.body));
+      }else{showToast('`Failed to get report');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){

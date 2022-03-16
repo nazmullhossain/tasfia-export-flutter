@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tashfia_export/controller/api_helper.dart';
+import 'package:tashfia_export/model/account_summery_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
@@ -20,6 +21,7 @@ class PublicController extends GetxController{
   Rx<LoginResponse> loginResponse = LoginResponse().obs;
   Rx<CustomerModel> customerModel = CustomerModel().obs;
   Rx<SupplierModel> supplierModel = SupplierModel().obs;
+  Rx<AccountSummeryModel> accountSummery = AccountSummeryModel().obs;
 
 
   Future<void> initApp(BuildContext context) async {
@@ -55,5 +57,11 @@ class PublicController extends GetxController{
 
   Future<void> getAllSupplier()async{
     await helper.allSuppliersResponse();
+  }
+
+  Future<void> getAccountSummery(String fromDate, String toDate)async{
+    loading(true);update();
+    await helper.accountSummeryResponse(fromDate,toDate);
+    loading(false);update();
   }
 }
