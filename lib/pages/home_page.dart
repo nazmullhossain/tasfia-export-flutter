@@ -28,7 +28,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _initData()async{
-    await Future.delayed(const Duration(milliseconds: 50));
+    await Future.delayed(const Duration(milliseconds: 1));
+    PublicController.pc.getDashboardData();
     PublicController.pc.getAllCustomer();
     PublicController.pc.getAllSupplier();
   }

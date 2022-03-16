@@ -36,12 +36,12 @@ class _DashboardPageState extends State<DashboardPage> {
       await PublicController.pc.getAllSupplier();
     }
     _dashboardDataList = [
-      HomeMenuModel(title: 'আজকের মোট বিক্রয়\n(পরিমাণ/অর্থ)\n0কেজি/0টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xff007BFF)),
-      HomeMenuModel(title: 'বর্তমান মাসের মোট বিক্রয়\n(পরিমাণ/অর্থ)\n0কেজি/0টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xff11CDEF)),
-      HomeMenuModel(title: 'আজকের মোট ক্রয়\n(পরিমাণ/অর্থ)\n0কেজি/0টাকা', icon: LineAwesomeIcons.shopping_cart, color: const Color(0xff2DCE89)),
-      HomeMenuModel(title: 'বর্তমান মাসের মোট ক্রয়\n(পরিমাণ/অর্থ)\n0কেজি/0টাকা', icon: LineAwesomeIcons.shopping_cart, color: const Color(0xff343A40)),
-      HomeMenuModel(title: 'আজকের মোট বকেয়া\n(পরিমাণ/অর্থ)\n0কেজি/0টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xffDF2DE3)),
-      HomeMenuModel(title: 'বর্তমান মাসের মোট পাওনা\n(পরিমাণ/অর্থ)\n0কেজি/0টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xffFB6340)),
+      HomeMenuModel(title: 'আজকের মোট বিক্রয়\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.todayTotalSalesQuantity}কেজি/${pc.dashboardModel.value.todaySalesAmount}টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xff007BFF)),
+      HomeMenuModel(title: 'বর্তমান মাসের মোট বিক্রয়\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.currentMonthTotalSalesQuantity}কেজি/${pc.dashboardModel.value.currentMonthSalesAmount}টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xff11CDEF)),
+      HomeMenuModel(title: 'আজকের মোট ক্রয়\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.todayPurchaseQuantity}কেজি/${pc.dashboardModel.value.todayPurchaseAmount}টাকা', icon: LineAwesomeIcons.shopping_cart, color: const Color(0xff2DCE89)),
+      HomeMenuModel(title: 'বর্তমান মাসের মোট ক্রয়\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.currentMonthPurchaseQuantity}কেজি/${pc.dashboardModel.value.currentMonthPurchaseAmount}টাকা', icon: LineAwesomeIcons.shopping_cart, color: const Color(0xff343A40)),
+      HomeMenuModel(title: 'আজকের মোট বকেয়া\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.todayDueQuantity}কেজি/${pc.dashboardModel.value.todayDueAmount}টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xffDF2DE3)),
+      HomeMenuModel(title: 'বর্তমান মাসের মোট পাওনা\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.currentMonthDueQuantity}কেজি/${pc.dashboardModel.value.currentMonthDueAmount}টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xffFB6340)),
       HomeMenuModel(title: 'মোট কাস্টমার\n${pc.customerModel.value.customers!.length}', icon: LineAwesomeIcons.users, color: const Color(0xffF5365C)),
       HomeMenuModel(title: 'মোট সাপ্লায়ার\n${pc.supplierModel.value.suppliers!.length}', icon: LineAwesomeIcons.user_plus, color: const Color(0xffCAD900))];
     setState(() {});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tashfia_export/pages/report_page.dart';
+import 'package:tashfia_export/pages/report/report_page.dart';
 import 'package:tashfia_export/pages/supplier_list_page.dart';
 import 'package:tashfia_export/pages/customer_list_page.dart';
 import 'package:tashfia_export/pages/dashboard_page.dart';

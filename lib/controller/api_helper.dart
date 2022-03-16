@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/model/account_summery_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
+import 'package:tashfia_export/model/dashboard_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/variables/variable.dart';
@@ -15,7 +16,6 @@ class ApiHelper{
       var response = await http.post(
           Uri.parse(Variables.baseUrl+'login?email=$email&password=$password'));
       if(response.statusCode==200){
-        final jsonData = jsonDecode(response.body);
           PublicController.pc.loginResponse(loginResponseFromJson(response.body));
           PublicController.pc.pref!.setString('email', email);
           PublicController.pc.pref!.setString('password', password);
@@ -35,6 +35,24 @@ class ApiHelper{
     }
   }
 
+  Future<void> dashboardResponse()async{
+    try{
+      var response = await http.get(
+          Uri.parse(Variables.baseUrl+'total_sales_purchase_due_report'),
+          headers: Variables().authHeader
+      );
+      if(response.statusCode==200){
+        PublicController.pc.dashboardModel(dashboardModelFromJson(response.body));
+        print('Dashboard: ${PublicController.pc.dashboardModel.value.todayTotalSalesQuantity}');
+      }else{showToast('Dashboard Failed');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      print(error.toString());
+      showToast(error.toString());
+    }
+  }
+
   Future<void> allCustomersResponse()async{
     try{
       var response = await http.get(
@@ -43,7 +61,6 @@ class ApiHelper{
       );
       if(response.statusCode==200){
        PublicController.pc.customerModel(customerModelFromJson(response.body));
-       PublicController.pc.update();
        print('Customers: ${PublicController.pc.customerModel.value.customers!.length}');
       }else{showToast('Customer get Failed');}
     }on SocketException{
@@ -62,7 +79,6 @@ class ApiHelper{
       );
       if(response.statusCode==200){
         PublicController.pc.supplierModel(supplierModelFromJson(response.body));
-        PublicController.pc.update();
         print('Suppliers: ${PublicController.pc.supplierModel.value.suppliers!.length}');
       }else{showToast('Suppliers get Failed');}
     }on SocketException{
