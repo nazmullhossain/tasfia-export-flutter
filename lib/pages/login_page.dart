@@ -24,18 +24,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _autoLogin();
+    //_autoLogin();
   }
-
-  Future<void> _autoLogin()async{
-    await Future.delayed(const Duration(milliseconds: 50));
-    if(PublicController.pc.pref!.getString('email')!=null
-        && PublicController.pc.pref!.getString('password')!=null){
-      await PublicController.pc.login(
-          PublicController.pc.pref!.getString('email')!,
-          PublicController.pc.pref!.getString('password')!);
-    }
-  }
+  // Future<void> _autoLogin()async{
+  //   await Future.delayed(const Duration(milliseconds: 50));
+  //   if(PublicController.pc.pref!.getString('email')!=null
+  //       && PublicController.pc.pref!.getString('password')!=null){
+  //     await PublicController.pc.login(
+  //         PublicController.pc.pref!.getString('email')!,
+  //         PublicController.pc.pref!.getString('password')!);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

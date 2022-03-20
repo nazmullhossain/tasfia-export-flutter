@@ -18,18 +18,18 @@ class DashboardModel {
     this.todayTotalSalesQuantity
   });
 
-  final int? todayTotalSalesQuantity;
-  final int? todaySalesAmount;
-  final int? currentMonthTotalSalesQuantity;
-  final int? currentMonthSalesAmount;
-  final int? todayPurchaseQuantity;
-  final int? todayPurchaseAmount;
-  final int? currentMonthPurchaseQuantity;
-  final int? currentMonthPurchaseAmount;
-  final int? todayDueAmount;
-  final int? todayDueQuantity;
-  final int? currentMonthDueAmount;
-  final int? currentMonthDueQuantity;
+  final dynamic todayTotalSalesQuantity;
+  final dynamic todaySalesAmount;
+  final dynamic currentMonthTotalSalesQuantity;
+  final dynamic currentMonthSalesAmount;
+  final dynamic todayPurchaseQuantity;
+  final dynamic todayPurchaseAmount;
+  final dynamic currentMonthPurchaseQuantity;
+  final dynamic currentMonthPurchaseAmount;
+  final dynamic todayDueAmount;
+  final dynamic todayDueQuantity;
+  final dynamic currentMonthDueAmount;
+  final dynamic currentMonthDueQuantity;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
     todayTotalSalesQuantity: json["today_total_sales_quantity"],

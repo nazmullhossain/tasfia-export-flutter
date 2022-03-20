@@ -18,7 +18,7 @@ class HomeMenuModel{
     HomeMenuModel(title: 'জমা হিসাব', icon: LineAwesomeIcons.plus_circle, color: Colors.lightGreen),
     HomeMenuModel(title: 'খরচ হিসাব', icon: LineAwesomeIcons.dollar_sign, color: Colors.purple),
     HomeMenuModel(title: 'Advance Sell', icon: LineAwesomeIcons.dolly_flatbed, color: Colors.orange),
-    HomeMenuModel(title: 'Employee Details', icon: LineAwesomeIcons.user_check, color: Colors.lightBlue),
+    HomeMenuModel(title: 'All Employee', icon: LineAwesomeIcons.user_check, color: Colors.lightBlue),
     HomeMenuModel(title: 'Opening Balance', icon: LineAwesomeIcons.hand_holding_us_dollar, color: Colors.lightGreen),
     HomeMenuModel(title: 'Report', icon: LineAwesomeIcons.signal, color: Colors.purple),
     HomeMenuModel(title: 'Logout', icon: LineAwesomeIcons.alternate_sign_out, color: Colors.red),

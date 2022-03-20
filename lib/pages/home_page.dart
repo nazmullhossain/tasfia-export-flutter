@@ -30,8 +30,12 @@ class _HomePageState extends State<HomePage> {
   Future<void> _initData()async{
     await Future.delayed(const Duration(milliseconds: 1));
     PublicController.pc.getDashboardData();
+    PublicController.pc.getCompanyList();
     PublicController.pc.getAllCustomer();
     PublicController.pc.getAllSupplier();
+    PublicController.pc.getAllEmployee();
+    PublicController.pc.getAllProduct();
+    PublicController.pc.getAllPurchase();
   }
 
   @override
@@ -42,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Scaffold(
               key: _scaffoldKey,
-              body: _bodyUI(pc),
+              body: _bodyUI(pc)
             ),
             if(pc.loading.value) const LoadingWidget()
           ],

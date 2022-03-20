@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tashfia_export/pages/all_employee_page.dart';
+import 'package:tashfia_export/pages/all_product_page.dart';
+import 'package:tashfia_export/pages/all_purchase_page.dart';
 import 'package:tashfia_export/pages/report/report_page.dart';
 import 'package:tashfia_export/pages/supplier_list_page.dart';
 import 'package:tashfia_export/pages/customer_list_page.dart';
@@ -27,6 +30,12 @@ class HomeMenuTile extends StatelessWidget {
                 Get.to(()=> const SupplierListPage());
               }else if(model.title=='Report') {
                 Get.to(()=> const ReportPage());
+              }else if(model.title=='All Employee') {
+                Get.to(()=> const AllEmployeePage());
+              }else if(model.title=='Products') {
+                Get.to(()=> const AllProductPage());
+              }else if(model.title=='Purchase') {
+                Get.to(()=> const AllPurchasePage());
               }
             },
             child: Container(

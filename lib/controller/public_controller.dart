@@ -4,9 +4,13 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tashfia_export/controller/api_helper.dart';
 import 'package:tashfia_export/model/account_summery_model.dart';
+import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/dashboard_model.dart';
+import 'package:tashfia_export/model/employee_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
+import 'package:tashfia_export/model/product_list_model.dart';
+import 'package:tashfia_export/model/purchase_list_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/pages/home_page.dart';
 import 'package:tashfia_export/pages/login_page.dart';
@@ -24,7 +28,10 @@ class PublicController extends GetxController{
   Rx<SupplierModel> supplierModel = SupplierModel().obs;
   Rx<AccountSummeryModel> accountSummery = AccountSummeryModel().obs;
   Rx<DashboardModel> dashboardModel = DashboardModel().obs;
-
+  Rx<CompanyListModel> companyModel = CompanyListModel().obs;
+  Rx<EmployeeModel> allEmployeeModel = EmployeeModel().obs;
+  Rx<ProductListModel> productListModel = ProductListModel().obs;
+  Rx<PurchaseListModel> purchaseListModel = PurchaseListModel().obs;
 
   Future<void> initApp(BuildContext context) async {
     pref = await SharedPreferences.getInstance();
@@ -53,6 +60,11 @@ class PublicController extends GetxController{
     }
   }
 
+  Future<void> getCompanyList()async{
+    await helper.getCompanyResponse();
+    update();
+  }
+
   Future<void> getDashboardData()async{
     await helper.dashboardResponse();
     update();
@@ -63,14 +75,53 @@ class PublicController extends GetxController{
     update();
   }
 
+  Future<void> searchCustomer(Map<String,String> map)async{
+    loading(true);update();
+    await helper.searchCustomersResponse(map);
+    loading(false);update();
+  }
+
   Future<void> getAllSupplier()async{
     await helper.allSuppliersResponse();
     update();
   }
 
+  Future<void> searchSupplier(Map<String, String> map)async{
+    loading(true);update();
+    await helper.searchSupplierResponse(map);
+    loading(false);update();
+  }
+
   Future<void> getAccountSummery(String fromDate, String toDate)async{
     loading(true);update();
     await helper.accountSummeryResponse(fromDate,toDate);
+    loading(false);update();
+  }
+
+  Future<void> getAllEmployee()async{
+    await helper.allEmployeeResponse();
+    update();
+  }
+
+  Future<void> getAllProduct()async{
+    await helper.allProductResponse();
+    update();
+  }
+
+  Future<void> searchProduct(Map<String, String> map)async{
+    loading(true);update();
+    await helper.searchProductResponse(map);
+    loading(false);update();
+  }
+
+  Future<void> getAllPurchase()async{
+    await helper.allPurchaseResponse();
+    update();
+  }
+
+  Future<void> searchPurchase(Map<String, String> map)async{
+    loading(true);update();
+    await helper.searchPurchaseResponse(map);
     loading(false);update();
   }
 }

@@ -4,8 +4,10 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/util/customer_list_tile.dart';
 import 'package:tashfia_export/variables/config.dart';
+import 'package:tashfia_export/variables/variable.dart';
 import 'package:tashfia_export/widgets/color_button.dart';
 import 'package:tashfia_export/widgets/text_field_tile.dart';
+import '../model/company_list_model.dart';
 import '../util/decoration.dart';
 import '../variables/color_variable.dart';
 import '../widgets/loading_widget.dart';
@@ -22,7 +24,7 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
   final TextEditingController _name = TextEditingController(text: '');
   final TextEditingController _phone = TextEditingController(text: '');
   final TextEditingController _customerId = TextEditingController(text: '');
-  String? _company;
+  CompanyModel? _companyModel;
 
   @override
   void initState(){
@@ -49,7 +51,8 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
               titleSpacing: 0.0,
               iconTheme: IconThemeData(color: Colors.grey.shade800),
               actions: [
-                IconButton(onPressed: (){_showSearchDialog();}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
+                IconButton(onPressed: ()async=>await pc.getAllCustomer(), icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
+                IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
               ],
             ),
             body: _bodyUI(pc),
@@ -60,21 +63,27 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
     });
   }
 
-  Widget _bodyUI(PublicController pc)=>ListView.separated(
-    physics: const BouncingScrollPhysics(),
-    padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
-    itemCount: pc.customerModel.value.customers!.length,
-    itemBuilder: (context, index)=> CustomerListTile(model: pc.customerModel.value.customers![index]),
-    separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04)));
+  Widget _bodyUI(PublicController pc)=>RefreshIndicator(
+    onRefresh: ()async=> await pc.getAllCustomer(),
+    backgroundColor: Colors.white,
+    child: pc.customerModel.value.customers!=null
+        ?ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
+        itemCount: pc.customerModel.value.customers!.length,
+        itemBuilder: (context, index)=> CustomerListTile(model: pc.customerModel.value.customers![index]),
+        separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
+  );
 
-  void _showSearchDialog(){
+  void _showSearchDialog(PublicController pc){
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context)=>AlertDialog(
           scrollable: true,
           insetPadding: EdgeInsets.all(dynamicSize(.04)),
           contentPadding: EdgeInsets.all(dynamicSize(.04)),
-          title: Text('Search customer',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
+          title: Text('Search Customer',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
           content: StatefulBuilder(
             builder: (context,setState) {
               return SizedBox(
@@ -89,23 +98,23 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
                         border: Border.all(color: Colors.blueGrey,width: .5)
                       ),
                       child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: _company,
+                        child: DropdownButton<CompanyModel>(
+                          value: _companyModel,
                           icon: Icon(LineAwesomeIcons.angle_down,size: dynamicSize(.04)),
                           elevation: 16,
                           dropdownColor: Colors.white,
                           isExpanded: true,
                           isDense: true,
                           hint: const Text('Select Company'),
-                          onChanged: (String? newValue) {
-                            setState(() {_company = newValue!;});
+                          onChanged: (model) {
+                            setState(() {_companyModel = model;});
                             setState((){});
                           },
-                          items: <String>['One', 'Two', 'Free', 'Four']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,style: StDecoration.normalTextStyle),
+                          items: pc.companyModel.value.data!
+                              .map<DropdownMenuItem<CompanyModel>>((CompanyModel model) {
+                            return DropdownMenuItem<CompanyModel>(
+                              value: model,
+                              child: Text(model.companyName!,style: StDecoration.normalTextStyle),
                             );
                           }).toList(),
                         ),
@@ -113,18 +122,32 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
                     ),
                     SizedBox(height: dynamicSize(.06)),
 
-                    TextFieldTile(controller:  _name, labelText: 'Name'),
+                    TextFieldTile(controller:  _name, labelText: 'Name',textCapitalization: TextCapitalization.words),
                     SizedBox(height: dynamicSize(.06)),
-                    TextFieldTile(controller:  _phone, labelText: 'Phone Number'),
+                    TextFieldTile(controller:  _phone, labelText: 'Phone Number',textInputType: TextInputType.number),
                     SizedBox(height: dynamicSize(.06)),
                     TextFieldTile(controller:  _customerId, labelText: 'Customer ID'),
                     SizedBox(height: dynamicSize(.06)),
 
-                    ColorTextButton(
-                        onPressed: (){},
+                    !pc.loading.value
+                        ?ColorTextButton(
+                        onPressed: ()async{
+                          if(_phone.text.isNotEmpty){
+                            setState((){});
+                            Map<String,String> map = {
+                              'name':_name.text,
+                              'phone': _phone.text,
+                              'company_name': _companyModel!=null?_companyModel!.companyName!:'',
+                              'customer_id': _customerId.text
+                            };
+                            await pc.searchCustomer(map);
+                            setState((){});
+                            Get.back();
+                          }else{showToast('Enter phone number');}
+                        },
                         text: 'Search',
                        minimumSize: Size(dynamicSize(.45),dynamicSize(.1)),
-                    )
+                    ):const CircularProgressIndicator()
                   ],
                 ),
               );
