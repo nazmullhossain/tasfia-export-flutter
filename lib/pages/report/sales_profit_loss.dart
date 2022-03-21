@@ -9,7 +9,8 @@ import '../../variables/config.dart';
 import '../../variables/variable.dart';
 
 class SalesProfitLoss extends StatefulWidget {
-  const SalesProfitLoss({Key? key}) : super(key: key);
+  const SalesProfitLoss({Key? key,required this.profitLoss}) : super(key: key);
+  final bool profitLoss;
 
   @override
   State<SalesProfitLoss> createState() => _SalesProfitLossState();
@@ -59,6 +60,8 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                       InkWell(
                         onTap: ()async{
                           await _selectToDate();
+                          await pc.searchSalesProfitLoss(DateFormat('yyyy-MM-dd').format(_fromDate),
+                              DateFormat('yyyy-MM-dd').format(_toDate));
                         },
                         child: Container(
                           padding: EdgeInsets.all(dynamicSize(.02)),
@@ -83,10 +86,12 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
 
               ///Data List
               Expanded(
-                child: ListView.separated(
+                child:pc.salesProfitLossModel.value.data!=null
+                    && pc.salesProfitLossModel.value.data!.isNotEmpty
+                    ? ListView.separated(
                   physics:const BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04)),
-                  itemCount: 20,
+                  itemCount: pc.salesProfitLossModel.value.data!.length,
                   separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04)),
                   itemBuilder: (context, index)=>Container(
                     padding: EdgeInsets.all(dynamicSize(.02)),
@@ -99,20 +104,20 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                         style: StDecoration.normalTextStyle,
                         children: [
                           const TextSpan(text: 'SL: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: '$index\n'),
+                          TextSpan(text: '${index+1}\n'),
                           const TextSpan(text: 'Date: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${DateFormat('dd-MMM-yyyy').format(DateTime.now())}\n'),
                           const TextSpan(text: 'Customer Name: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: 'Rakib $index\n'),
+                          TextSpan(text: '${pc.salesProfitLossModel.value.data![index].customerId}\n'),
                           const TextSpan(text: 'Sales Amount: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: '${12*index}\n'),
+                          TextSpan(text: '${pc.salesProfitLossModel.value.data![index].totalPrice}\n'),
                           const TextSpan(text: 'Profit/loss: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: '${index+5}'),
+                          TextSpan(text: '${pc.salesProfitLossModel.value.data![index].profitOrLoss}'),
                         ],
                       ),
                     ),
                   ),
-                  ),
+                  ):Container(),
               ),
 
               ///Bottom Container
@@ -128,7 +133,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                 child: Row(
                   children: [
                     Text('Total:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
-                    Expanded(child: Text('(1211000)',textAlign: TextAlign.end,
+                    Expanded(child: Text('(${pc.salesProfitLossModel.value.profitOrLoss})',textAlign: TextAlign.end,
                         style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
                   ],
                 ),

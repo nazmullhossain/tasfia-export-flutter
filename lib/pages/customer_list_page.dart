@@ -51,7 +51,11 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
               titleSpacing: 0.0,
               iconTheme: IconThemeData(color: Colors.grey.shade800),
               actions: [
-                IconButton(onPressed: ()async=>await pc.getAllCustomer(), icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
+                IconButton(onPressed: ()async{
+                  pc.loading(true);pc.update();
+                  await pc.getAllCustomer();
+                  pc.loading(false);pc.update();
+                }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
               ],
             ),

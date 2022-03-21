@@ -16,30 +16,24 @@ class AllEmployeeTile extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(dynamicSize(.02))),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RichText(
-            text: TextSpan(
-              style: StDecoration.normalTextStyle,
-              children: [
-                const TextSpan(text: 'Name: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.name}\n'),
-                const TextSpan(text: 'Phone: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.phone}\n'),
-                const TextSpan(text: 'Email: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.email}\n'),
-                const TextSpan(text: 'Address: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.address}\n'),
-                const TextSpan(text: 'Salary: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.salary}\n'),
-                const TextSpan(text: 'Join Date: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: DateFormat('dd-MMM-yyyy').format(model.updatedAt!)),
-              ],
-            ),
-          )
-        ],
+      child: RichText(
+        text: TextSpan(
+          style: StDecoration.normalTextStyle,
+          children: [
+            const TextSpan(text: 'Name: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.name}\n'),
+            const TextSpan(text: 'Phone: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.phone}\n'),
+            const TextSpan(text: 'Email: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.email}\n'),
+            const TextSpan(text: 'Address: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.address}\n'),
+            const TextSpan(text: 'Salary: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.salary}\n'),
+            const TextSpan(text: 'Join Date: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: DateFormat('dd-MMM-yyyy').format(model.updatedAt!)),
+          ],
+        ),
       ),
     );
   }

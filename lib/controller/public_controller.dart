@@ -4,13 +4,16 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tashfia_export/controller/api_helper.dart';
 import 'package:tashfia_export/model/account_summery_model.dart';
+import 'package:tashfia_export/model/category_list_model.dart';
 import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/dashboard_model.dart';
 import 'package:tashfia_export/model/employee_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
+import 'package:tashfia_export/model/opening_balance_model.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/purchase_list_model.dart';
+import 'package:tashfia_export/model/sales_profit_loss_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/pages/home_page.dart';
 import 'package:tashfia_export/pages/login_page.dart';
@@ -29,9 +32,12 @@ class PublicController extends GetxController{
   Rx<AccountSummeryModel> accountSummery = AccountSummeryModel().obs;
   Rx<DashboardModel> dashboardModel = DashboardModel().obs;
   Rx<CompanyListModel> companyModel = CompanyListModel().obs;
+  Rx<CategoryListModel> categoryModel = CategoryListModel().obs;
   Rx<EmployeeModel> allEmployeeModel = EmployeeModel().obs;
   Rx<ProductListModel> productListModel = ProductListModel().obs;
   Rx<PurchaseListModel> purchaseListModel = PurchaseListModel().obs;
+  Rx<OpeningBalanceListModel> openingBalanceModel = OpeningBalanceListModel().obs;
+  Rx<SalesProfitLossListModel> salesProfitLossModel = SalesProfitLossListModel().obs;
 
   Future<void> initApp(BuildContext context) async {
     pref = await SharedPreferences.getInstance();
@@ -62,6 +68,11 @@ class PublicController extends GetxController{
 
   Future<void> getCompanyList()async{
     await helper.getCompanyResponse();
+    update();
+  }
+
+  Future<void> getCategoryList()async{
+    await helper.getCategoryResponse();
     update();
   }
 
@@ -122,6 +133,17 @@ class PublicController extends GetxController{
   Future<void> searchPurchase(Map<String, String> map)async{
     loading(true);update();
     await helper.searchPurchaseResponse(map);
+    loading(false);update();
+  }
+
+  Future<void> getOpeningBalance()async{
+    await helper.dailyOpeningBalanceResponse();
+    update();
+  }
+
+  Future<void> searchSalesProfitLoss(String fromDate, String toDate)async{
+    loading(true);update();
+    await helper.salesProfitLossResponse(fromDate, toDate);
     loading(false);update();
   }
 }

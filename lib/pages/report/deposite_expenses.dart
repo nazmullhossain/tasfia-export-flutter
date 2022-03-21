@@ -9,8 +9,8 @@ import '../../variables/config.dart';
 import '../../variables/variable.dart';
 
 class DepositExpenses extends StatefulWidget {
-  const DepositExpenses({Key? key,required this.gotAllData}) : super(key: key);
-  final bool gotAllData;
+  const DepositExpenses({Key? key,required this.gotJoma}) : super(key: key);
+  final bool gotJoma;
 
   @override
   State<DepositExpenses> createState() => _DepositExpensesState();
@@ -65,8 +65,9 @@ class _DepositExpensesState extends State<DepositExpenses> {
                       onTap: ()async{
                         await _selectToDate();
                         await PublicController.pc.getAccountSummery(
-                            '${_fromDate.year}-${_fromDate.month}-${_fromDate.day}',
-                            '${_toDate.year}-${_toDate.month}-${_toDate.day}');
+                            DateFormat('yyyy-MM-dd').format(_fromDate),
+                            DateFormat('yyyy-MM-dd').format(_toDate),
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.all(dynamicSize(.025)),
@@ -89,7 +90,7 @@ class _DepositExpensesState extends State<DepositExpenses> {
                     const Divider(color: AllColor.primaryColor,thickness: 2),
                     SizedBox(height: dynamicSize(.08)),
 
-                    if(widget.gotAllData)Column(
+                    if(widget.gotJoma)Column(
                       children: [
                         RichText(
                           text: TextSpan(
@@ -108,7 +109,7 @@ class _DepositExpensesState extends State<DepositExpenses> {
                             style: StDecoration.normalTextStyle,
                             children: [
                               const TextSpan(text: 'ক্যাশ: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                              TextSpan(text: '${pc.accountSummery.value.profit!-pc.accountSummery.value.expense!}\n'),
+                              TextSpan(text: '${double.parse(pc.accountSummery.value.profit!.toString())-double.parse(pc.accountSummery.value.expense!.toString())}\n'),
                             ],
                           ),
                         ),

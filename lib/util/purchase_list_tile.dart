@@ -16,34 +16,28 @@ class PurchaseListTile extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(dynamicSize(.02))),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RichText(
-            text: TextSpan(
-              style: StDecoration.normalTextStyle,
-              children: [
-                const TextSpan(text: 'Status: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.status}\n'),
-                const TextSpan(text: 'Actual purchase price: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.actualPurchasPrice}\n'),
-                const TextSpan(text: 'Actual unit price: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.actualUnitPrice}\n'),
-                const TextSpan(text: 'Quantity: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.mainQuantity}\n'),
-                const TextSpan(text: 'Payment Amount: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.paymentAmount}\n'),
-                const TextSpan(text: 'Due Amount: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.due}\n'),
-                const TextSpan(text: 'Total purchase price: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '${model.totalPurchasPrice}\n'),
-                const TextSpan(text: 'Date: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: DateFormat('dd-MMM-yyyy').format(model.updatedAt!)),
-              ],
-            ),
-          )
-        ],
+      child: RichText(
+        text: TextSpan(
+          style: StDecoration.normalTextStyle,
+          children: [
+            const TextSpan(text: 'Status: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.status}\n'),
+            const TextSpan(text: 'Actual purchase price: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.actualPurchasPrice}\n'),
+            const TextSpan(text: 'Actual unit price: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.actualUnitPrice}\n'),
+            const TextSpan(text: 'Quantity: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.mainQuantity}\n'),
+            const TextSpan(text: 'Payment Amount: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.paymentAmount}\n'),
+            const TextSpan(text: 'Due Amount: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.due}\n'),
+            const TextSpan(text: 'Total purchase price: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '${model.totalPurchasPrice}\n'),
+            const TextSpan(text: 'Date: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: DateFormat('dd-MMM-yyyy').format(model.updatedAt!)),
+          ],
+        ),
       ),
     );
   }

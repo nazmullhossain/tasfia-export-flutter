@@ -31,11 +31,13 @@ class _HomePageState extends State<HomePage> {
     await Future.delayed(const Duration(milliseconds: 1));
     PublicController.pc.getDashboardData();
     PublicController.pc.getCompanyList();
+    PublicController.pc.getCategoryList();
     PublicController.pc.getAllCustomer();
     PublicController.pc.getAllSupplier();
     PublicController.pc.getAllEmployee();
     PublicController.pc.getAllProduct();
     PublicController.pc.getAllPurchase();
+    PublicController.pc.getOpeningBalance();
   }
 
   @override

@@ -28,16 +28,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
   Future<void> _initData()async{
-    await Future.delayed(const Duration(seconds: 2));
-    if(PublicController.pc.pref!.getString('email')!=null
-        && PublicController.pc.pref!.getString('password')!=null){
-      await PublicController.pc.login(
-          PublicController.pc.pref!.getString('email')!,
-          PublicController.pc.pref!.getString('password')!);
-    }else{
       Future.delayed(const Duration(seconds: 3)).then((value) =>
-          Get.offAll(()=>const LoginPage()));
-    }
+        Get.offAll(()=>const LoginPage()));
   }
 
   @override

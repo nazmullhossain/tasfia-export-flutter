@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/model/account_summery_model.dart';
+import 'package:tashfia_export/model/category_list_model.dart';
 import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/dashboard_model.dart';
@@ -9,9 +10,11 @@ import 'package:tashfia_export/model/employee_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/purchase_list_model.dart';
+import 'package:tashfia_export/model/sales_profit_loss_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/variables/variable.dart';
 import 'package:http/http.dart' as http;
+import '../model/opening_balance_model.dart';
 
 class ApiHelper{
 
@@ -49,6 +52,27 @@ class ApiHelper{
         }else{showToast('No company found');}
       }else{
         showToast('Company list fetch problem');
+      }
+    }on SocketException{
+      showToast('No internet connection');
+      getCompanyResponse();
+    }catch(error){
+      showToast(error.toString());
+      getCompanyResponse();
+    }
+  }
+
+  Future<void> getCategoryResponse()async{
+    try{
+      var response = await http.get(
+          Uri.parse(Variables.baseUrl+'category_list'),headers: Variables().authHeader);
+      if(response.statusCode==200){
+        var jsonData = jsonDecode(response.body);
+        if(jsonData['data'].isNotEmpty){
+          PublicController.pc.categoryModel(categoryListModelFromJson(response.body));
+        }else{showToast('No category found');}
+      }else{
+        showToast('Category list fetching problem');
       }
     }on SocketException{
       showToast('No internet connection');
@@ -220,9 +244,8 @@ class ApiHelper{
 
       if(response.statusCode==200){
         var jsonData = jsonDecode(response.body);
-        if(jsonData['data'].isNotEmpty){
-          PublicController.pc.productListModel(productListModelFromJson(response.body));
-        }else{showToast('No product found');}
+        PublicController.pc.productListModel(productListModelFromJson(response.body));
+        if(jsonData['data'].isEmpty)showToast('No product found');
       }else{showToast('Failed to get product');}
     }on SocketException{
       showToast('No internet connection');
@@ -260,10 +283,39 @@ class ApiHelper{
 
       if(response.statusCode==200){
         var jsonData = jsonDecode(response.body);
-        if(jsonData['data'].isNotEmpty){
-          PublicController.pc.purchaseListModel(purchaseListModelFromJson(response.body));
-        }else{showToast('No purchase found');}
+        PublicController.pc.purchaseListModel(purchaseListModelFromJson(response.body));
+        if(jsonData['data'].isNotEmpty)showToast('No purchase found');
       }else{showToast('Failed to get purchase');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> dailyOpeningBalanceResponse()async{
+    try{
+      var response = await http.get(
+          Uri.parse(Variables.baseUrl+'daily_opening_closing_balance'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+         PublicController.pc.openingBalanceModel(openingBalanceListModelFromJson(response.body));
+      }else{showToast('Failed to get opening balance');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> salesProfitLossResponse(String fromDate, String toDate)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'profit_loss?from_date=$fromDate&to_date=$toDate'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        PublicController.pc.salesProfitLossModel(salesProfitLossListModelFromJson(response.body));
+      }else{showToast('Failed to get sales profit loss');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){

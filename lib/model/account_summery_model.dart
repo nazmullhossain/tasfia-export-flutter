@@ -8,8 +8,8 @@ class AccountSummeryModel {
     this.expense,
   });
 
-  final int? profit;
-  final int? expense;
+  final dynamic profit;
+  final dynamic expense;
 
   factory AccountSummeryModel.fromJson(Map<String, dynamic> json) => AccountSummeryModel(
     profit: json["profit"],

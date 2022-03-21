@@ -75,11 +75,11 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
     onRefresh: ()async=> await pc.getAllProduct(),
     backgroundColor: Colors.white,
-    child: pc.purchaseListModel.value.data!=null
+    child: pc.purchaseListModel.value.data!.isNotEmpty
         ?ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
-        itemCount: pc.productListModel.value.data!.length,
+        itemCount: pc.purchaseListModel.value.data!.length,
         itemBuilder: (context, index)=> PurchaseListTile(model: pc.purchaseListModel.value.data![index]),
         separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
   );

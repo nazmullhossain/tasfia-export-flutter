@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:tashfia_export/util/opening_balance_tile.dart';
 import '../controller/public_controller.dart';
-import '../util/all_employee_tile.dart';
 import '../util/decoration.dart';
 import '../variables/color_variable.dart';
 import '../variables/config.dart';
 import '../widgets/loading_widget.dart';
 
-class AllEmployeePage extends StatefulWidget {
-  const AllEmployeePage({Key? key}) : super(key: key);
+class OpeningBalancePage extends StatefulWidget {
+  const OpeningBalancePage({Key? key}) : super(key: key);
 
   @override
-  State<AllEmployeePage> createState() => _AllEmployeePageState();
+  State<OpeningBalancePage> createState() => _OpeningBalancePageState();
 }
 
-class _AllEmployeePageState extends State<AllEmployeePage> {
-
+class _OpeningBalancePageState extends State<OpeningBalancePage> {
   @override
   void initState(){
     super.initState();
     _initData();
   }
+
   Future<void> _initData()async{
-    if(PublicController.pc.allEmployeeModel.value.data==null){
-      await PublicController.pc.getAllEmployee();
+    if(PublicController.pc.openingBalanceModel.value.data==null){
+      await PublicController.pc.getOpeningBalance();
     }
   }
 
@@ -35,19 +34,11 @@ class _AllEmployeePageState extends State<AllEmployeePage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('All Employee', style:StDecoration.boldTextStyle),
+              title: Text('Opening And Closing Balance', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
               iconTheme: IconThemeData(color: Colors.grey.shade800),
-              actions: [
-                IconButton(onPressed: ()async{
-                  pc.loading(true);pc.update();
-                  await pc.getAllEmployee();
-                  pc.loading(false);pc.update();
-                 },
-                 icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
-              ],
             ),
             body: _bodyUI(pc),
           ),
@@ -58,13 +49,14 @@ class _AllEmployeePageState extends State<AllEmployeePage> {
   }
 
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
-    onRefresh: ()async=>await pc.getAllEmployee(),
+    onRefresh: ()async=> await pc.getOpeningBalance(),
     backgroundColor: Colors.white,
-    child: pc.allEmployeeModel.value.data!=null?ListView.separated(
+    child: pc.openingBalanceModel.value.data!=null
+        ?ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
-        itemCount: pc.allEmployeeModel.value.data!.length,
-        itemBuilder: (context, index)=> AllEmployeeTile(model: pc.allEmployeeModel.value.data![index]),
+        itemCount: pc.openingBalanceModel.value.data!.length,
+        itemBuilder: (context, index)=> OpeningBalanceTile(model: pc.openingBalanceModel.value.data![index]),
         separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
   );
 }

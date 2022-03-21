@@ -27,6 +27,7 @@ class _AllProductPageState extends State<AllProductPage> {
     super.initState();
     _initData();
   }
+
   Future<void> _initData()async{
     if(PublicController.pc.productListModel.value.data==null){
       await PublicController.pc.getAllProduct();
@@ -46,7 +47,11 @@ class _AllProductPageState extends State<AllProductPage> {
               titleSpacing: 0.0,
               iconTheme: IconThemeData(color: Colors.grey.shade800),
               actions: [
-                IconButton(onPressed: ()async=>await pc.getAllProduct(), icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
+                IconButton(onPressed: ()async{
+                  pc.loading(true);pc.update();
+                  await pc.getAllProduct();
+                  pc.loading(false);pc.update();
+                }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
               ],
             ),

@@ -32,17 +32,17 @@ class SupplierListTile extends StatelessWidget {
              shape: BoxShape.circle,
              color: AllColor.primaryColor,
            ),
-            child: model.photo!.isEmpty
-                ? Icon(LineAwesomeIcons.user,color: Colors.white,size: dynamicSize(.08))
-                : ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(dynamicSize(.1))),
-                    child: CachedNetworkImage(
-                      imageUrl: model.photo!,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => CupertinoActivityIndicator(color: Colors.white,radius: dynamicSize(.03)),
-                      errorWidget: (context, url, error) => Icon(LineAwesomeIcons.exclamation,color:Colors.white,size: dynamicSize(.07)),
-                  ),
-                ),
+            child: model.photo!=null && model.photo!.isNotEmpty
+                ? ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(dynamicSize(.1))),
+              child: CachedNetworkImage(
+                imageUrl: model.photo!,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => CupertinoActivityIndicator(color: Colors.white,radius: dynamicSize(.03)),
+                errorWidget: (context, url, error) => Icon(LineAwesomeIcons.exclamation,color:Colors.white,size: dynamicSize(.07)),
+              ),
+            )
+                : Icon(LineAwesomeIcons.user,color: Colors.white,size: dynamicSize(.08)),
           ),
           SizedBox(width: dynamicSize(.03)),
 

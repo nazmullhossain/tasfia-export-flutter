@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/pages/report/deposite_expenses.dart';
 import 'package:tashfia_export/pages/report/sales_profit_loss.dart';
@@ -18,7 +19,8 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
   TabController? _tabController;
   final DateTime _fromDate = DateTime.now();
   final DateTime _toDate = DateTime.now();
-  bool _gotAllData=false;
+  bool _gotJoma=false;
+  bool _profitLoss=false;
 
   @override
   void initState(){
@@ -30,9 +32,13 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
   Future<void> _initData()async{
     await Future.delayed(const Duration(milliseconds: 1));
     await PublicController.pc.getAccountSummery(
-        '${_fromDate.year}-${_fromDate.month}-${_fromDate.day}',
-        '${_toDate.year}-${_toDate.month}-${_toDate.day}');
-    setState(()=>_gotAllData=true);
+        DateFormat('yyyy-MM-dd').format(_fromDate),
+        DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
+    setState(()=>_gotJoma=true);
+
+    await PublicController.pc.searchSalesProfitLoss(DateFormat('yyyy-MM-dd').format(_fromDate),
+        DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
+    setState(()=> _profitLoss=true);
   }
 
   @override
@@ -64,8 +70,8 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
               controller: _tabController,
               physics:const BouncingScrollPhysics(),
               children: [
-                DepositExpenses(gotAllData: _gotAllData),
-                const SalesProfitLoss()
+                DepositExpenses(gotJoma: _gotJoma),
+                SalesProfitLoss(profitLoss: _profitLoss)
               ],
             ),
           ),
