@@ -7,6 +7,7 @@ import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/dashboard_model.dart';
 import 'package:tashfia_export/model/employee_model.dart';
+import 'package:tashfia_export/model/five_transaction_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/purchase_list_model.dart';
@@ -15,6 +16,7 @@ import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/variables/variable.dart';
 import 'package:http/http.dart' as http;
 import '../model/opening_balance_model.dart';
+import '../model/sell_list_model.dart';
 
 class ApiHelper{
 
@@ -97,6 +99,21 @@ class ApiHelper{
       showToast('No internet connection');
     }catch(error){
       print(error.toString());
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> fiveTransactionResponse()async{
+    try{
+      var response = await http.get(
+          Uri.parse(Variables.baseUrl+'last_five_transaction'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        PublicController.pc.fiveTransactionModel(fiveTransactionListModelFromJson(response.body));
+      }else{showToast('Failed to get five transaction');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
       showToast(error.toString());
     }
   }
@@ -262,9 +279,8 @@ class ApiHelper{
 
       if(response.statusCode==200){
         var jsonData = jsonDecode(response.body);
-        if(jsonData['data'].isNotEmpty){
-          PublicController.pc.purchaseListModel(purchaseListModelFromJson(response.body));
-        }else{showToast('No purchase found');}
+        PublicController.pc.purchaseListModel(purchaseListModelFromJson(response.body));
+        if(jsonData['data'].isEmpty) showToast('No purchase found');
       }else{showToast('Failed to get purchase');}
     }on SocketException{
       showToast('No internet connection');
@@ -284,7 +300,7 @@ class ApiHelper{
       if(response.statusCode==200){
         var jsonData = jsonDecode(response.body);
         PublicController.pc.purchaseListModel(purchaseListModelFromJson(response.body));
-        if(jsonData['data'].isNotEmpty)showToast('No purchase found');
+        if(jsonData['data'].isEmpty)showToast('No purchase found');
       }else{showToast('Failed to get purchase');}
     }on SocketException{
       showToast('No internet connection');
@@ -316,6 +332,62 @@ class ApiHelper{
       if(response.statusCode==200){
         PublicController.pc.salesProfitLossModel(salesProfitLossListModelFromJson(response.body));
       }else{showToast('Failed to get sales profit loss');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<bool> changePasswordResponse(String currentPass,String newPass,String confirmPass)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'change_password?current_password=$currentPass'
+              '&password=$newPass&password_confirmation=$confirmPass'),
+          headers: Variables().authHeader);
+      if(response.statusCode==201){
+        return true;
+      }else{
+        showToast('Update failed');
+        return false;
+      }
+    }on SocketException{
+      showToast('No internet connection');
+      return false;
+    }catch(error){
+      showToast(error.toString());
+      return false;
+    }
+  }
+
+  Future<void> sellListResponse()async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_sales_history'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        PublicController.pc.sellModel(sellListModelFromJson(response.body));
+      }else{showToast('Failed to get Sells');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> searchSelResponse(Map<String, String> map)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_sales_history?from_date=${map['from_date']}'
+              '&to_date=${map['to_date']}&search_payment_status=${map['search_payment_status']}'
+              '&search_company_id=${map['search_company_id']}&search_customer_id=${map['search_customer_id']}'
+              '&invoice_number=${map['invoice_number']}'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        var jsonData = jsonDecode(response.body);
+        PublicController.pc.sellModel(sellListModelFromJson(response.body));
+        if(jsonData['data'].isEmpty) showToast('No sells found');
+      }else{showToast('Failed to get Sells');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tashfia_export/pages/all_employee_page.dart';
-import 'package:tashfia_export/pages/all_product_page.dart';
-import 'package:tashfia_export/pages/all_purchase_page.dart';
+import 'package:tashfia_export/pages/employee_page.dart';
+import 'package:tashfia_export/pages/product_page.dart';
+import 'package:tashfia_export/pages/purchase_page.dart';
 import 'package:tashfia_export/pages/opening_balance_page.dart';
 import 'package:tashfia_export/pages/report/report_page.dart';
+import 'package:tashfia_export/pages/sell_page.dart';
 import 'package:tashfia_export/pages/supplier_list_page.dart';
 import 'package:tashfia_export/pages/customer_list_page.dart';
 import 'package:tashfia_export/pages/dashboard_page.dart';
@@ -22,23 +23,27 @@ class HomeMenuTile extends StatelessWidget {
     return GetBuilder<PublicController>(
       builder: (pc) {
         return  InkWell(
-            onTap: (){
-              if(model.title=='Dashboard') {
+            onTap: ()async{
+              if(model.title=='ড্যাশবোর্ড') {
                 Get.to(()=> const DashboardPage());
-              } else if(model.title=='Customer') {
+              } else if(model.title=='ক্রেতা') {
                 Get.to(()=> const AllCustomerPage());
-              }else if(model.title=='Supplier') {
+              }else if(model.title=='সরবরাহকারী') {
                 Get.to(()=> const SupplierListPage());
-              }else if(model.title=='Report') {
+              }else if(model.title=='রিপোর্ট') {
                 Get.to(()=> const ReportPage());
-              }else if(model.title=='All Employee') {
+              }else if(model.title=='সকল কর্মচারী') {
                 Get.to(()=> const AllEmployeePage());
-              }else if(model.title=='Products') {
+              }else if(model.title=='পণ্য') {
                 Get.to(()=> const AllProductPage());
-              }else if(model.title=='Purchase') {
+              }else if(model.title=='ক্রয়') {
                 Get.to(()=> const AllPurchasePage());
-              }else if(model.title=='Opening Balance') {
+              }else if(model.title=='ওপেনিং ব্যালেন্স') {
                 Get.to(()=> const OpeningBalancePage());
+              }else if(model.title=='বিক্রয়') {
+                Get.to(()=> const SellPage());
+              }else if(model.title=='লগ আউট') {
+                await pc.logout();
               }
             },
             child: Container(

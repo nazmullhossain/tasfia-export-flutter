@@ -41,7 +41,7 @@ class _AllProductPageState extends State<AllProductPage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('All Product', style:StDecoration.boldTextStyle),
+              title: Text('পণ্য', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
@@ -83,7 +83,7 @@ class _AllProductPageState extends State<AllProductPage> {
           scrollable: true,
           insetPadding: EdgeInsets.all(dynamicSize(.04)),
           contentPadding: EdgeInsets.all(dynamicSize(.04)),
-          title: Text('Search Product',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
+          title: Text('পণ্য অনুসন্ধান করুন',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
           content: StatefulBuilder(
               builder: (context,setState) {
                 return SizedBox(
@@ -91,11 +91,11 @@ class _AllProductPageState extends State<AllProductPage> {
                   child: Column(
                     children: [
 
-                      TextFieldTile(controller:  _productName, labelText: 'Product Name',textCapitalization: TextCapitalization.words),
+                      TextFieldTile(controller:  _productName, labelText: 'পণ্যের নাম',textCapitalization: TextCapitalization.words),
                       SizedBox(height: dynamicSize(.06)),
-                      TextFieldTile(controller:  _barCode, labelText: 'Product Bar Code'),
+                      TextFieldTile(controller:  _barCode, labelText: 'পণ্যের বার কোড'),
                       SizedBox(height: dynamicSize(.06)),
-                      TextFieldTile(controller:  _partyName, labelText: 'Party Name'),
+                      TextFieldTile(controller:  _partyName, labelText: 'পার্টির নাম'),
                       SizedBox(height: dynamicSize(.06)),
 
                       !pc.loading.value
@@ -111,7 +111,7 @@ class _AllProductPageState extends State<AllProductPage> {
                             setState((){});
                             Get.back();
                         },
-                        text: 'Search',
+                        text: 'অনুসন্ধান করুন',
                         minimumSize: Size(dynamicSize(.45),dynamicSize(.1)),
                       ):const CircularProgressIndicator()
                     ],

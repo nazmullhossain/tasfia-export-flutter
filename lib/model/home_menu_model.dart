@@ -8,20 +8,20 @@ class HomeMenuModel{
   HomeMenuModel({required this.title,required this.icon, required this.color});
 
   static List<HomeMenuModel> homeMenuDataList = [
-    HomeMenuModel(title: 'Dashboard', icon: LineAwesomeIcons.alternate_tachometer, color: Colors.purple),
-    HomeMenuModel(title: 'Customer', icon: LineAwesomeIcons.users, color: Colors.orange),
-    HomeMenuModel(title: 'Supplier', icon: LineAwesomeIcons.user_plus, color: Colors.lightBlue),
-    HomeMenuModel(title: 'Products', icon: LineAwesomeIcons.folder_plus, color: Colors.lightGreen),
-    HomeMenuModel(title: 'Purchase', icon: LineAwesomeIcons.download, color: Colors.purple),
-    HomeMenuModel(title: 'Sales', icon: LineAwesomeIcons.coins, color: Colors.orange),
-    HomeMenuModel(title: 'Stock', icon: LineAwesomeIcons.layer_group, color: Colors.lightBlue),
+    HomeMenuModel(title: 'ড্যাশবোর্ড', icon: LineAwesomeIcons.alternate_tachometer, color: Colors.purple),
+    HomeMenuModel(title: 'ক্রেতা', icon: LineAwesomeIcons.users, color: Colors.orange),
+    HomeMenuModel(title: 'সরবরাহকারী', icon: LineAwesomeIcons.user_plus, color: Colors.lightBlue),
+    HomeMenuModel(title: 'পণ্য', icon: LineAwesomeIcons.folder_plus, color: Colors.lightGreen),
+    HomeMenuModel(title: 'ক্রয়', icon: LineAwesomeIcons.download, color: Colors.purple),
+    HomeMenuModel(title: 'বিক্রয়', icon: LineAwesomeIcons.coins, color: Colors.orange),
+    HomeMenuModel(title: 'স্টক', icon: LineAwesomeIcons.layer_group, color: Colors.lightBlue),
     HomeMenuModel(title: 'জমা হিসাব', icon: LineAwesomeIcons.plus_circle, color: Colors.lightGreen),
     HomeMenuModel(title: 'খরচ হিসাব', icon: LineAwesomeIcons.dollar_sign, color: Colors.purple),
-    HomeMenuModel(title: 'Advance Sell', icon: LineAwesomeIcons.dolly_flatbed, color: Colors.orange),
-    HomeMenuModel(title: 'All Employee', icon: LineAwesomeIcons.user_check, color: Colors.lightBlue),
-    HomeMenuModel(title: 'Opening Balance', icon: LineAwesomeIcons.hand_holding_us_dollar, color: Colors.lightGreen),
-    HomeMenuModel(title: 'Report', icon: LineAwesomeIcons.signal, color: Colors.purple),
-    HomeMenuModel(title: 'Logout', icon: LineAwesomeIcons.alternate_sign_out, color: Colors.red),
+    HomeMenuModel(title: 'অগ্রিম বিক্রয়', icon: LineAwesomeIcons.dolly_flatbed, color: Colors.orange),
+    HomeMenuModel(title: 'সকল কর্মচারী', icon: LineAwesomeIcons.user_check, color: Colors.lightBlue),
+    HomeMenuModel(title: 'ওপেনিং ব্যালেন্স', icon: LineAwesomeIcons.hand_holding_us_dollar, color: Colors.lightGreen),
+    HomeMenuModel(title: 'রিপোর্ট', icon: LineAwesomeIcons.signal, color: Colors.purple),
+    HomeMenuModel(title: 'লগ আউট', icon: LineAwesomeIcons.alternate_sign_out, color: Colors.red),
   ];
 
   static List<HomeMenuModel> dashboardDataList = [

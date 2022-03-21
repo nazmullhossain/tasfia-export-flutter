@@ -45,7 +45,7 @@ class _SupplierListPageState extends State<SupplierListPage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('Suppliers', style:StDecoration.boldTextStyle),
+              title: Text('সরবরাহকারী', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
@@ -88,7 +88,7 @@ class _SupplierListPageState extends State<SupplierListPage> {
           scrollable: true,
           insetPadding: EdgeInsets.all(dynamicSize(.04)),
           contentPadding: EdgeInsets.all(dynamicSize(.04)),
-          title: Text('Search Supplier',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
+          title: Text('সরবরাহকারী অনুসন্ধান করুন',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
           content: StatefulBuilder(
               builder: (context,setState) {
                 return SizedBox(
@@ -110,7 +110,7 @@ class _SupplierListPageState extends State<SupplierListPage> {
                             dropdownColor: Colors.white,
                             isExpanded: true,
                             isDense: true,
-                            hint: const Text('Select Company'),
+                            hint: const Text('কোম্পানি নির্বাচন করুন'),
                             onChanged: (model) {
                               setState(() {_companyModel = model;});
                               setState((){});
@@ -127,11 +127,11 @@ class _SupplierListPageState extends State<SupplierListPage> {
                       ),
                       SizedBox(height: dynamicSize(.06)),
 
-                      TextFieldTile(controller:  _name, labelText: 'Name'),
+                      TextFieldTile(controller:  _name, labelText: 'নাম'),
                       SizedBox(height: dynamicSize(.06)),
-                      TextFieldTile(controller:  _phone, labelText: 'Phone Number',textInputType: TextInputType.number),
+                      TextFieldTile(controller:  _phone, labelText: 'ফোন নাম্বার',textInputType: TextInputType.number),
                       SizedBox(height: dynamicSize(.06)),
-                      TextFieldTile(controller:  _supplierId, labelText: 'Supplier ID'),
+                      TextFieldTile(controller:  _supplierId, labelText: 'সরবরাহকারীর আইডি'),
                       SizedBox(height: dynamicSize(.06)),
 
                       !pc.loading.value
@@ -148,9 +148,9 @@ class _SupplierListPageState extends State<SupplierListPage> {
                             await pc.searchSupplier(map);
                             setState((){});
                             Get.back();
-                          }else{showToast('Enter phone number');}
+                          }else{showToast('ফোন নাম্বর লিখুন');}
                         },
-                        text: 'Search',
+                        text: 'অনুসন্ধান করুন',
                         minimumSize: Size(dynamicSize(.45),dynamicSize(.1)),
                       ):const CircularProgressIndicator()
                     ],

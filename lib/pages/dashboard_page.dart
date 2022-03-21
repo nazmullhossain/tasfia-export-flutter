@@ -5,6 +5,7 @@ import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/model/home_menu_model.dart';
 import 'package:tashfia_export/util/dashboard_tile.dart';
 import 'package:tashfia_export/util/decoration.dart';
+import 'package:tashfia_export/util/five_transaction_tile.dart';
 import 'package:tashfia_export/variables/config.dart';
 import 'package:tashfia_export/widgets/loading_widget.dart';
 import '../variables/color_variable.dart';
@@ -55,7 +56,7 @@ class _DashboardPageState extends State<DashboardPage> {
           children: [
             Scaffold(
               appBar: AppBar(
-                title: Text('Dashboard', style:StDecoration.boldTextStyle),
+                title: Text('ড্যাশবোর্ড', style:StDecoration.boldTextStyle),
                 backgroundColor: AllColor.appBgColor,
                 elevation: 0.0,
                 titleSpacing: 0.0,
@@ -70,11 +71,53 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _bodyUI(PublicController pc)=>ListView.separated(
+  Widget _bodyUI(PublicController pc)=>ListView(
     physics: const BouncingScrollPhysics(),
-    padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
-    itemCount: _dashboardDataList.length,
-    separatorBuilder: (context,index)=>SizedBox(height: dynamicSize(.04)),
-    itemBuilder: (context, index)=> DashboardTile(model: _dashboardDataList[index])
+    children: [
+      ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
+        itemCount: _dashboardDataList.length,
+        separatorBuilder: (context,index)=>SizedBox(height: dynamicSize(.04)),
+        itemBuilder: (context, index)=> DashboardTile(model: _dashboardDataList[index])
+      ),
+      SizedBox(height: dynamicSize(.04)),
+
+      ///Last 5 Transaction
+      Container(
+        padding: EdgeInsets.all(dynamicSize(.04)),
+        margin: EdgeInsets.symmetric(horizontal: dynamicSize(.04)),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(5))
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ///Header
+            Row(
+              children: [
+                Expanded(child: Text('শেষ ৫টি লেনদেন',style: StDecoration.boldTextStyle.copyWith(fontSize: dynamicSize(.05)))),
+                Icon(LineAwesomeIcons.angle_down,size: dynamicSize(.06))
+              ],
+            ),
+            const Divider(color: Colors.blueGrey,thickness: 1),
+
+            ///Transaction List
+            pc.fiveTransactionModel.value.data!=null
+                ? ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: pc.fiveTransactionModel.value.data!.length,
+                separatorBuilder: (context,index)=>const Divider(color: Colors.blueGrey,thickness: .5),
+                itemBuilder: (context, index)=> FiveTransactionTile(model: pc.fiveTransactionModel.value.data![index])
+            ) :Container()
+          ],
+        ),
+      ),
+      SizedBox(height: dynamicSize(.04)),
+    ],
   );
 }

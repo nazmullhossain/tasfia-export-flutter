@@ -128,8 +128,26 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/logo.png',height: dynamicSize(.2)),
+                          RichText(
+                            textAlign: TextAlign.start,
+                            text: TextSpan(
+                              style: TextStyle(color: const Color(0xffFF002D),fontSize: dynamicSize(.06),fontWeight: FontWeight.w900),
+                              children: const <TextSpan>[
+                                TextSpan(text: 'Tashfia'),
+                                TextSpan(text: ' Export', style: TextStyle(color: Colors.purple)),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+
                       ///Login Title
-                      Center(child: Text('Login',
+                      Center(child: Text('লগইন',
                           style: StDecoration.boldTextStyle.copyWith(
                             fontSize: dynamicSize(.07),
                             fontWeight: FontWeight.w600,
@@ -150,10 +168,10 @@ class _LoginPageState extends State<LoginPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: dynamicSize(.04)),
-                                LoginTextFieldTile(controller: email,hintText: 'Email Address',
+                                LoginTextFieldTile(controller: email,hintText: 'ইমেইল',
                                   prefixIcon: LineAwesomeIcons.user,textInputType: TextInputType.emailAddress),
                                 const Divider(),
-                                LoginTextFieldTile(controller: password,hintText: 'Password',
+                                LoginTextFieldTile(controller: password,hintText: 'পাসওয়ার্ড',
                                     obscure: true,prefixIcon: LineAwesomeIcons.key),
                                 SizedBox(height: dynamicSize(.04)),
                               ],
@@ -170,19 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                           )
                         ],
                       ),
-                      SizedBox(height: dynamicSize(.06)),
-
-                      ///Forgot Button
-                      Padding(
-                        padding: EdgeInsets.only(right: dynamicSize(.05),top: dynamicSize(.02)),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                              onPressed: (){},
-                              child: Text('Forgot ?',style: TextStyle(color: AllColor.hintColor,
-                                  fontWeight: FontWeight.bold,fontSize: dynamicSize(.045)))),
-                        ),
-                      ),
+                      SizedBox(height: dynamicSize(.3)),
                     ],
                   ),
                 ],

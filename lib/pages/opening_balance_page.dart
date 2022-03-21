@@ -34,7 +34,7 @@ class _OpeningBalancePageState extends State<OpeningBalancePage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('Opening And Closing Balance', style:StDecoration.boldTextStyle),
+              title: Text('ওপেনিং এবং ক্লোজিং ব্যালেন্স', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,

@@ -46,11 +46,7 @@ class Variables {
       )
   );
 
-  static const List<String> userList= ['Aggregator','Merchant','Super User'];
-
-  static const String userCollection='user';
-  static const String transactionCollection='transaction_list';
-  static const List<String> statusList = ['success','pending','deny'];
+  static const List<String> paymentStatusList = ['paid','unpaid'];
 }
 
 void showToast(message) => Fluttertoast.showToast(

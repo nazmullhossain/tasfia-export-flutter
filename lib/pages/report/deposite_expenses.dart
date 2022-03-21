@@ -51,7 +51,7 @@ class _DepositExpensesState extends State<DepositExpenses> {
                         ),
                         child: Row(
                           children: [
-                            Text('From Date: ',style: StDecoration.boldTextStyle),
+                            Text('তারিখ হতে: ',style: StDecoration.boldTextStyle),
                             Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
                             Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                           ],
@@ -77,7 +77,7 @@ class _DepositExpensesState extends State<DepositExpenses> {
                         ),
                         child: Row(
                           children: [
-                            Text('To Date: ',style: StDecoration.boldTextStyle),
+                            Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
                             Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
                             Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                           ],
@@ -133,7 +133,7 @@ class _DepositExpensesState extends State<DepositExpenses> {
         lastDate: DateTime.now());
     if (selectedDate != null) {
       setState(()=> _fromDate = selectedDate);
-    }else{showToast('No date selected');}
+    }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
   }
 
   Future<void> _selectToDate() async {
@@ -145,7 +145,7 @@ class _DepositExpensesState extends State<DepositExpenses> {
     );
     if (selectedDate != null) {
       setState(()=> _toDate = selectedDate);
-    }else{showToast('No date selected');}
+    }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
   }
 }
 

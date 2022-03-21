@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../controller/public_controller.dart';
-import '../util/all_employee_tile.dart';
+import '../util/employee_tile.dart';
 import '../util/decoration.dart';
 import '../variables/color_variable.dart';
 import '../variables/config.dart';
@@ -35,7 +35,7 @@ class _AllEmployeePageState extends State<AllEmployeePage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('All Employee', style:StDecoration.boldTextStyle),
+              title: Text('সকল কর্মচারী', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,

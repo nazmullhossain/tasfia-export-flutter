@@ -48,7 +48,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                           ),
                           child: Row(
                             children: [
-                              Text('From Date: ',style: StDecoration.boldTextStyle),
+                              Text('তারিখ হতে: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],
@@ -71,7 +71,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                           ),
                           child: Row(
                             children: [
-                              Text('To Date: ',style: StDecoration.boldTextStyle),
+                              Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],
@@ -105,13 +105,13 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                         children: [
                           const TextSpan(text: 'SL: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${index+1}\n'),
-                          const TextSpan(text: 'Date: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const TextSpan(text: 'তারিখ: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${DateFormat('dd-MMM-yyyy').format(DateTime.now())}\n'),
-                          const TextSpan(text: 'Customer Name: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const TextSpan(text: 'ক্রেতার নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${pc.salesProfitLossModel.value.data![index].customerId}\n'),
-                          const TextSpan(text: 'Sales Amount: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const TextSpan(text: 'বিক্রয় পরিমাণ: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${pc.salesProfitLossModel.value.data![index].totalPrice}\n'),
-                          const TextSpan(text: 'Profit/loss: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const TextSpan(text: 'লাভ/ক্ষতি: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${pc.salesProfitLossModel.value.data![index].profitOrLoss}'),
                         ],
                       ),
@@ -132,8 +132,8 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                 ),
                 child: Row(
                   children: [
-                    Text('Total:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
-                    Expanded(child: Text('(${pc.salesProfitLossModel.value.profitOrLoss})',textAlign: TextAlign.end,
+                    Text('মোট:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
+                    Expanded(child: Text('(${pc.salesProfitLossModel.value.profitOrLoss}) /=',textAlign: TextAlign.end,
                         style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
                   ],
                 ),
@@ -152,7 +152,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
         lastDate: DateTime.now());
     if (selectedDate != null) {
       setState(()=> _fromDate = selectedDate);
-    }else{showToast('No date selected');}
+    }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
   }
 
   Future<void> _selectToDate() async {
@@ -164,6 +164,6 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
     );
     if (selectedDate != null) {
       setState(()=> _toDate = selectedDate);
-    }else{showToast('No date selected');}
+    }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
   }
 }

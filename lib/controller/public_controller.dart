@@ -9,11 +9,13 @@ import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/dashboard_model.dart';
 import 'package:tashfia_export/model/employee_model.dart';
+import 'package:tashfia_export/model/five_transaction_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/opening_balance_model.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/purchase_list_model.dart';
 import 'package:tashfia_export/model/sales_profit_loss_model.dart';
+import 'package:tashfia_export/model/sell_list_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/pages/home_page.dart';
 import 'package:tashfia_export/pages/login_page.dart';
@@ -38,6 +40,8 @@ class PublicController extends GetxController{
   Rx<PurchaseListModel> purchaseListModel = PurchaseListModel().obs;
   Rx<OpeningBalanceListModel> openingBalanceModel = OpeningBalanceListModel().obs;
   Rx<SalesProfitLossListModel> salesProfitLossModel = SalesProfitLossListModel().obs;
+  Rx<FiveTransactionListModel> fiveTransactionModel = FiveTransactionListModel().obs;
+  Rx<SellListModel> sellModel = SellListModel().obs;
 
   Future<void> initApp(BuildContext context) async {
     pref = await SharedPreferences.getInstance();
@@ -78,6 +82,11 @@ class PublicController extends GetxController{
 
   Future<void> getDashboardData()async{
     await helper.dashboardResponse();
+    update();
+  }
+
+  Future<void> getLastFiveTransaction()async{
+    await helper.fiveTransactionResponse();
     update();
   }
 
@@ -144,6 +153,28 @@ class PublicController extends GetxController{
   Future<void> searchSalesProfitLoss(String fromDate, String toDate)async{
     loading(true);update();
     await helper.salesProfitLossResponse(fromDate, toDate);
+    loading(false);update();
+  }
+
+  Future<void> changePassword(String currentPass,String newPass,String confirmPass)async{
+    loading(true);update();
+    bool result = await helper.changePasswordResponse(currentPass, newPass, confirmPass);
+    loading(false);update();
+    if(result){
+      pref!.setString('password', newPass);
+      showToast('পাসওয়ার্ড সফলভাবে আপডেট হয়েছে');
+      update();
+    }
+  }
+
+  Future<void> getSellList()async{
+    await helper.sellListResponse();
+    update();
+  }
+
+  Future<void> searchSellList(Map<String, String> map)async{
+    loading(true);update();
+    await helper.searchSelResponse(map);
     loading(false);update();
   }
 }

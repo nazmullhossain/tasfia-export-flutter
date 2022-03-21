@@ -45,7 +45,7 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('Customers', style:StDecoration.boldTextStyle),
+              title: Text('ক্রেতা', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
@@ -87,7 +87,7 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
           scrollable: true,
           insetPadding: EdgeInsets.all(dynamicSize(.04)),
           contentPadding: EdgeInsets.all(dynamicSize(.04)),
-          title: Text('Search Customer',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
+          title: Text('ক্রেতা অনুসন্ধান করুন',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
           content: StatefulBuilder(
             builder: (context,setState) {
               return SizedBox(
@@ -109,7 +109,7 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
                           dropdownColor: Colors.white,
                           isExpanded: true,
                           isDense: true,
-                          hint: const Text('Select Company'),
+                          hint: const Text('কোম্পানি নির্বাচন করুন'),
                           onChanged: (model) {
                             setState(() {_companyModel = model;});
                             setState((){});
@@ -126,11 +126,11 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
                     ),
                     SizedBox(height: dynamicSize(.06)),
 
-                    TextFieldTile(controller:  _name, labelText: 'Name',textCapitalization: TextCapitalization.words),
+                    TextFieldTile(controller:  _name, labelText: 'নাম',textCapitalization: TextCapitalization.words),
                     SizedBox(height: dynamicSize(.06)),
-                    TextFieldTile(controller:  _phone, labelText: 'Phone Number',textInputType: TextInputType.number),
+                    TextFieldTile(controller:  _phone, labelText: 'ফোন নাম্বার',textInputType: TextInputType.number),
                     SizedBox(height: dynamicSize(.06)),
-                    TextFieldTile(controller:  _customerId, labelText: 'Customer ID'),
+                    TextFieldTile(controller:  _customerId, labelText: 'ক্রেতার আইডি'),
                     SizedBox(height: dynamicSize(.06)),
 
                     !pc.loading.value
@@ -147,9 +147,9 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
                             await pc.searchCustomer(map);
                             setState((){});
                             Get.back();
-                          }else{showToast('Enter phone number');}
+                          }else{showToast('ফোন নাম্বর লিখুন');}
                         },
-                        text: 'Search',
+                        text: 'অনুসন্ধান করুন',
                        minimumSize: Size(dynamicSize(.45),dynamicSize(.1)),
                     ):const CircularProgressIndicator()
                   ],

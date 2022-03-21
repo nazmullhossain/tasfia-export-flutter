@@ -13,7 +13,6 @@ import '../variables/config.dart';
 import '../variables/variable.dart';
 import '../widgets/color_button.dart';
 import '../widgets/loading_widget.dart';
-import '../widgets/text_field_tile.dart';
 
 class AllPurchasePage extends StatefulWidget {
   const AllPurchasePage({Key? key}) : super(key: key);
@@ -23,7 +22,7 @@ class AllPurchasePage extends StatefulWidget {
 }
 
 class _AllPurchasePageState extends State<AllPurchasePage> {
-  DateTime _fromDate = DateTime.now();
+  DateTime _fromDate = DateTime.now().subtract(const Duration(days: 1));
   DateTime _toDate = DateTime.now();
   CompanyModel? _companyModel;
   Product? _product;
@@ -54,13 +53,17 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('All Purchase', style:StDecoration.boldTextStyle),
+              title: Text('ক্রয়', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
               iconTheme: IconThemeData(color: Colors.grey.shade800),
               actions: [
-                IconButton(onPressed: ()async=>await pc.getAllPurchase(), icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
+                IconButton(onPressed: ()async{
+                  pc.loading(true);pc.update();
+                  await pc.getAllPurchase();
+                  pc.loading(false);pc.update();
+                }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
               ],
             ),
@@ -75,7 +78,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
     onRefresh: ()async=> await pc.getAllProduct(),
     backgroundColor: Colors.white,
-    child: pc.purchaseListModel.value.data!.isNotEmpty
+    child: pc.purchaseListModel.value.data!=null && pc.purchaseListModel.value.data!.isNotEmpty
         ?ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
@@ -92,14 +95,13 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
           scrollable: true,
           insetPadding: EdgeInsets.all(dynamicSize(.04)),
           contentPadding: EdgeInsets.all(dynamicSize(.04)),
-          title: Text('Search Purchase',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
+          title: Text('ক্রয় অনুসন্ধান করুন',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
           content: StatefulBuilder(
               builder: (context,setState) {
                 return SizedBox(
                   width: double.infinity,
                   child: Column(
                     children: [
-
                       ///From Date
                       InkWell(
                         onTap: ()async{
@@ -114,7 +116,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                           ),
                           child: Row(
                             children: [
-                              Text('From Date: ',style: StDecoration.boldTextStyle),
+                              Text('তারিখ হইতে: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],
@@ -122,7 +124,6 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                         ),
                         borderRadius:const BorderRadius.all(Radius.circular(5)),
                       ),
-
                       SizedBox(height: dynamicSize(.06)),
 
                       ///To Date
@@ -139,7 +140,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                           ),
                           child: Row(
                             children: [
-                              Text('To Date: ',style: StDecoration.boldTextStyle),
+                              Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],
@@ -164,7 +165,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                             dropdownColor: Colors.white,
                             isExpanded: true,
                             isDense: true,
-                            hint: const Text('Select Company'),
+                            hint: const Text('কোম্পানি নির্বাচন করুন'),
                             onChanged: (model) {
                               setState(() {_companyModel = model;});
                               setState((){});
@@ -196,7 +197,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                             dropdownColor: Colors.white,
                             isExpanded: true,
                             isDense: true,
-                            hint: const Text('Select Product'),
+                            hint: const Text('পণ্য নির্বাচন করুন'),
                             onChanged: (model) {
                               setState(() {_product = model;});
                               setState((){});
@@ -228,7 +229,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                             dropdownColor: Colors.white,
                             isExpanded: true,
                             isDense: true,
-                            hint: const Text('Select Supplier'),
+                            hint: const Text('সরবরাহকারী নির্বাচন করুন'),
                             onChanged: (model) {
                               setState(() {_supplier = model;});
                               setState((){});
@@ -249,13 +250,9 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                           ?ColorTextButton(
                         onPressed: ()async{
                           setState((){});
-                          await PublicController.pc.getAccountSummery(
-                              '${_fromDate.year}-${_fromDate.month}-${_fromDate.day}',
-                              '${_toDate.year}-${_toDate.month}-${_toDate.day}');
-
                           Map<String,String> map = {
-                            'from_date': '${_fromDate.year}-${_fromDate.month}-${_fromDate.day}',
-                            'to_date': '${_toDate.year}-${_toDate.month}-${_toDate.day}',
+                            'from_date': DateFormat('yyyy-MM-dd').format(_fromDate),
+                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate),
                             'search_company_id': _companyModel!=null? _companyModel!.id!.toString():'',
                             'product_name': _product!=null? _product!.id!.toString():'',
                             'search_supplier_id': _supplier!=null? _supplier!.id!.toString():'',
@@ -264,7 +261,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                           setState((){});
                           Get.back();
                         },
-                        text: 'Search',
+                        text: 'অনুসন্ধান করুন',
                         minimumSize: Size(dynamicSize(.45),dynamicSize(.1)),
                       ):const CircularProgressIndicator()
                     ],
@@ -283,7 +280,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
         lastDate: DateTime.now());
     if (selectedDate != null) {
       setState(()=> _fromDate = selectedDate);
-    }else{showToast('No date selected');}
+    }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
   }
 
   Future<void> _selectToDate() async {
@@ -295,6 +292,6 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
     );
     if (selectedDate != null) {
       setState(()=> _toDate = selectedDate);
-    }else{showToast('No date selected');}
+    }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
   }
 }

@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _initData()async{
     await Future.delayed(const Duration(milliseconds: 1));
     PublicController.pc.getDashboardData();
+    PublicController.pc.getLastFiveTransaction();
     PublicController.pc.getCompanyList();
     PublicController.pc.getCategoryList();
     PublicController.pc.getAllCustomer();
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     PublicController.pc.getAllEmployee();
     PublicController.pc.getAllProduct();
     PublicController.pc.getAllPurchase();
+    PublicController.pc.getSellList();
     PublicController.pc.getOpeningBalance();
   }
 
@@ -67,9 +69,28 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
-                  onTap: ()=> _scaffoldKey.currentState!.openDrawer(),
-                  child: Icon(LineAwesomeIcons.bars,color: AllColor.textColor,size: dynamicSize(.075))),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/logo.png',height: 45),
+                    Expanded(
+                      child: RichText(
+                        textAlign: TextAlign.start,
+                        text: TextSpan(
+                          style: TextStyle(color: const Color(0xffFF002D),fontSize: dynamicSize(.045),fontWeight: FontWeight.w900),
+                          children: const <TextSpan>[
+                            TextSpan(text: 'Tashfia'),
+                            TextSpan(text: ' Export', style: TextStyle(color: Colors.purple)),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
               PopupMenuButton<int>(
                 key: _key,
                 icon: Icon(LineAwesomeIcons.vertical_ellipsis,size: dynamicSize(.07)),
@@ -87,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Icon(LineAwesomeIcons.key,color: AllColor.textColor,size: dynamicSize(.06)),
                             SizedBox(width: dynamicSize(.02)),
-                            Text('Change Password', style: StDecoration.normalTextStyle),
+                            Text('পাসওয়ার্ড পরিবর্তন করুন', style: StDecoration.normalTextStyle),
                           ],
                         ), value: 1,
                       padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 10),
@@ -98,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Icon(LineAwesomeIcons.power_off,color: AllColor.textColor,size: dynamicSize(.06)),
                           SizedBox(width: dynamicSize(.02)),
-                          Text('Logout', style: StDecoration.normalTextStyle),
+                          Text('লগ আউট', style: StDecoration.normalTextStyle),
                         ],
                       ), value: 2,
                       padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 10),
@@ -106,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                   ];
                 },
                 padding: const EdgeInsets.all(0.0),
-                tooltip: 'Select an option',
+                tooltip: 'যেকোনো একটি নির্বাচন করুন',
                 offset: Offset(0,dynamicSize(.1)),
               ),
             ],

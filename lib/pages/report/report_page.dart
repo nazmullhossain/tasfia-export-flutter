@@ -58,7 +58,7 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
                         controller: _tabController,
                         tabs: [
                           Tab(child: Text('জমা এবং খরচ',style: StDecoration.boldTextStyle.copyWith(fontSize: dynamicSize(.046)))),
-                          Tab(child: Text('Sales profit loss',style: StDecoration.boldTextStyle)),
+                          Tab(child: Text('বিক্রয় লাভ ক্ষতি',style: StDecoration.boldTextStyle)),
                         ],
                       ),
                     ),

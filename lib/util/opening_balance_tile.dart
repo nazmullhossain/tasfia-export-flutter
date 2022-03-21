@@ -20,13 +20,13 @@ class OpeningBalanceTile extends StatelessWidget {
         text: TextSpan(
           style: StDecoration.normalTextStyle,
           children: [
-            const TextSpan(text: 'S/L NO: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            const TextSpan(text: 'S/L নং: ', style: TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: '${model.id}\n'),
-            const TextSpan(text: 'Opening Balance: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            const TextSpan(text: 'ওপেনিং ব্যালেন্স: ', style: TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: '${model.openingBalance}\n'),
-            const TextSpan(text: 'Closing Balance: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            const TextSpan(text: 'ক্লোজিং ব্যালেন্স: ', style: TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: '${model.closingBalance}\n'),
-            const TextSpan(text: 'Date: ', style: TextStyle(fontWeight: FontWeight.bold)),
+            const TextSpan(text: 'তারিখ: ', style: TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: DateFormat('dd-MMM-yyyy').format(model.updatedAt!)),
           ],
         ),
