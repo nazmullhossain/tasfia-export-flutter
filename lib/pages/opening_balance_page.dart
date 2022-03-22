@@ -56,7 +56,7 @@ class _OpeningBalancePageState extends State<OpeningBalancePage> {
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
         itemCount: pc.openingBalanceModel.value.data!.length,
-        itemBuilder: (context, index)=> OpeningBalanceTile(model: pc.openingBalanceModel.value.data![index]),
+        itemBuilder: (context, index)=> OpeningBalanceTile(model: pc.openingBalanceModel.value.data![index], index: index),
         separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
   );
 }

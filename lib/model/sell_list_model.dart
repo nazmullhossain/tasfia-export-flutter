@@ -32,6 +32,24 @@ class SellModel {
     this.createdBy,
     this.createdAt,
     this.updatedAt,
+    this.companyId,
+    this.name,
+    this.type,
+    this.email,
+    this.personalPhone,
+    this.optionalPhone,
+    this.presentAddress,
+    this.companyName,
+    this.permanentAddress,
+    this.balance,
+    this.nid,
+    this.photo,
+    this.nationality,
+    this.designation,
+    this.category,
+    this.companyAddress,
+    this.companyContactNo,
+    this.country,
   });
 
   final int? id;
@@ -47,9 +65,27 @@ class SellModel {
   final String? salesCode;
   final String? profitOrLoss;
   final dynamic date;
-  final dynamic createdBy;
+  final int? createdBy;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final int? companyId;
+  final String? name;
+  final String? type;
+  final dynamic email;
+  final dynamic personalPhone;
+  final dynamic optionalPhone;
+  final String? presentAddress;
+  final String? companyName;
+  final String? permanentAddress;
+  final String? balance;
+  final dynamic nid;
+  final String? photo;
+  final String? nationality;
+  final String? designation;
+  final String? category;
+  final String? companyAddress;
+  final dynamic companyContactNo;
+  final String? country;
 
   factory SellModel.fromJson(Map<String, dynamic> json) => SellModel(
     id: json["id"],
@@ -68,5 +104,23 @@ class SellModel {
     createdBy: json["created_by"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
+    companyId: json["company_id"],
+    name: json["name"],
+    type: json["type"],
+    email: json["email"],
+    personalPhone: json["personal_phone"],
+    optionalPhone: json["optional_phone"],
+    presentAddress: json["present_address"],
+    companyName: json["company_name"],
+    permanentAddress: json["permanent_address"],
+    balance: json["balance"],
+    nid: json["nid"],
+    photo: json["photo"],
+    nationality: json["nationality"],
+    designation: json["designation"],
+    category: json["category"],
+    companyAddress: json["company_address"],
+    companyContactNo: json["company_contact_no"],
+    country: json["country"],
   );
 }

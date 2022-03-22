@@ -41,7 +41,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.tashfia_export"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

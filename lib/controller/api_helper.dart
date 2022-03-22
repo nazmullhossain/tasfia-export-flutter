@@ -7,11 +7,13 @@ import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/dashboard_model.dart';
 import 'package:tashfia_export/model/employee_model.dart';
+import 'package:tashfia_export/model/expense_list_model.dart';
 import 'package:tashfia_export/model/five_transaction_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/purchase_list_model.dart';
 import 'package:tashfia_export/model/sales_profit_loss_model.dart';
+import 'package:tashfia_export/model/stock_list_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/variables/variable.dart';
 import 'package:http/http.dart' as http;
@@ -240,10 +242,7 @@ class ApiHelper{
           headers: Variables().authHeader);
 
       if(response.statusCode==200){
-        var jsonData = jsonDecode(response.body);
-        if(jsonData['data'].isNotEmpty){
-          PublicController.pc.productListModel(productListModelFromJson(response.body));
-        }else{showToast('No product found');}
+        PublicController.pc.productListModel(productListModelFromJson(response.body));
       }else{showToast('Failed to get product');}
     }on SocketException{
       showToast('No internet connection');
@@ -276,11 +275,8 @@ class ApiHelper{
       var response = await http.post(
           Uri.parse(Variables.baseUrl+'search_purchase'),
           headers: Variables().authHeader);
-
       if(response.statusCode==200){
-        var jsonData = jsonDecode(response.body);
         PublicController.pc.purchaseListModel(purchaseListModelFromJson(response.body));
-        if(jsonData['data'].isEmpty) showToast('No purchase found');
       }else{showToast('Failed to get purchase');}
     }on SocketException{
       showToast('No internet connection');
@@ -388,6 +384,73 @@ class ApiHelper{
         PublicController.pc.sellModel(sellListModelFromJson(response.body));
         if(jsonData['data'].isEmpty) showToast('No sells found');
       }else{showToast('Failed to get Sells');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> stockListResponse()async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_stock'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        PublicController.pc.stockModel(stockListModelFromJson(response.body));
+      }else{showToast('Failed to get stock');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> searchStockListResponse(Map<String, String> map)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_stock?from_date=${map['from_date']}&to_date=${map['to_date']}'
+              '&search_supplier_id=${map['search_supplier_id']}&product_name=${map['product_name']}'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        var jsonData = jsonDecode(response.body);
+        PublicController.pc.stockModel(stockListModelFromJson(response.body));
+        if(jsonData['data'].isEmpty) showToast('No Stock Found');
+      }else{showToast('Failed to search stock');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> expenseListResponse()async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_expense'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        PublicController.pc.expenseModel(expenseListModelFromJson(response.body));
+      }else{showToast('Failed to get expense');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> searchExpenseListResponse(Map<String, String> map)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_expense?from_date=${map['from_date']}'
+              '&to_date=${map['to_date']}&search_amount=${map['search_amount']}'
+              '&search_name=${map['search_name']}&expenses_category=${map['expenses_category']}'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        var jsonData = jsonDecode(response.body);
+        PublicController.pc.expenseModel(expenseListModelFromJson(response.body));
+        if(jsonData['data'].isEmpty) showToast('No Expense Found');
+      }else{showToast('Failed to get expense');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){

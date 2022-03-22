@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tashfia_export/pages/employee_page.dart';
+import 'package:tashfia_export/pages/expense_list_page.dart';
 import 'package:tashfia_export/pages/product_page.dart';
 import 'package:tashfia_export/pages/purchase_page.dart';
 import 'package:tashfia_export/pages/opening_balance_page.dart';
 import 'package:tashfia_export/pages/report/report_page.dart';
 import 'package:tashfia_export/pages/sell_page.dart';
+import 'package:tashfia_export/pages/stock_list_page.dart';
 import 'package:tashfia_export/pages/supplier_list_page.dart';
 import 'package:tashfia_export/pages/customer_list_page.dart';
 import 'package:tashfia_export/pages/dashboard_page.dart';
@@ -42,6 +44,10 @@ class HomeMenuTile extends StatelessWidget {
                 Get.to(()=> const OpeningBalancePage());
               }else if(model.title=='বিক্রয়') {
                 Get.to(()=> const SellPage());
+              }else if(model.title=='স্টক') {
+                Get.to(()=> const StockListPage());
+              }else if(model.title=='খরচ হিসাব') {
+                Get.to(()=> const ExpenseListPage());
               }else if(model.title=='লগ আউট') {
                 await pc.logout();
               }

@@ -36,7 +36,8 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
         DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
     setState(()=>_gotJoma=true);
 
-    await PublicController.pc.searchSalesProfitLoss(DateFormat('yyyy-MM-dd').format(_fromDate),
+    await PublicController.pc.searchSalesProfitLoss(
+        DateFormat('yyyy-MM-dd').format(_fromDate),
         DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
     setState(()=> _profitLoss=true);
   }

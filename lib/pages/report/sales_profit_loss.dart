@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:tashfia_export/controller/generate_pdf.dart';
 import 'package:tashfia_export/variables/color_variable.dart';
 import '../../controller/public_controller.dart';
 import '../../util/decoration.dart';
@@ -36,49 +37,66 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                 ),
                 child: Material(
                   color: Colors.white,
-                  child: Column(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      InkWell(
-                        onTap: ()=>_selectFromDate(),
-                        child: Container(
-                          padding: EdgeInsets.all(dynamicSize(.02)),
-                          decoration: BoxDecoration(
+                      Expanded(
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: ()=>_selectFromDate(),
+                              child: Container(
+                                padding: EdgeInsets.all(dynamicSize(.02)),
+                                decoration: BoxDecoration(
+                                    borderRadius:const BorderRadius.all(Radius.circular(5)),
+                                    border: Border.all(color: Colors.blueGrey, width: 0.5)
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text('From: ',style: StDecoration.boldTextStyle),
+                                    Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
+                                    Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
+                                  ],
+                                ),
+                              ),
                               borderRadius:const BorderRadius.all(Radius.circular(5)),
-                              border: Border.all(color: Colors.blueGrey, width: 0.5)
-                          ),
-                          child: Row(
-                            children: [
-                              Text('তারিখ হতে: ',style: StDecoration.boldTextStyle),
-                              Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
-                              Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
-                            ],
-                          ),
-                        ),
-                        borderRadius:const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      SizedBox(height: dynamicSize(.05)),
-                      InkWell(
-                        onTap: ()async{
-                          await _selectToDate();
-                          await pc.searchSalesProfitLoss(DateFormat('yyyy-MM-dd').format(_fromDate),
-                              DateFormat('yyyy-MM-dd').format(_toDate));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(dynamicSize(.02)),
-                          decoration: BoxDecoration(
+                            ),
+                            SizedBox(height: dynamicSize(.05)),
+                            InkWell(
+                              onTap: ()async{
+                                await _selectToDate();
+                                await pc.searchSalesProfitLoss(DateFormat('yyyy-MM-dd').format(_fromDate),
+                                    DateFormat('yyyy-MM-dd').format(_toDate));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(dynamicSize(.02)),
+                                decoration: BoxDecoration(
+                                    borderRadius:const BorderRadius.all(Radius.circular(5)),
+                                    border: Border.all(color: Colors.blueGrey, width: 0.5)
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text('To: ',style: StDecoration.boldTextStyle),
+                                    Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
+                                    Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
+                                  ],
+                                ),
+                              ),
                               borderRadius:const BorderRadius.all(Radius.circular(5)),
-                              border: Border.all(color: Colors.blueGrey, width: 0.5)
-                          ),
-                          child: Row(
-                            children: [
-                              Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
-                              Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
-                              Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        borderRadius:const BorderRadius.all(Radius.circular(5)),
                       ),
+                      SizedBox(width: dynamicSize(.02)),
+                      //if(pc.salesProfitLossModel.value.data!=null && pc.salesProfitLossModel.value.data!.isNotEmpty)
+                      ElevatedButton(
+                          onPressed: ()async{
+                            if(pc.salesProfitLossModel.value.data!=null
+                                && pc.salesProfitLossModel.value.data!.isNotEmpty){
+                              await GeneratePDF.generateSalesProfitLossPDFReport(pc.salesProfitLossModel.value.data!);
+                            }else{showToast('Empty Data');}
+                          },
+                          child: Text('PDF',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
                     ],
                   ),
                 ),
@@ -108,11 +126,11 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                           const TextSpan(text: 'তারিখ: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${DateFormat('dd-MMM-yyyy').format(DateTime.now())}\n'),
                           const TextSpan(text: 'ক্রেতার নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: '${pc.salesProfitLossModel.value.data![index].customerId}\n'),
+                          TextSpan(text: '${pc.salesProfitLossModel.value.data![index].customer!.name}\n'),
                           const TextSpan(text: 'বিক্রয় পরিমাণ: ', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: '${pc.salesProfitLossModel.value.data![index].totalPrice}\n'),
                           const TextSpan(text: 'লাভ/ক্ষতি: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: '${pc.salesProfitLossModel.value.data![index].profitOrLoss}'),
+                          TextSpan(text: pc.salesProfitLossModel.value.data![index].profitOrLoss??''),
                         ],
                       ),
                     ),

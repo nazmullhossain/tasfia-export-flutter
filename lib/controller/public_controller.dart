@@ -9,6 +9,7 @@ import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/model/dashboard_model.dart';
 import 'package:tashfia_export/model/employee_model.dart';
+import 'package:tashfia_export/model/expense_list_model.dart';
 import 'package:tashfia_export/model/five_transaction_model.dart';
 import 'package:tashfia_export/model/login_response.dart';
 import 'package:tashfia_export/model/opening_balance_model.dart';
@@ -16,6 +17,7 @@ import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/purchase_list_model.dart';
 import 'package:tashfia_export/model/sales_profit_loss_model.dart';
 import 'package:tashfia_export/model/sell_list_model.dart';
+import 'package:tashfia_export/model/stock_list_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/pages/home_page.dart';
 import 'package:tashfia_export/pages/login_page.dart';
@@ -42,6 +44,8 @@ class PublicController extends GetxController{
   Rx<SalesProfitLossListModel> salesProfitLossModel = SalesProfitLossListModel().obs;
   Rx<FiveTransactionListModel> fiveTransactionModel = FiveTransactionListModel().obs;
   Rx<SellListModel> sellModel = SellListModel().obs;
+  Rx<StockListModel> stockModel = StockListModel().obs;
+  Rx<ExpenseListModel> expenseModel = ExpenseListModel().obs;
 
   Future<void> initApp(BuildContext context) async {
     pref = await SharedPreferences.getInstance();
@@ -175,6 +179,28 @@ class PublicController extends GetxController{
   Future<void> searchSellList(Map<String, String> map)async{
     loading(true);update();
     await helper.searchSelResponse(map);
+    loading(false);update();
+  }
+
+  Future<void> getStockList()async{
+    await helper.stockListResponse();
+    update();
+  }
+
+  Future<void> searchStockList(Map<String, String> map)async{
+    loading(true);update();
+    await helper.searchStockListResponse(map);
+    loading(false);update();
+  }
+
+  Future<void> getExpenseList()async{
+    await helper.expenseListResponse();
+    update();
+  }
+
+  Future<void> searchExpenseList(Map<String, String> map)async{
+    loading(true);update();
+    await helper.searchExpenseListResponse(map);
     loading(false);update();
   }
 }
