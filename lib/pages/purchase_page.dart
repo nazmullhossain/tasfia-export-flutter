@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:tashfia_export/controller/purchase_report_pdf.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/util/purchase_list_tile.dart';
@@ -68,6 +69,17 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Padding(
+              padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04)),
+              child: ElevatedButton(
+                onPressed: ()async{
+                  if(pc.purchaseListModel.value.data!=null && pc.purchaseListModel.value.data!.isNotEmpty){
+                    PurchaseReportPDF.generatePurchasePDFReport(pc.purchaseListModel.value.data!);
+                  }else{showToast('Empty Data');}
+                },
+                child: Text('Print Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)),
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],

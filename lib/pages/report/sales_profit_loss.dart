@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:tashfia_export/controller/generate_pdf.dart';
+import 'package:tashfia_export/controller/loss_pfofit_pdf.dart';
 import 'package:tashfia_export/variables/color_variable.dart';
 import '../../controller/public_controller.dart';
 import '../../util/decoration.dart';
@@ -38,7 +38,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                 child: Material(
                   color: Colors.white,
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Column(
@@ -93,10 +93,10 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                           onPressed: ()async{
                             if(pc.salesProfitLossModel.value.data!=null
                                 && pc.salesProfitLossModel.value.data!.isNotEmpty){
-                              await GeneratePDF.generateSalesProfitLossPDFReport(pc.salesProfitLossModel.value.data!);
+                              await LossProfitPDF.generateSalesProfitLossPDFReport(pc.salesProfitLossModel.value.data!);
                             }else{showToast('Empty Data');}
                           },
-                          child: Text('PDF',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
+                          child: Text('Print',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
                     ],
                   ),
                 ),
@@ -151,7 +151,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                 child: Row(
                   children: [
                     Text('মোট:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
-                    Expanded(child: Text('(${pc.salesProfitLossModel.value.profitOrLoss}) /=',textAlign: TextAlign.end,
+                    Expanded(child: Text('(${double.parse((pc.salesProfitLossModel.value.profitOrLoss).toStringAsFixed(2))}) TK',textAlign: TextAlign.end,
                         style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
                   ],
                 ),

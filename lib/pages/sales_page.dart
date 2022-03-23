@@ -15,14 +15,14 @@ import '../variables/variable.dart';
 import '../widgets/color_button.dart';
 import '../widgets/loading_widget.dart';
 
-class SellPage extends StatefulWidget {
-  const SellPage({Key? key}) : super(key: key);
+class SalesPage extends StatefulWidget {
+  const SalesPage({Key? key}) : super(key: key);
 
   @override
-  State<SellPage> createState() => _SellPageState();
+  State<SalesPage> createState() => _SalesPageState();
 }
 
-class _SellPageState extends State<SellPage> {
+class _SalesPageState extends State<SalesPage> {
   DateTime _fromDate = DateTime.now();
   DateTime _toDate = DateTime.now();
   CompanyModel? _companyModel;
@@ -74,6 +74,17 @@ class _SellPageState extends State<SellPage> {
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Padding(
+              padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04)),
+              child: ElevatedButton(
+                onPressed: ()async{
+                  if(pc.purchaseListModel.value.data!=null && pc.purchaseListModel.value.data!.isNotEmpty){
+                    //PurchaseReportPDF.generatePurchasePDFReport(pc.purchaseListModel.value.data!);
+                  }else{showToast('Empty Data');}
+                },
+                child: Text('Print Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)),
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],

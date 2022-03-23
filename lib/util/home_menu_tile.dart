@@ -6,7 +6,7 @@ import 'package:tashfia_export/pages/product_page.dart';
 import 'package:tashfia_export/pages/purchase_page.dart';
 import 'package:tashfia_export/pages/opening_balance_page.dart';
 import 'package:tashfia_export/pages/report/report_page.dart';
-import 'package:tashfia_export/pages/sell_page.dart';
+import 'package:tashfia_export/pages/sales_page.dart';
 import 'package:tashfia_export/pages/stock_list_page.dart';
 import 'package:tashfia_export/pages/supplier_list_page.dart';
 import 'package:tashfia_export/pages/customer_list_page.dart';
@@ -43,7 +43,7 @@ class HomeMenuTile extends StatelessWidget {
               }else if(model.title=='ওপেনিং ব্যালেন্স') {
                 Get.to(()=> const OpeningBalancePage());
               }else if(model.title=='বিক্রয়') {
-                Get.to(()=> const SellPage());
+                Get.to(()=> const SalesPage());
               }else if(model.title=='স্টক') {
                 Get.to(()=> const StockListPage());
               }else if(model.title=='খরচ হিসাব') {

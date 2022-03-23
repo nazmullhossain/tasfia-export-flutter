@@ -2,15 +2,17 @@ import 'dart:io';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:tashfia_export/controller/public_controller.dart';
+import 'package:tashfia_export/pages/view_pdf_page.dart';
 import 'package:tashfia_export/variables/variable.dart';
 import '../model/sales_profit_loss_model.dart';
 
-class GeneratePDF{
+class LossProfitPDF{
 
   static Future<void> generateSalesProfitLossPDFReport(List<SalesProfitLossModel> dataList)async{
     PublicController.pc.loading(true);PublicController.pc.update();
@@ -20,7 +22,7 @@ class GeneratePDF{
 
     var boldTextStyle = pw.TextStyle(
       font: myFont,
-      fontSize: 11.0,
+      fontSize: 8.0,
       fontWeight: pw.FontWeight.bold,
       color: PdfColors.black,
     );
@@ -132,7 +134,7 @@ class GeneratePDF{
                       ),
 
                       ///Header Image
-                      pw.Expanded(child: pw.Image(image)),
+                      pw.SizedBox(child: pw.Image(image),width: 250),
 
                       ///Right Header Section
                       pw.Expanded(
@@ -178,59 +180,48 @@ class GeneratePDF{
                     ]
                   ),
                 ),
-                pw.SizedBox(height: 5.0),
 
                 ///Title
-                pw.Center(child: pw.Text('Profit Loss Invoice | Tashfia Export',style: boldTextStyle)),
+                pw.Center(child: pw.Text('Profit Loss Invoice | Tashfia Export',style: boldTextStyle.copyWith(fontSize: 11.0))),
                 pw.SizedBox(height: 5.0),
 
                 ///Table Header
-                pw.Row(
-                    children: [
-                      // SL NO
-                      pw.Container(
-                          child: pw.Text('SL',style: boldTextStyle.copyWith(color: PdfColors.white)),
+                pw.Container(
+                  color: PdfColors.green,
+                  child: pw.Row(
+                      children: [
+                        pw.Container(
+                          child: pw.Text('SL',style: boldTextStyle.copyWith(color: PdfColors.white),textAlign: pw.TextAlign.center),
                           padding: const pw.EdgeInsets.all(3),
                           width: 30.0,
                           alignment: pw.Alignment.center,
-                          color: PdfColors.green
-                      ),
-                      // Date
-                      pw.Container(
-                          child: pw.Text('Date',style: boldTextStyle.copyWith(color: PdfColors.white)),
+                        ),
+                        pw.Container(
+                          child: pw.Text('Date',style: boldTextStyle.copyWith(color: PdfColors.white),textAlign: pw.TextAlign.center),
                           padding: const pw.EdgeInsets.all(3),
                           width: 45.0,
                           alignment: pw.Alignment.center,
-                          color: PdfColors.green
-                      ),
-                      // Customer Name
-                      pw.Expanded(
-                        child: pw.Container(
-                            child: pw.Text('Customer Name',style: boldTextStyle.copyWith(color: PdfColors.white)),
-                            padding: const pw.EdgeInsets.all(3),
-                            alignment: pw.Alignment.center,
-                            color: PdfColors.green
                         ),
-                      ),
-                      // Sales Amount
-                      pw.Expanded(
-                        child: pw.Container(
-                            child: pw.Text('Sales Amount',style: boldTextStyle.copyWith(color: PdfColors.white)),
+                        pw.Expanded(
+                          child: pw.Padding(
+                            child: pw.Text('Customer Name',style: boldTextStyle.copyWith(color: PdfColors.white),textAlign: pw.TextAlign.center),
                             padding: const pw.EdgeInsets.all(3),
-                            alignment: pw.Alignment.center,
-                            color: PdfColors.green
+                          ),
                         ),
-                      ),
-                      // Profit loss
-                      pw.Expanded(
-                        child: pw.Container(
-                            child: pw.Text('Profit/Loss',style: boldTextStyle.copyWith(color: PdfColors.white)),
+                        pw.Expanded(
+                          child: pw.Padding(
+                            child: pw.Text('Sales Amount',style: boldTextStyle.copyWith(color: PdfColors.white),textAlign: pw.TextAlign.center),
                             padding: const pw.EdgeInsets.all(3),
-                            alignment: pw.Alignment.center,
-                            color: PdfColors.green
+                          ),
                         ),
-                      )
-                    ]
+                        pw.Expanded(
+                          child: pw.Padding(
+                            child: pw.Text('Profit/Loss',style: boldTextStyle.copyWith(color: PdfColors.white),textAlign: pw.TextAlign.center),
+                            padding: const pw.EdgeInsets.all(3),
+                          ),
+                        )
+                      ]
+                  ),
                 ),
 
                 ///Table Body
@@ -248,7 +239,7 @@ class GeneratePDF{
                         ),
                         //Date
                         pw.Container(
-                            child: pw.Text(DateFormat('dd/mm/yy').format(dataList[index].createdAt!),style: normalTextStyle),
+                            child: pw.Text(DateFormat('dd/MM/yy').format(dataList[index].createdAt!),style: normalTextStyle),
                             padding: const pw.EdgeInsets.all(3),
                             width: 45.0,
                             alignment: pw.Alignment.center
@@ -280,9 +271,9 @@ class GeneratePDF{
                       ]
                     );
                   },
-                  separatorBuilder: (context, index)=>pw.Divider(color: PdfColors.grey,height: 0.0),
+                  separatorBuilder: (context, index)=>pw.Divider(color: PdfColors.grey,height: 0.0,thickness: 0.5),
                   ),
-                pw.Divider(color: PdfColors.grey),
+                pw.Divider(color: PdfColors.grey,height: 0.0),
 
                 ///Table Footer
                 pw.Row(
@@ -305,7 +296,7 @@ class GeneratePDF{
                       //Sales Amount
                       pw.Expanded(
                         child: pw.Container(
-                            child: pw.Text('$salesAmount TK',style: boldTextStyle.copyWith(color: PdfColors.purple)),
+                            child: pw.Text('${double.parse((salesAmount).toStringAsFixed(2))} TK',style: boldTextStyle.copyWith(color: PdfColors.purple)),
                             padding: const pw.EdgeInsets.all(3),
                             alignment: pw.Alignment.center
                         ),
@@ -313,7 +304,7 @@ class GeneratePDF{
                       //Profit Loss
                       pw.Expanded(
                         child: pw.Container(
-                            child: pw.Text('$profitLoss TK',style: boldTextStyle.copyWith(color: PdfColors.purple)),
+                            child: pw.Text('${double.parse((profitLoss).toStringAsFixed(2))} TK',style: boldTextStyle.copyWith(color: PdfColors.purple)),
                             padding: const pw.EdgeInsets.all(3),
                             alignment: pw.Alignment.center
                         ),
@@ -327,11 +318,14 @@ class GeneratePDF{
 
     try{
       final directory = await DownloadsPathProvider.downloadsDirectory;
-      final file = File('${directory!.path}/report-invoice-${DateFormat('dd-mm-yy').format(DateTime.now())}.pdf');
+      final String fileName = 'sales-profit-loss-report-${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final file = File('${directory!.path}/$fileName');
       await file.writeAsBytes(await pdf.save(),flush: true);
 
       PublicController.pc.loading(false);PublicController.pc.update();
       showToast('PDF saved to Download folder');
+      ///View generated PDF
+      Get.to(()=>ViewPdfPage(filePath: file.path,fileName: fileName));
     }catch(e){
       PublicController.pc.loading(false);PublicController.pc.update();
       showToast(e.toString());
