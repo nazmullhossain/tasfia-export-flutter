@@ -16,7 +16,7 @@ import 'package:tashfia_export/model/opening_balance_model.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/purchase_list_model.dart';
 import 'package:tashfia_export/model/sales_profit_loss_model.dart';
-import 'package:tashfia_export/model/sell_list_model.dart';
+import 'package:tashfia_export/model/sales_list_model.dart';
 import 'package:tashfia_export/model/stock_list_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/pages/home_page.dart';
@@ -43,7 +43,7 @@ class PublicController extends GetxController{
   Rx<OpeningBalanceListModel> openingBalanceModel = OpeningBalanceListModel().obs;
   Rx<SalesProfitLossListModel> salesProfitLossModel = SalesProfitLossListModel().obs;
   Rx<FiveTransactionListModel> fiveTransactionModel = FiveTransactionListModel().obs;
-  Rx<SellListModel> sellModel = SellListModel().obs;
+  Rx<SalesListModel> sellModel = SalesListModel().obs;
   Rx<StockListModel> stockModel = StockListModel().obs;
   Rx<ExpenseListModel> expenseModel = ExpenseListModel().obs;
 

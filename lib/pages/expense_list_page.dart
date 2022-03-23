@@ -114,7 +114,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                           ),
                           child: Row(
                             children: [
-                              Text('তারিখ হইতে: ',style: StDecoration.boldTextStyle),
+                              Text('From: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],
@@ -138,7 +138,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                           ),
                           child: Row(
                             children: [
-                              Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
+                              Text('To: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],

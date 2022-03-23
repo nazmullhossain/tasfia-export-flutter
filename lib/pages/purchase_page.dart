@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:tashfia_export/controller/purchase_report_pdf.dart';
+import 'package:tashfia_export/controller/pdf_helper/purchase_report_pdf.dart';
 import 'package:tashfia_export/model/product_list_model.dart';
 import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/util/purchase_list_tile.dart';
@@ -74,7 +74,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
               child: ElevatedButton(
                 onPressed: ()async{
                   if(pc.purchaseListModel.value.data!=null && pc.purchaseListModel.value.data!.isNotEmpty){
-                    PurchaseReportPDF.generatePurchasePDFReport(pc.purchaseListModel.value.data!);
+                    await PurchaseReportPDF.generatePurchasePDFReport(pc.purchaseListModel.value.data!);
                   }else{showToast('Empty Data');}
                 },
                 child: Text('Print Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)),
@@ -128,7 +128,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                           ),
                           child: Row(
                             children: [
-                              Text('তারিখ হইতে: ',style: StDecoration.boldTextStyle),
+                              Text('From: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],
@@ -152,7 +152,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                           ),
                           child: Row(
                             children: [
-                              Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
+                              Text('To: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],

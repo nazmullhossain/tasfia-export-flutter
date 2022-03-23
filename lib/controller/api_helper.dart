@@ -18,7 +18,7 @@ import 'package:tashfia_export/model/supplier_model.dart';
 import 'package:tashfia_export/variables/variable.dart';
 import 'package:http/http.dart' as http;
 import '../model/opening_balance_model.dart';
-import '../model/sell_list_model.dart';
+import '../model/sales_list_model.dart';
 
 class ApiHelper{
 

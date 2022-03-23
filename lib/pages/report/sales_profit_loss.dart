@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:tashfia_export/controller/loss_pfofit_pdf.dart';
+import 'package:tashfia_export/controller/pdf_helper/loss_pfofit_pdf.dart';
 import 'package:tashfia_export/variables/color_variable.dart';
 import '../../controller/public_controller.dart';
 import '../../util/decoration.dart';
@@ -61,7 +61,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                               ),
                               borderRadius:const BorderRadius.all(Radius.circular(5)),
                             ),
-                            SizedBox(height: dynamicSize(.05)),
+                            SizedBox(height: dynamicSize(.04)),
                             InkWell(
                               onTap: ()async{
                                 await _selectToDate();
@@ -96,7 +96,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                               await LossProfitPDF.generateSalesProfitLossPDFReport(pc.salesProfitLossModel.value.data!);
                             }else{showToast('Empty Data');}
                           },
-                          child: Text('Print',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
+                          child: Text('Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
                     ],
                   ),
                 ),

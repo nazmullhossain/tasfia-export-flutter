@@ -5,10 +5,11 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:tashfia_export/model/customer_model.dart';
 import 'package:tashfia_export/widgets/text_field_tile.dart';
 import '../controller/public_controller.dart';
+import '../controller/pdf_helper/sales_report_pdf.dart';
 import '../model/company_list_model.dart';
 import '../util/decoration.dart';
 import '../util/purchase_list_tile.dart';
-import '../util/sell_list_tile.dart';
+import '../util/sales_list_tile.dart';
 import '../variables/color_variable.dart';
 import '../variables/config.dart';
 import '../variables/variable.dart';
@@ -78,8 +79,8 @@ class _SalesPageState extends State<SalesPage> {
               padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04)),
               child: ElevatedButton(
                 onPressed: ()async{
-                  if(pc.purchaseListModel.value.data!=null && pc.purchaseListModel.value.data!.isNotEmpty){
-                    //PurchaseReportPDF.generatePurchasePDFReport(pc.purchaseListModel.value.data!);
+                  if(pc.sellModel.value.data!=null && pc.sellModel.value.data!.isNotEmpty){
+                    await SalesReportPDF.generateSalesPDFReport(pc.sellModel.value.data!);
                   }else{showToast('Empty Data');}
                 },
                 child: Text('Print Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)),
@@ -100,7 +101,7 @@ class _SalesPageState extends State<SalesPage> {
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
         itemCount: pc.sellModel.value.data!.length,
-        itemBuilder: (context, index)=> SellListTile(model: pc.sellModel.value.data![index]),
+        itemBuilder: (context, index)=> SalesListTile(model: pc.sellModel.value.data![index]),
         separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
   );
 
@@ -134,7 +135,7 @@ class _SalesPageState extends State<SalesPage> {
                           ),
                           child: Row(
                             children: [
-                              Text('তারিখ হইতে: ',style: StDecoration.boldTextStyle),
+                              Text('From: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],
@@ -158,7 +159,7 @@ class _SalesPageState extends State<SalesPage> {
                           ),
                           child: Row(
                             children: [
-                              Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
+                              Text('To: ',style: StDecoration.boldTextStyle),
                               Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
                               Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
                             ],

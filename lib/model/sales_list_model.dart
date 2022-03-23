@@ -1,21 +1,21 @@
 import 'dart:convert';
 
-SellListModel sellListModelFromJson(String str) => SellListModel.fromJson(json.decode(str));
+SalesListModel sellListModelFromJson(String str) => SalesListModel.fromJson(json.decode(str));
 
-class SellListModel {
-  SellListModel({
+class SalesListModel {
+  SalesListModel({
     this.data,
   });
 
-  final List<SellModel>? data;
+  final List<SalesModel>? data;
 
-  factory SellListModel.fromJson(Map<String, dynamic> json) => SellListModel(
-    data: List<SellModel>.from(json["data"].map((x) => SellModel.fromJson(x))),
+  factory SalesListModel.fromJson(Map<String, dynamic> json) => SalesListModel(
+    data: List<SalesModel>.from(json["data"].map((x) => SalesModel.fromJson(x))),
   );
 }
 
-class SellModel {
-  SellModel({
+class SalesModel {
+  SalesModel({
     this.id,
     this.customerId,
     this.salesExecutiveId,
@@ -87,7 +87,7 @@ class SellModel {
   final dynamic companyContactNo;
   final String? country;
 
-  factory SellModel.fromJson(Map<String, dynamic> json) => SellModel(
+  factory SalesModel.fromJson(Map<String, dynamic> json) => SalesModel(
     id: json["id"],
     customerId: json["customer_id"],
     salesExecutiveId: json["sales_executive_id"],

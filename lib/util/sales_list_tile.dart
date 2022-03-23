@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tashfia_export/model/sell_list_model.dart';
+import 'package:tashfia_export/model/sales_list_model.dart';
 import 'package:tashfia_export/util/decoration.dart';
 import 'package:tashfia_export/variables/config.dart';
 
-class SellListTile extends StatelessWidget {
-  const SellListTile({Key? key,required this.model}) : super(key: key);
-  final SellModel model;
+class SalesListTile extends StatelessWidget {
+  const SalesListTile({Key? key,required this.model}) : super(key: key);
+  final SalesModel model;
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/pages/view_pdf_page.dart';
 import 'package:tashfia_export/variables/variable.dart';
-import '../model/sales_profit_loss_model.dart';
+import '../../model/sales_profit_loss_model.dart';
 
 class LossProfitPDF{
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import '../../controller/pdf_helper/deposite_expense_pdf.dart';
 import '../../controller/public_controller.dart';
 import '../../util/decoration.dart';
 import '../../variables/color_variable.dart';
@@ -39,56 +40,72 @@ class _DepositExpensesState extends State<DepositExpenses> {
                 color: Colors.white,
                 child: Column(
                   children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: ()=>_selectFromDate(),
+                                child: Container(
+                                  padding: EdgeInsets.all(dynamicSize(.02)),
+                                  decoration: BoxDecoration(
+                                      borderRadius:const BorderRadius.all(Radius.circular(5)),
+                                      border: Border.all(color: Colors.blueGrey, width: 0.5)
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text('From: ',style: StDecoration.boldTextStyle),
+                                      Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
+                                      Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
+                                    ],
+                                  ),
+                                ),
+                                borderRadius:const BorderRadius.all(Radius.circular(5)),
+                              ),
+                              SizedBox(height: dynamicSize(.04)),
+                              InkWell(
+                                onTap: ()async{
+                                  await _selectToDate();
+                                  await PublicController.pc.getAccountSummery(
+                                    DateFormat('yyyy-MM-dd').format(_fromDate),
+                                    DateFormat('yyyy-MM-dd').format(_toDate),
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(dynamicSize(.02)),
+                                  decoration: BoxDecoration(
+                                      borderRadius:const BorderRadius.all(Radius.circular(5)),
+                                      border: Border.all(color: Colors.blueGrey, width: 0.5)
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text('To: ',style: StDecoration.boldTextStyle),
+                                      Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
+                                      Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
+                                    ],
+                                  ),
+                                ),
+                                borderRadius:const BorderRadius.all(Radius.circular(5)),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(width: dynamicSize(.02)),
+                        //if(pc.salesProfitLossModel.value.data!=null && pc.salesProfitLossModel.value.data!.isNotEmpty)
+                        ElevatedButton(
+                            onPressed: ()async{
+                              await DepositExpenseReportPDF.generateDepositExpensePDFReport();
+                            },
+                            child: Text('Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
+                      ],
+                    ),
                     SizedBox(height: dynamicSize(.04)),
 
-                    InkWell(
-                      onTap: ()=>_selectFromDate(),
-                      child: Container(
-                        padding: EdgeInsets.all(dynamicSize(.025)),
-                        decoration: BoxDecoration(
-                            borderRadius:const BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(color: Colors.blueGrey, width: 0.5)
-                        ),
-                        child: Row(
-                          children: [
-                            Text('তারিখ হতে: ',style: StDecoration.boldTextStyle),
-                            Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_fromDate),style: StDecoration.normalTextStyle)),
-                            Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
-                          ],
-                        ),
-                      ),
-                      borderRadius:const BorderRadius.all(Radius.circular(5)),
-                    ),
-                    SizedBox(height: dynamicSize(.08)),
-
-                    InkWell(
-                      onTap: ()async{
-                        await _selectToDate();
-                        await PublicController.pc.getAccountSummery(
-                            DateFormat('yyyy-MM-dd').format(_fromDate),
-                            DateFormat('yyyy-MM-dd').format(_toDate),
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(dynamicSize(.025)),
-                        decoration: BoxDecoration(
-                            borderRadius:const BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(color: Colors.blueGrey, width: 0.5)
-                        ),
-                        child: Row(
-                          children: [
-                            Text('এখন পর্যন্ত: ',style: StDecoration.boldTextStyle),
-                            Expanded(child: Text(DateFormat('dd-MMM-yyyy').format(_toDate),style: StDecoration.normalTextStyle)),
-                            Icon(LineAwesomeIcons.calendar,size: dynamicSize(.07))
-                          ],
-                        ),
-                      ),
-                      borderRadius:const BorderRadius.all(Radius.circular(5)),
-                    ),
-                    SizedBox(height: dynamicSize(.08)),
-
                     const Divider(color: AllColor.primaryColor,thickness: 2),
-                    SizedBox(height: dynamicSize(.08)),
+                    SizedBox(height: dynamicSize(.04)),
 
                     if(widget.gotJoma)Column(
                       children: [
@@ -103,13 +120,13 @@ class _DepositExpensesState extends State<DepositExpenses> {
                             ],
                           ),
                         ),
-                        Divider(color: Colors.blueGrey,thickness: 1,height: dynamicSize(.05)),
+                        const Divider(color: Colors.blueGrey,thickness: 1,height: 0.0),
                         RichText(
                           text: TextSpan(
                             style: StDecoration.normalTextStyle,
                             children: [
                               const TextSpan(text: 'ক্যাশ: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                              TextSpan(text: '${double.parse(pc.accountSummery.value.profit!.toString())-double.parse(pc.accountSummery.value.expense!.toString())}\n'),
+                              TextSpan(text: '${double.parse(pc.accountSummery.value.profit!.toString())-double.parse(pc.accountSummery.value.expense!.toString())}'),
                             ],
                           ),
                         ),

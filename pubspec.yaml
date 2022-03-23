@@ -54,3 +54,7 @@ flutter:
           weight: 500
         - asset: assets/fonts/OpenSans-SemiBold.ttf
           weight: 600
+
+    - family: kalpurush
+      fonts:
+        - asset: assets/fonts/kalpurush.ttf
