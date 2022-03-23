@@ -52,6 +52,8 @@ class CustomerListTile extends StatelessWidget {
                 children: [
                   const TextSpan(text: 'নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
                   TextSpan(text: '${model.name}\n'),
+                  const TextSpan(text: 'কোম্পানির নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: '${model.companyName??''}\n'),
                   const TextSpan(text: 'ফোন: ', style: TextStyle(fontWeight: FontWeight.bold)),
                   TextSpan(text: '${model.personalPhone??model.optionalPhone}\n'),
                   const TextSpan(text: 'ইমেইল: ', style: TextStyle(fontWeight: FontWeight.bold)),
