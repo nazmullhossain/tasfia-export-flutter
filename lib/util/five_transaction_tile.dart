@@ -22,7 +22,7 @@ class FiveTransactionTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Mr. Rakib Hossain',style: StDecoration.boldTextStyle.copyWith(color: AllColor.secondaryColor)),
+              Text(model.customer!.name!,style: StDecoration.boldTextStyle.copyWith(color: AllColor.secondaryColor)),
               Text('পরিমান: ${model.amount}/=',style: StDecoration.normalTextStyle),
               Text('পেমেন্টের ধরন: ${model.paymentMode}',style: StDecoration.normalTextStyle),
               Text('তারিখ: ${DateFormat('dd-MMM-yyyy').format(model.updatedAt!)}',style: StDecoration.normalTextStyle.copyWith(fontSize: dynamicSize(.038),fontStyle: FontStyle.italic))

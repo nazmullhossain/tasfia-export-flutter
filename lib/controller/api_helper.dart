@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/model/account_summery_model.dart';
+import 'package:tashfia_export/model/asset_list_model.dart';
 import 'package:tashfia_export/model/category_list_model.dart';
 import 'package:tashfia_export/model/company_list_model.dart';
 import 'package:tashfia_export/model/customer_model.dart';
@@ -147,15 +148,13 @@ class ApiHelper{
       );
       if(response.statusCode==200){
         var jsonData = jsonDecode(response.body);
-        if(jsonData['data'].isNotEmpty){
-          PublicController.pc.customerModel(customerModelFromJson(response.body));
-        }else{showToast('No Customer found');}
+        PublicController.pc.customerModel(customerModelFromJson(response.body));
+        if(jsonData['data'].isEmpty) showToast('No Customer found');
       }
       else{showToast('Customer get Failed');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){
-      print(error.toString());
       showToast(error.toString());
     }
   }
@@ -451,6 +450,40 @@ class ApiHelper{
         PublicController.pc.expenseModel(expenseListModelFromJson(response.body));
         if(jsonData['data'].isEmpty) showToast('No Expense Found');
       }else{showToast('Failed to get expense');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> assetListResponse()async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_asset'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        PublicController.pc.assetModel(assetListModelFromJson(response.body));
+      }else{showToast('Failed to get assets');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> searchAssetListResponse(Map<String, String> map)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_asset?from_date=${map['from_date']}'
+              '&to_date=${map['to_date']}&search_amount=${map['search_amount']}'
+              '&search_name=${map['search_name']}&category=${map['category']}'),
+          headers: Variables().authHeader);
+      if(response.statusCode==200){
+        var jsonData = jsonDecode(response.body);
+        PublicController.pc.assetModel(assetListModelFromJson(response.body));
+        if(jsonData['data'].isEmpty) showToast('No Asset Found');
+      }else{showToast('Failed to get asset');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){

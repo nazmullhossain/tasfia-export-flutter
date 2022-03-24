@@ -136,18 +136,18 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
                     !pc.loading.value
                         ?ColorTextButton(
                         onPressed: ()async{
-                          if(_phone.text.isNotEmpty){
+                          if(_phone.text.isNotEmpty || _name.text.isNotEmpty || _companyModel!=null || _customerId.text.isNotEmpty){
                             setState((){});
                             Map<String,String> map = {
                               'name':_name.text,
                               'phone': _phone.text,
-                              'company_name': _companyModel!=null?_companyModel!.companyName!:'',
+                              'company_name': _companyModel!=null?_companyModel!.id.toString():'',
                               'customer_id': _customerId.text
                             };
                             await pc.searchCustomer(map);
                             setState((){});
                             Get.back();
-                          }else{showToast('ফোন নাম্বর লিখুন');}
+                          }else{showToast('ফিল্ড পূরন করুন');}
                         },
                         text: 'অনুসন্ধান করুন',
                        minimumSize: Size(dynamicSize(.45),dynamicSize(.1)),

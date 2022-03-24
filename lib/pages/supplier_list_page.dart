@@ -137,12 +137,12 @@ class _SupplierListPageState extends State<SupplierListPage> {
                       !pc.loading.value
                           ?ColorTextButton(
                         onPressed: ()async{
-                          if(_phone.text.isNotEmpty){
+                          if(_phone.text.isNotEmpty || _name.text.isNotEmpty || _supplierId.text.isNotEmpty || _companyModel!=null){
                             setState((){});
                             Map<String , String> map = {
                               'name':_name.text,
                               'phone': _phone.text,
-                              'company_name': _companyModel!=null?_companyModel!.companyName!:'',
+                              'company_name': _companyModel!=null?_companyModel!.id.toString():'',
                               'customer_id': _supplierId.text
                             };
                             await pc.searchSupplier(map);

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/model/category_list_model.dart';
-import 'package:tashfia_export/util/expense_list_tile.dart';
+import '../util/asset_list_tile.dart';
 import '../util/decoration.dart';
 import '../variables/color_variable.dart';
 import '../variables/config.dart';
@@ -13,14 +13,14 @@ import '../widgets/color_button.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/text_field_tile.dart';
 
-class ExpenseListPage extends StatefulWidget {
-  const ExpenseListPage({Key? key}) : super(key: key);
+class AssetListPage extends StatefulWidget {
+  const AssetListPage({Key? key}) : super(key: key);
 
   @override
-  State<ExpenseListPage> createState() => _ExpenseListPageState();
+  State<AssetListPage> createState() => _AssetListPageState();
 }
 
-class _ExpenseListPageState extends State<ExpenseListPage> {
+class _AssetListPageState extends State<AssetListPage> {
   DateTime _fromDate = DateTime.now().subtract(const Duration(days: 1));
   DateTime _toDate = DateTime.now();
   CategoryModel? _categoryModel;
@@ -33,15 +33,16 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
     _initData();
   }
   Future<void> _initData()async{
-    if(PublicController.pc.expenseModel.value.data==null
-        ||PublicController.pc.expenseModel.value.data!.isEmpty){
-      PublicController.pc.getExpenseList();
+    if(PublicController.pc.assetModel.value.data==null
+        ||PublicController.pc.assetModel.value.data!.isEmpty){
+      PublicController.pc.getAssetList();
     }
     if(PublicController.pc.categoryModel.value.data==null
         ||PublicController.pc.categoryModel.value.data!.isEmpty){
       await PublicController.pc.getCategoryList();
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('খরচ হিসাব', style:StDecoration.boldTextStyle),
+              title: Text('জমা হিসাব', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
@@ -58,7 +59,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
               actions: [
                 IconButton(onPressed: ()async{
                   pc.loading(true);pc.update();
-                  await pc.getExpenseList();
+                  await pc.getAssetList();
                   pc.loading(false);pc.update();
                 }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
@@ -75,12 +76,12 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
     onRefresh: ()async=> await pc.getExpenseList(),
     backgroundColor: Colors.white,
-    child: pc.expenseModel.value.data!=null
+    child: pc.assetModel.value.data!=null
         ?ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
-        itemCount: pc.expenseModel.value.data!.length,
-        itemBuilder: (context, index)=> ExpenseListTile(model: pc.expenseModel.value.data![index],index: index),
+        itemCount: pc.assetModel.value.data!.length,
+        itemBuilder: (context, index)=> AssetListTile(model: pc.assetModel.value.data![index],index: index),
         separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
   );
 
@@ -92,7 +93,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
           scrollable: true,
           insetPadding: EdgeInsets.all(dynamicSize(.04)),
           contentPadding: EdgeInsets.all(dynamicSize(.04)),
-          title: Text('খরচ হিসাব অনুসন্ধান করুন',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
+          title: Text('জমা হিসাব অনুসন্ধান করুন',textAlign: TextAlign.center,style: StDecoration.boldTextStyle),
           content: StatefulBuilder(
               builder: (context,setState) {
                 return SizedBox(
@@ -194,9 +195,9 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                             'to_date': DateFormat('yyyy-MM-dd').format(_toDate),
                             'search_amount': _amount.text,
                             'search_name': _name.text,
-                            'expenses_category': _categoryModel!=null? _categoryModel!.id!.toString():'',
+                            'category': _categoryModel!=null? _categoryModel!.id!.toString():'',
                           };
-                          await pc.searchExpenseList(map);
+                          await pc.searchAssetList(map);
                           setState((){});
                           Get.back();
                         },
