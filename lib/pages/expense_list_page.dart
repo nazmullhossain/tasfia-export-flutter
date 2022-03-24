@@ -26,6 +26,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
   CategoryModel? _categoryModel;
   final TextEditingController _name = TextEditingController(text: '');
   final TextEditingController _amount = TextEditingController(text: '');
+  double _totalAmount=0.0;
 
   @override
   void initState(){
@@ -40,7 +41,15 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
     if(PublicController.pc.categoryModel.value.data==null
         ||PublicController.pc.categoryModel.value.data!.isEmpty){
       await PublicController.pc.getCategoryList();
-    }
+    }_totalAmountCount();
+  }
+  void _totalAmountCount(){
+    _totalAmount = 0.0;
+    for(var e in PublicController.pc.expenseModel.value.data!){
+      if(e.amount!=null && e.amount!.isNotEmpty){
+        _totalAmount = _totalAmount+ double.parse(e.amount!);
+      }
+    }setState((){});
   }
 
   @override
@@ -50,7 +59,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('খরচ হিসাব', style:StDecoration.boldTextStyle),
+              title: Text('খরচ হিসাব (মোটঃ ${pc.expenseModel.value.data!=null?pc.expenseModel.value.data!.length:0})', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
@@ -59,12 +68,30 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                 IconButton(onPressed: ()async{
                   pc.loading(true);pc.update();
                   await pc.getExpenseList();
+                  _totalAmountCount();
                   pc.loading(false);pc.update();
                 }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.symmetric(vertical: dynamicSize(.02),horizontal: dynamicSize(.05)),
+              decoration: BoxDecoration(
+                color: AllColor.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(dynamicSize(.03)),
+                    topRight: Radius.circular(dynamicSize(.03))
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text('মোট পরিমান:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
+                  Expanded(child: Text('${_totalAmount.toStringAsFixed(2)} TK',textAlign: TextAlign.end,
+                      style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
+                ],
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],
@@ -73,7 +100,10 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
   }
 
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
-    onRefresh: ()async=> await pc.getExpenseList(),
+    onRefresh: ()async{
+      await pc.getExpenseList();
+      _totalAmountCount();
+    },
     backgroundColor: Colors.white,
     child: pc.expenseModel.value.data!=null
         ?ListView.separated(
@@ -197,6 +227,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                             'expenses_category': _categoryModel!=null? _categoryModel!.id!.toString():'',
                           };
                           await pc.searchExpenseList(map);
+                          _totalAmountCount();
                           setState((){});
                           Get.back();
                         },

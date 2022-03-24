@@ -1,42 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:tashfia_export/controller/public_controller.dart';
-import 'package:tashfia_export/pages/report/deposite_expenses.dart';
-import 'package:tashfia_export/pages/report/sales_profit_loss.dart';
-import 'package:tashfia_export/variables/color_variable.dart';
-import 'package:tashfia_export/variables/config.dart';
+import '../../controller/public_controller.dart';
 import '../../util/decoration.dart';
+import '../../variables/color_variable.dart';
+import '../../variables/config.dart';
 import '../../widgets/loading_widget.dart';
 
-class ReportPage extends StatefulWidget {
-  const ReportPage({Key? key}) : super(key: key);
+class CustomerDetailsPage extends StatefulWidget {
+  const CustomerDetailsPage({Key? key}) : super(key: key);
 
   @override
-  State<ReportPage> createState() => _ReportPageState();
+  State<CustomerDetailsPage> createState() => _CustomerDetailsPageState();
 }
 
-class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateMixin{
+class _CustomerDetailsPageState extends State<CustomerDetailsPage> with SingleTickerProviderStateMixin{
   TabController? _tabController;
-  final DateTime _fromDate = DateTime.now();
-  final DateTime _toDate = DateTime.now();
-
   @override
   void initState(){
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _initData();
-  }
-
-  Future<void> _initData()async{
-    await Future.delayed(const Duration(milliseconds: 1));
-    await PublicController.pc.getAccountSummery(
-        DateFormat('yyyy-MM-dd').format(_fromDate),
-        DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
-
-    await PublicController.pc.searchSalesProfitLoss(
-        DateFormat('yyyy-MM-dd').format(_fromDate),
-        DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
   }
 
   @override
@@ -59,8 +41,8 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
                         indicator:const BoxDecoration(
                             border: Border(bottom: BorderSide(width: 3.5, color: AllColor.primaryColor))),
                         tabs: [
-                          Tab(child: Text('জমা এবং খরচ',style: StDecoration.boldTextStyle.copyWith(fontSize: dynamicSize(.046)))),
-                          Tab(child: Text('বিক্রয় লাভ ক্ষতি',style: StDecoration.boldTextStyle)),
+                          Tab(child: Text('বিক্রয় বিবরণ',style: StDecoration.boldTextStyle.copyWith(fontSize: dynamicSize(.046)))),
+                          Tab(child: Text('পূর্ববর্তী বকেয়া পেমেন্ট বিবরণ',style: StDecoration.boldTextStyle)),
                         ],
                       ),
                     ),
@@ -71,9 +53,9 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
             body: TabBarView(
               controller: _tabController,
               physics:const BouncingScrollPhysics(),
-              children:const [
-                DepositExpenses(),
-                SalesProfitLoss()
+              children: [
+                Text(""),
+                Text(""),
               ],
             ),
           ),
@@ -83,3 +65,4 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
     });
   }
 }
+

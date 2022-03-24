@@ -30,6 +30,7 @@ class PublicController extends GetxController{
   late SharedPreferences? pref;
   RxDouble size = 0.0.obs;
   RxBool loading=false.obs;
+  RxDouble totalAsset=0.0.obs;
 
   Rx<LoginResponse> loginResponse = LoginResponse().obs;
   Rx<CustomerModel> customerModel = CustomerModel().obs;

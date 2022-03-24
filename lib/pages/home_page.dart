@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
     PublicController.pc.getOpeningBalance();
     PublicController.pc.getStockList();
     PublicController.pc.getExpenseList();
+    PublicController.pc.getAssetList();
   }
 
   @override

@@ -60,6 +60,23 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.symmetric(vertical: dynamicSize(.02),horizontal: dynamicSize(.05)),
+              decoration: BoxDecoration(
+                color: AllColor.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(dynamicSize(.03)),
+                    topRight: Radius.circular(dynamicSize(.03))
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text('মোট কাস্টমার:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
+                  Expanded(child: Text('${pc.customerModel.value.customers!=null? pc.customerModel.value.customers!.length:''}',textAlign: TextAlign.end,
+                      style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
+                ],
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],

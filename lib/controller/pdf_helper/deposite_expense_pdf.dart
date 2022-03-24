@@ -43,18 +43,18 @@ class DepositExpenseReportPDF{
     );
 
     ///Bengali font style
-    var bengaliBoldStyle = pw.TextStyle(
-      font: bengaliFont,
-      fontSize: 8.0,
-      fontWeight: pw.FontWeight.bold,
-      color: PdfColors.black,
-    );
-    var bengaliNormalStyle = pw.TextStyle(
-        font: bengaliFont,
-        fontSize: 8.0,
-        fontWeight: pw.FontWeight.normal,
-        color: PdfColors.black
-    );
+    // var boldTextStyle = pw.TextStyle(
+    //   font: bengaliFont,
+    //   fontSize: 8.0,
+    //   fontWeight: pw.FontWeight.bold,
+    //   color: PdfColors.black,
+    // );
+    // var normalTextStyle = pw.TextStyle(
+    //     font: bengaliFont,
+    //     fontSize: 8.0,
+    //     fontWeight: pw.FontWeight.normal,
+    //     color: PdfColors.black
+    // );
 
     Future<File> getImageFileFromAssets(String path) async {
       final byteData = await rootBundle.load('assets/$path');
@@ -208,7 +208,7 @@ class DepositExpenseReportPDF{
                               ///Title:::::::::::::::::::::::::::::::::::::::
                               pw.Padding(
                                 padding: const pw.EdgeInsets.all(5),
-                                child: pw.Text('জমা',style: bengaliBoldStyle,textAlign: pw.TextAlign.center)
+                                child: pw.Text('Asset',style: boldTextStyle,textAlign: pw.TextAlign.center)
                               ),
                               pw.Divider(thickness: 0.5,height: 0.0),
 
@@ -227,7 +227,7 @@ class DepositExpenseReportPDF{
                                         child: pw.Row(
                                             children: [
                                               pw.Expanded(
-                                                  child: pw.Text('ক্যাশ ইজা :',style: bengaliBoldStyle,textAlign: pw.TextAlign.center)
+                                                  child: pw.Text('Cash :',style: boldTextStyle,textAlign: pw.TextAlign.center)
                                               ),
                                               pw.Container(color: PdfColors.grey,height: 20,width: 0.5),
                                               pw.Expanded(
@@ -246,7 +246,7 @@ class DepositExpenseReportPDF{
                                             borderRadius:const pw.BorderRadius.all(pw.Radius.circular(2)),
                                             border: pw.Border.all(color: PdfColors.grey,width: 0.5)
                                         ),
-                                        child: pw.Text('ক্রয়:',style: bengaliBoldStyle.copyWith(color: PdfColors.white))
+                                        child: pw.Text('Purchase:',style: boldTextStyle.copyWith(color: PdfColors.white))
                                     ),
                                     ///Purchase Table header
                                     pw.Container(
@@ -260,7 +260,7 @@ class DepositExpenseReportPDF{
                                         child: pw.Row(
                                           children: [
                                             pw.Container(
-                                              child: pw.Text('#',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                              child: pw.Text('#',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                               alignment: pw.Alignment.center,
                                               padding: const pw.EdgeInsets.all(5.0),
                                               width: 30.0,
@@ -268,25 +268,25 @@ class DepositExpenseReportPDF{
                                             pw.Expanded(
                                               child: pw.Padding(
                                                 padding: const pw.EdgeInsets.all(5.0),
-                                                child: pw.Text('পার্টি নাম',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                child: pw.Text('Party Name',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                               )
                                             ),
                                             pw.Expanded(
                                                 child: pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
-                                                  child: pw.Text('বিল নং',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                  child: pw.Text('Bill No',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                 )
                                             ),
                                             pw.Expanded(
                                                 child: pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
-                                                  child: pw.Text('চেক নং',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                  child: pw.Text('Check No',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                 )
                                             ),
                                             pw.Expanded(
                                                 child: pw.Padding(
                                                   padding: const pw.EdgeInsets.all(5.0),
-                                                  child: pw.Text('মোট টাকা',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                  child: pw.Text('Total',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                 )
                                             ),
                                           ]
@@ -300,7 +300,7 @@ class DepositExpenseReportPDF{
                                           itemBuilder: (context, index)=>pw.Row(
                                               children: [
                                                 pw.Container(
-                                                  child: pw.Text('${index+1}',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                  child: pw.Text('${index+1}',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                   alignment: pw.Alignment.center,
                                                   padding: const pw.EdgeInsets.all(2.0),
                                                   width: 30.0,
@@ -308,25 +308,25 @@ class DepositExpenseReportPDF{
                                                 pw.Expanded(
                                                     child: pw.Padding(
                                                       padding: const pw.EdgeInsets.all(2.0),
-                                                      child: pw.Text('পার্টি নাম',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                      child: pw.Text('Party Name',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                     )
                                                 ),
                                                 pw.Expanded(
                                                     child: pw.Padding(
                                                       padding: const pw.EdgeInsets.all(2.0),
-                                                      child: pw.Text('বিল নং',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                      child: pw.Text('Bill No',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                     )
                                                 ),
                                                 pw.Expanded(
                                                     child: pw.Padding(
                                                       padding: const pw.EdgeInsets.all(2.0),
-                                                      child: pw.Text('চেক নং',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                      child: pw.Text('Check No',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                     )
                                                 ),
                                                 pw.Expanded(
                                                     child: pw.Padding(
                                                       padding: const pw.EdgeInsets.all(2.0),
-                                                      child: pw.Text('মোট টাকা',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                      child: pw.Text('Total',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                     )
                                                 ),
                                               ]
@@ -348,7 +348,7 @@ class DepositExpenseReportPDF{
                                             borderRadius:const pw.BorderRadius.all(pw.Radius.circular(2)),
                                             border: pw.Border.all(color: PdfColors.grey,width: 0.5)
                                         ),
-                                        child: pw.Text('সকল জমা:',style: bengaliBoldStyle.copyWith(color: PdfColors.white))
+                                        child: pw.Text('All Deposite:',style: boldTextStyle.copyWith(color: PdfColors.white))
                                     ),
                                     ///All Deposit Table header
                                     pw.Container(
@@ -362,7 +362,7 @@ class DepositExpenseReportPDF{
                                         child: pw.Row(
                                             children: [
                                               pw.Container(
-                                                child: pw.Text('#',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                child: pw.Text('#',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                 alignment: pw.Alignment.center,
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 width: 30.0,
@@ -370,25 +370,25 @@ class DepositExpenseReportPDF{
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('পার্টি নাম',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Party Name',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('ক্যাটাগরি',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Category',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('মন্তব্য',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Comment',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('মোট টাকা',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Total',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                             ]
@@ -402,7 +402,7 @@ class DepositExpenseReportPDF{
                                             itemBuilder: (context, index)=>pw.Row(
                                                 children: [
                                                   pw.Container(
-                                                    child: pw.Text('${index+1}',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('${index+1}',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                     alignment: pw.Alignment.center,
                                                     padding: const pw.EdgeInsets.all(2.0),
                                                     width: 30.0,
@@ -410,25 +410,25 @@ class DepositExpenseReportPDF{
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('পার্টি নাম',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Party Name',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('ক্যাটাগরি',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Category',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('মন্তব্য',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Comment',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('মোট টাকা',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Total',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                 ]
@@ -450,7 +450,7 @@ class DepositExpenseReportPDF{
                                             borderRadius:const pw.BorderRadius.all(pw.Radius.circular(2)),
                                             border: pw.Border.all(color: PdfColors.grey,width: 0.5)
                                         ),
-                                        child: pw.Text('অগ্রিম জমা:',style: bengaliBoldStyle.copyWith(color: PdfColors.white))
+                                        child: pw.Text('Advance Deposite:',style: boldTextStyle.copyWith(color: PdfColors.white))
                                     ),
                                     ///Advance Deposit Table header
                                     pw.Container(
@@ -464,7 +464,7 @@ class DepositExpenseReportPDF{
                                         child: pw.Row(
                                             children: [
                                               pw.Container(
-                                                child: pw.Text('#',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                child: pw.Text('#',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                 alignment: pw.Alignment.center,
                                                 padding: const pw.EdgeInsets.all(5.0),
                                                 width: 30.0,
@@ -472,25 +472,25 @@ class DepositExpenseReportPDF{
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('পার্টি নাম',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Party Name',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('প্রোডাক্ট',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Product',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('মন্তব্য',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Comment',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.all(5.0),
-                                                    child: pw.Text('মোট টাকা',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('Total',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                   )
                                               ),
                                             ]
@@ -504,7 +504,7 @@ class DepositExpenseReportPDF{
                                             itemBuilder: (context, index)=>pw.Row(
                                                 children: [
                                                   pw.Container(
-                                                    child: pw.Text('${index+1}',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('${index+1}',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                     alignment: pw.Alignment.center,
                                                     padding: const pw.EdgeInsets.all(2.0),
                                                     width: 30.0,
@@ -512,25 +512,25 @@ class DepositExpenseReportPDF{
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('পার্টি নাম',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Party Name',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('প্রোডাক্ট',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Product',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('মন্তব্য',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Comment',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(2.0),
-                                                        child: pw.Text('মোট টাকা',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Total',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                 ]
@@ -547,11 +547,11 @@ class DepositExpenseReportPDF{
                                           pw.Expanded(
                                               child: pw.Padding(
                                                 padding: const pw.EdgeInsets.symmetric(vertical: 2.0,horizontal: 10),
-                                                child: pw.Text('মোট জমা',style: bengaliBoldStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.left),
+                                                child: pw.Text('Total Deposit',style: boldTextStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.left),
                                               )
                                           ),
                                           pw.Container(
-                                            child: pw.Text('195121',style: bengaliBoldStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.right),
+                                            child: pw.Text('195121',style: boldTextStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.right),
                                             alignment: pw.Alignment.centerRight,
                                             padding: const pw.EdgeInsets.symmetric(vertical: 2.0,horizontal: 10),
                                             width: 50.0,
@@ -586,7 +586,7 @@ class DepositExpenseReportPDF{
                                   ///Title:::::::::::::::::::::::::::::::::::::::
                                   pw.Padding(
                                       padding: const pw.EdgeInsets.all(5),
-                                      child: pw.Text('খরচ',style: bengaliBoldStyle,textAlign: pw.TextAlign.center)
+                                      child: pw.Text('খরচ',style: boldTextStyle,textAlign: pw.TextAlign.center)
                                   ),
                                   pw.Divider(thickness: 0.5,height: 0.0),
 
@@ -604,7 +604,7 @@ class DepositExpenseReportPDF{
                                                 borderRadius:const pw.BorderRadius.all(pw.Radius.circular(2)),
                                                 border: pw.Border.all(color: PdfColors.grey,width: 0.5)
                                             ),
-                                            child: pw.Text('বিক্রয়:',style: bengaliBoldStyle.copyWith(color: PdfColors.white))
+                                            child: pw.Text('Sales:',style: boldTextStyle.copyWith(color: PdfColors.white))
                                         ),
                                         ///Sales Table header
                                         pw.Container(
@@ -618,7 +618,7 @@ class DepositExpenseReportPDF{
                                             child: pw.Row(
                                                 children: [
                                                   pw.Container(
-                                                    child: pw.Text('#',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('#',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                     alignment: pw.Alignment.center,
                                                     padding: const pw.EdgeInsets.all(5.0),
                                                     width: 30.0,
@@ -626,25 +626,25 @@ class DepositExpenseReportPDF{
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('পার্টি নাম',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Party Name',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('বিল নং',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Bill No',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('চেক নং',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Check No',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('মোট টাকা',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Total',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                 ]
@@ -658,7 +658,7 @@ class DepositExpenseReportPDF{
                                                 itemBuilder: (context, index)=>pw.Row(
                                                     children: [
                                                       pw.Container(
-                                                        child: pw.Text('${index+1}',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('${index+1}',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                         alignment: pw.Alignment.center,
                                                         padding: const pw.EdgeInsets.all(2.0),
                                                         width: 30.0,
@@ -666,25 +666,25 @@ class DepositExpenseReportPDF{
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('পার্টি নাম',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Party Name',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('বিল নং',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Bill No',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('চেক নং',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Check No',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('মোট টাকা',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Total',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                     ]
@@ -706,7 +706,7 @@ class DepositExpenseReportPDF{
                                                 borderRadius:const pw.BorderRadius.all(pw.Radius.circular(2)),
                                                 border: pw.Border.all(color: PdfColors.grey,width: 0.5)
                                             ),
-                                            child: pw.Text('সকল খরচ:',style: bengaliBoldStyle.copyWith(color: PdfColors.white))
+                                            child: pw.Text('All Expense:',style: boldTextStyle.copyWith(color: PdfColors.white))
                                         ),
                                         ///All Expense Table header
                                         pw.Container(
@@ -720,7 +720,7 @@ class DepositExpenseReportPDF{
                                             child: pw.Row(
                                                 children: [
                                                   pw.Container(
-                                                    child: pw.Text('#',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                    child: pw.Text('#',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                     alignment: pw.Alignment.center,
                                                     padding: const pw.EdgeInsets.all(5.0),
                                                     width: 30.0,
@@ -728,25 +728,25 @@ class DepositExpenseReportPDF{
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('পার্টি নাম',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Party Name',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('ক্যাটাগরি',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Category',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('মন্তব্য',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Comment',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                   pw.Expanded(
                                                       child: pw.Padding(
                                                         padding: const pw.EdgeInsets.all(5.0),
-                                                        child: pw.Text('মোট টাকা',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('Total',style: boldTextStyle,textAlign: pw.TextAlign.center),
                                                       )
                                                   ),
                                                 ]
@@ -760,7 +760,7 @@ class DepositExpenseReportPDF{
                                                 itemBuilder: (context, index)=>pw.Row(
                                                     children: [
                                                       pw.Container(
-                                                        child: pw.Text('${index+1}',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                        child: pw.Text('${index+1}',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                         alignment: pw.Alignment.center,
                                                         padding: const pw.EdgeInsets.all(2.0),
                                                         width: 30.0,
@@ -768,25 +768,25 @@ class DepositExpenseReportPDF{
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('পার্টি নাম',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Party Name',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('প্রোডাক্ট',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Product',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('মন্তব্য',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Comment',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                       pw.Expanded(
                                                           child: pw.Padding(
                                                             padding: const pw.EdgeInsets.all(2.0),
-                                                            child: pw.Text('মোট টাকা',style: bengaliNormalStyle,textAlign: pw.TextAlign.center),
+                                                            child: pw.Text('Total',style: normalTextStyle,textAlign: pw.TextAlign.center),
                                                           )
                                                       ),
                                                     ]
@@ -803,11 +803,11 @@ class DepositExpenseReportPDF{
                                               pw.Expanded(
                                                   child: pw.Padding(
                                                     padding: const pw.EdgeInsets.symmetric(vertical: 2.0,horizontal: 10),
-                                                    child: pw.Text('মোট খরচ',style: bengaliBoldStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.left),
+                                                    child: pw.Text('Total Expense',style: boldTextStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.left),
                                                   )
                                               ),
                                               pw.Container(
-                                                child: pw.Text('195121',style: bengaliBoldStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.right),
+                                                child: pw.Text('195121',style: boldTextStyle.copyWith(color: PdfColors.purple),textAlign: pw.TextAlign.right),
                                                 alignment: pw.Alignment.centerRight,
                                                 padding: const pw.EdgeInsets.symmetric(vertical: 2.0,horizontal: 10),
                                                 width: 50.0,
@@ -841,10 +841,10 @@ class DepositExpenseReportPDF{
                       mainAxisAlignment: pw.MainAxisAlignment.center,
                       crossAxisAlignment: pw.CrossAxisAlignment.center,
                       children: [
-                        pw.Text('মোট জমা: 195121/=',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
-                        pw.Text('মোট খরচ: 61530/=',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                        pw.Text('মোট জমা: 195121/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
+                        pw.Text('মোট খরচ: 61530/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
                         pw.Divider(thickness: 0.2),
-                        pw.Text('ক্যাশ: 133591/=',style: bengaliBoldStyle,textAlign: pw.TextAlign.center),
+                        pw.Text('Cash: 133591/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
                       ]
                     )
                   )

@@ -222,10 +222,7 @@ class ApiHelper{
           headers: Variables().authHeader
       );
       if(response.statusCode==200){
-        var jsonData = jsonDecode(response.body);
-        if(jsonData['data'].isNotEmpty){
-          PublicController.pc.allEmployeeModel(employeeModelFromJson(response.body));
-        }else{showToast('No employee found');}
+        PublicController.pc.allEmployeeModel(employeeModelFromJson(response.body));
       }else{showToast('Failed to get employee');}
     }on SocketException{
       showToast('No internet connection');

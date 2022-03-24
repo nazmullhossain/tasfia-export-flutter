@@ -30,6 +30,7 @@ class _SalesPageState extends State<SalesPage> {
   Customer? _customer;
   String? _paymentStatus;
   final TextEditingController _invoiceNumber = TextEditingController(text: '');
+  double _totalA=0.0, _totalPA=0.0, _totalDue=0.0;
 
   @override
   void initState(){
@@ -49,7 +50,20 @@ class _SalesPageState extends State<SalesPage> {
     if(PublicController.pc.companyModel.value.data==null
         ||PublicController.pc.companyModel.value.data!.isEmpty){
       await PublicController.pc.getCompanyList();
-    }
+    }_totalCount();
+  }
+
+  void _totalCount(){
+    _totalA=0.0; _totalPA=0.0; _totalDue=0.0;
+    for(var e in PublicController.pc.sellModel.value.data!){
+      if(e.totalPrice!=null && e.totalPrice!.isNotEmpty){
+        _totalA = _totalA+double.parse(e.totalPrice!);
+      }if(e.paymentAmount!=null && e.paymentAmount!.isNotEmpty) {
+        _totalPA = _totalPA + double.parse(e.paymentAmount!);
+      }if(e.due!=null && e.due!.isNotEmpty){
+        _totalDue = _totalDue+double.parse(e.paymentAmount!);
+      }
+    }setState((){});
   }
 
 
@@ -66,9 +80,11 @@ class _SalesPageState extends State<SalesPage> {
               titleSpacing: 0.0,
               iconTheme: IconThemeData(color: Colors.grey.shade800),
               actions: [
+                IconButton(onPressed: (){_showTotalQuantity();}, icon: Icon(LineAwesomeIcons.vertical_ellipsis,size: dynamicSize(.065))),
                 IconButton(onPressed: ()async{
                   pc.loading(true);pc.update();
                   await pc.getSellList();
+                  _totalCount();
                   pc.loading(false);pc.update();
                 }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
@@ -94,7 +110,10 @@ class _SalesPageState extends State<SalesPage> {
   }
 
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
-    onRefresh: ()async=> await pc.getSellList(),
+    onRefresh: ()async{
+      await pc.getSellList();
+      _totalCount();
+    },
     backgroundColor: Colors.white,
     child: pc.sellModel.value.data!=null && pc.sellModel.value.data!.isNotEmpty
         ?ListView.separated(
@@ -281,6 +300,7 @@ class _SalesPageState extends State<SalesPage> {
                             'invoice_number': _invoiceNumber.text,
                           };
                           await pc.searchSellList(map);
+                          _totalCount();
                           setState((){});
                           Get.back();
                         },
@@ -316,5 +336,44 @@ class _SalesPageState extends State<SalesPage> {
     if (selectedDate != null) {
       setState(()=> _toDate = selectedDate);
     }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
+  }
+
+  void _showTotalQuantity(){
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context)=>AlertDialog(
+          scrollable: true,
+          insetPadding: EdgeInsets.all(dynamicSize(.04)),
+          contentPadding: EdgeInsets.all(dynamicSize(.04)),
+          content: SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Amount:',style: StDecoration.boldTextStyle),
+                    Text('${_totalA.toStringAsFixed(2)} TK',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Paid Amount:',style: StDecoration.boldTextStyle),
+                    Text('${_totalPA.toStringAsFixed(2)} TK',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Due:',style: StDecoration.boldTextStyle),
+                    Text('${_totalDue.toStringAsFixed(2)} TK',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }

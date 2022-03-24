@@ -10,8 +10,7 @@ import '../../variables/config.dart';
 import '../../variables/variable.dart';
 
 class SalesProfitLoss extends StatefulWidget {
-  const SalesProfitLoss({Key? key,required this.profitLoss}) : super(key: key);
-  final bool profitLoss;
+  const SalesProfitLoss({Key? key}) : super(key: key);
 
   @override
   State<SalesProfitLoss> createState() => _SalesProfitLossState();
@@ -151,7 +150,7 @@ class _SalesProfitLossState extends State<SalesProfitLoss> {
                 child: Row(
                   children: [
                     Text('মোট:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
-                    Expanded(child: Text('(${double.parse((pc.salesProfitLossModel.value.profitOrLoss).toStringAsFixed(2))}) TK',textAlign: TextAlign.end,
+                    Expanded(child: Text('${double.parse((pc.salesProfitLossModel.value.profitOrLoss).toStringAsFixed(2))} TK',textAlign: TextAlign.end,
                         style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
                   ],
                 ),

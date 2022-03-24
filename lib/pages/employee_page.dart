@@ -50,6 +50,23 @@ class _AllEmployeePageState extends State<AllEmployeePage> {
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.symmetric(vertical: dynamicSize(.02),horizontal: dynamicSize(.05)),
+              decoration: BoxDecoration(
+                color: AllColor.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(dynamicSize(.03)),
+                    topRight: Radius.circular(dynamicSize(.03))
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text('মোট কর্মচারী:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
+                  Expanded(child: Text('${pc.allEmployeeModel.value.data!=null? pc.allEmployeeModel.value.data!.length:''}',textAlign: TextAlign.end,
+                      style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
+                ],
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],

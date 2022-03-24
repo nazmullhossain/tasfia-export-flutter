@@ -61,6 +61,23 @@ class _SupplierListPageState extends State<SupplierListPage> {
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.symmetric(vertical: dynamicSize(.02),horizontal: dynamicSize(.05)),
+              decoration: BoxDecoration(
+                color: AllColor.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(dynamicSize(.03)),
+                    topRight: Radius.circular(dynamicSize(.03))
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text('মোট সরবরাহকারী:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
+                  Expanded(child: Text('${pc.supplierModel.value.suppliers!=null? pc.supplierModel.value.suppliers!.length:''}',textAlign: TextAlign.end,
+                      style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
+                ],
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],

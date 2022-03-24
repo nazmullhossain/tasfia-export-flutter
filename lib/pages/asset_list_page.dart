@@ -26,6 +26,7 @@ class _AssetListPageState extends State<AssetListPage> {
   CategoryModel? _categoryModel;
   final TextEditingController _name = TextEditingController(text: '');
   final TextEditingController _amount = TextEditingController(text: '');
+  double _totalAmount=0.0;
 
   @override
   void initState(){
@@ -40,7 +41,16 @@ class _AssetListPageState extends State<AssetListPage> {
     if(PublicController.pc.categoryModel.value.data==null
         ||PublicController.pc.categoryModel.value.data!.isEmpty){
       await PublicController.pc.getCategoryList();
-    }
+    }_totalAmountCount();
+  }
+
+  void _totalAmountCount(){
+    _totalAmount = 0.0;
+    for(var e in PublicController.pc.assetModel.value.data!){
+      if(e.amount!=null && e.amount!.isNotEmpty){
+        _totalAmount = _totalAmount+ double.parse(e.amount!);
+      }
+    }setState((){});
   }
 
 
@@ -51,7 +61,7 @@ class _AssetListPageState extends State<AssetListPage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('জমা হিসাব', style:StDecoration.boldTextStyle),
+              title: Text('জমা হিসাব (মোটঃ ${pc.assetModel.value.data!=null?pc.assetModel.value.data!.length:0})', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
@@ -60,12 +70,30 @@ class _AssetListPageState extends State<AssetListPage> {
                 IconButton(onPressed: ()async{
                   pc.loading(true);pc.update();
                   await pc.getAssetList();
+                  _totalAmountCount();
                   pc.loading(false);pc.update();
                 }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.symmetric(vertical: dynamicSize(.02),horizontal: dynamicSize(.05)),
+              decoration: BoxDecoration(
+                color: AllColor.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(dynamicSize(.03)),
+                    topRight: Radius.circular(dynamicSize(.03))
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text('মোট পরিমান:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
+                  Expanded(child: Text('${_totalAmount.toStringAsFixed(2)} TK',textAlign: TextAlign.end,
+                      style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
+                ],
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],
@@ -74,7 +102,10 @@ class _AssetListPageState extends State<AssetListPage> {
   }
 
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
-    onRefresh: ()async=> await pc.getExpenseList(),
+    onRefresh: ()async{
+      await pc.getAssetList();
+      _totalAmountCount();
+    },
     backgroundColor: Colors.white,
     child: pc.assetModel.value.data!=null
         ?ListView.separated(
@@ -198,6 +229,7 @@ class _AssetListPageState extends State<AssetListPage> {
                             'category': _categoryModel!=null? _categoryModel!.id!.toString():'',
                           };
                           await pc.searchAssetList(map);
+                          _totalAmountCount();
                           setState((){});
                           Get.back();
                         },

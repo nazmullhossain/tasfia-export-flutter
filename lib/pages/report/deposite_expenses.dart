@@ -10,8 +10,8 @@ import '../../variables/config.dart';
 import '../../variables/variable.dart';
 
 class DepositExpenses extends StatefulWidget {
-  const DepositExpenses({Key? key,required this.gotJoma}) : super(key: key);
-  final bool gotJoma;
+  const DepositExpenses({Key? key}) : super(key: key);
+
 
   @override
   State<DepositExpenses> createState() => _DepositExpensesState();
@@ -107,7 +107,8 @@ class _DepositExpensesState extends State<DepositExpenses> {
                     const Divider(color: AllColor.primaryColor,thickness: 2),
                     SizedBox(height: dynamicSize(.04)),
 
-                    if(widget.gotJoma)Column(
+                    if(pc.accountSummery.value.profit!=null
+                        && pc.accountSummery.value.expense!=null)Column(
                       children: [
                         RichText(
                           text: TextSpan(

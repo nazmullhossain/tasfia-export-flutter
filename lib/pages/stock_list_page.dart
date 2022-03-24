@@ -26,6 +26,7 @@ class _StockListPageState extends State<StockListPage> {
   DateTime _toDate = DateTime.now();
   Supplier? _supplier;
   final TextEditingController _productName = TextEditingController(text: '');
+  double _totalMainQuantity = 0.0;
 
   @override
   void initState(){
@@ -40,7 +41,16 @@ class _StockListPageState extends State<StockListPage> {
     if(PublicController.pc.supplierModel.value.suppliers==null
         ||PublicController.pc.supplierModel.value.suppliers!.isEmpty){
       await PublicController.pc.getAllSupplier();
-    }
+    }_totalQuantityCount();
+  }
+
+  void _totalQuantityCount(){
+    _totalMainQuantity = 0.0;
+    for(var e in PublicController.pc.stockModel.value.data!){
+      if(e.mainQuantity!=null && e.mainQuantity!.isNotEmpty){
+        _totalMainQuantity = _totalMainQuantity+ double.parse(e.mainQuantity!);
+      }
+    }setState((){});
   }
 
   @override
@@ -50,7 +60,7 @@ class _StockListPageState extends State<StockListPage> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text('স্টক', style:StDecoration.boldTextStyle),
+              title: Text('স্টক (মোটঃ ${pc.stockModel.value.data!=null?pc.stockModel.value.data!.length:0})', style:StDecoration.boldTextStyle),
               backgroundColor: AllColor.appBgColor,
               elevation: 0.0,
               titleSpacing: 0.0,
@@ -59,12 +69,30 @@ class _StockListPageState extends State<StockListPage> {
                 IconButton(onPressed: ()async{
                   pc.loading(true);pc.update();
                   await pc.getStockList();
+                  _totalQuantityCount();
                   pc.loading(false);pc.update();
                 }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
                 IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
               ],
             ),
             body: _bodyUI(pc),
+            bottomNavigationBar: Container(
+              padding: EdgeInsets.symmetric(vertical: dynamicSize(.02),horizontal: dynamicSize(.05)),
+              decoration: BoxDecoration(
+                color: AllColor.primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(dynamicSize(.03)),
+                    topRight: Radius.circular(dynamicSize(.03))
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text('মোট লভ্য পরিমান:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
+                  Expanded(child: Text('(${_totalMainQuantity.toStringAsFixed(2)}) TK',textAlign: TextAlign.end,
+                      style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
+                ],
+              ),
+            ),
           ),
           if(pc.loading.value) const LoadingWidget()
         ],
@@ -73,7 +101,10 @@ class _StockListPageState extends State<StockListPage> {
   }
 
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
-    onRefresh: ()async=> await pc.getStockList(),
+    onRefresh: ()async{
+      await pc.getStockList();
+      _totalQuantityCount();
+    } ,
     backgroundColor: Colors.white,
     child: pc.stockModel.value.data!=null
         ?ListView.separated(
@@ -193,6 +224,7 @@ class _StockListPageState extends State<StockListPage> {
                             'search_supplier_id': _supplier!=null? _supplier!.id!.toString():'',
                           };
                           await pc.searchStockList(map);
+                          _totalQuantityCount();
                           setState((){});
                           Get.back();
                         },

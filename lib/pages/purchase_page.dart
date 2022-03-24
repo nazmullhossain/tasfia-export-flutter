@@ -28,6 +28,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
   CompanyModel? _companyModel;
   Product? _product;
   Supplier? _supplier;
+  double _totalQ=0.0, _totalAQ=0.0, _totalUP=0.0, _totalPaid=0.0, _totalDue=0.0;
 
   @override
   void initState(){
@@ -44,7 +45,24 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
     }
     if(PublicController.pc.productListModel.value.data==null){
       await PublicController.pc.getAllProduct();
-    }
+    }_totalCount();
+  }
+
+  void _totalCount(){
+    _totalQ=0.0; _totalAQ=0.0; _totalUP=0.0; _totalPaid=0.0; _totalDue=0.0;
+    for(var e in PublicController.pc.purchaseListModel.value.data!){
+      if(e.mainQuantity!=null && e.mainQuantity!.isNotEmpty){
+        _totalAQ = _totalAQ+double.parse(e.mainQuantity!);
+      }if(e.quantity!=null && e.quantity!.isNotEmpty){
+        _totalQ = _totalQ+double.parse(e.quantity!);
+      }if(e.unitPrice!=null && e.unitPrice!.isNotEmpty){
+        _totalUP = _totalUP+double.parse(e.unitPrice!);
+      }if(e.paymentAmount!=null && e.paymentAmount!.isNotEmpty){
+        _totalPaid = _totalPaid+double.parse(e.paymentAmount!);
+      }if(e.due!=null && e.due!.isNotEmpty){
+        _totalDue = _totalDue+double.parse(e.paymentAmount!);
+      }
+    }setState((){});
   }
 
   @override
@@ -60,12 +78,14 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
               titleSpacing: 0.0,
               iconTheme: IconThemeData(color: Colors.grey.shade800),
               actions: [
+                IconButton(onPressed: (){_showTotalQuantity();}, icon: Icon(LineAwesomeIcons.vertical_ellipsis,size: dynamicSize(.065))),
                 IconButton(onPressed: ()async{
                   pc.loading(true);pc.update();
                   await pc.getAllPurchase();
+                  _totalCount();
                   pc.loading(false);pc.update();
                 }, icon: Icon(LineAwesomeIcons.alternate_redo,size: dynamicSize(.065))),
-                IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065)))
+                IconButton(onPressed: (){_showSearchDialog(pc);}, icon: Icon(LineAwesomeIcons.search,size: dynamicSize(.065))),
               ],
             ),
             body: _bodyUI(pc),
@@ -88,7 +108,10 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
   }
 
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
-    onRefresh: ()async=> await pc.getAllProduct(),
+    onRefresh: ()async{
+      await pc.getAllPurchase();
+      _totalCount();
+    },
     backgroundColor: Colors.white,
     child: pc.purchaseListModel.value.data!=null && pc.purchaseListModel.value.data!.isNotEmpty
         ?ListView.separated(
@@ -270,6 +293,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                             'search_supplier_id': _supplier!=null? _supplier!.id!.toString():'',
                           };
                           await pc.searchPurchase(map);
+                          _totalCount();
                           setState((){});
                           Get.back();
                         },
@@ -305,5 +329,58 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
     if (selectedDate != null) {
       setState(()=> _toDate = selectedDate);
     }else{showToast('কোনো তারিখ নির্বাচন করা হয়নি');}
+  }
+
+  void _showTotalQuantity(){
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context)=>AlertDialog(
+          scrollable: true,
+          insetPadding: EdgeInsets.all(dynamicSize(.04)),
+          contentPadding: EdgeInsets.all(dynamicSize(.04)),
+          content: SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Quantity:',style: StDecoration.boldTextStyle),
+                    Text('${_totalQ.toStringAsFixed(2)} Kg',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Available Quantity:',style: StDecoration.boldTextStyle),
+                    Text('${_totalAQ.toStringAsFixed(2)} Kg',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Unit Price:',style: StDecoration.boldTextStyle),
+                    Text('${_totalUP.toStringAsFixed(2)} TK',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Paid:',style: StDecoration.boldTextStyle),
+                    Text('${_totalPaid.toStringAsFixed(2)} TK',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Total Due:',style: StDecoration.boldTextStyle),
+                    Text('${_totalDue.toStringAsFixed(2)} TK',style: StDecoration.normalTextStyle)
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
