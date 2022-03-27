@@ -135,7 +135,7 @@ class _AdvanceSalePageState extends State<AdvanceSalePage> {
                           await _selectToDate();
                           setState((){});
                           await pc.searchAdvanceSaleList(DateFormat('yyyy-MM-dd').format(_fromDate),
-                              DateFormat('yyyy-MM-dd').format(_toDate));
+                              DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
                           setState((){});
                           Get.back();
                         },
@@ -155,6 +155,9 @@ class _AdvanceSalePageState extends State<AdvanceSalePage> {
                         ),
                         borderRadius:const BorderRadius.all(Radius.circular(5)),
                       ),
+                      SizedBox(height: dynamicSize(.04)),
+
+                      if(pc.loading.value) const CircularProgressIndicator()
                     ],
                   ),
                 );

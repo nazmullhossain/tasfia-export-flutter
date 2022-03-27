@@ -27,53 +27,68 @@ class SupplierListTile extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(dynamicSize(.02))),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: dynamicSize(.13),
-              width: dynamicSize(.13),
-             decoration: const BoxDecoration(
-               shape: BoxShape.circle,
-               color: AllColor.primaryColor,
-             ),
-              child: model.photo!=null && model.photo!.isNotEmpty
-                  ? ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(dynamicSize(.1))),
-                child: CachedNetworkImage(
-                  imageUrl: model.photo!,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => CupertinoActivityIndicator(color: Colors.white,radius: dynamicSize(.03)),
-                  errorWidget: (context, url, error) => Icon(LineAwesomeIcons.exclamation,color:Colors.white,size: dynamicSize(.07)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ///Image
+                Container(
+                  height: dynamicSize(.13),
+                  width: dynamicSize(.13),
+                 decoration: const BoxDecoration(
+                   shape: BoxShape.circle,
+                   color: AllColor.primaryColor,
+                 ),
+                  child: model.photo!=null && model.photo!.isNotEmpty
+                      ? ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(dynamicSize(.1))),
+                    child: CachedNetworkImage(
+                      imageUrl: model.photo!,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => CupertinoActivityIndicator(color: Colors.white,radius: dynamicSize(.03)),
+                      errorWidget: (context, url, error) => Icon(LineAwesomeIcons.exclamation,color:Colors.white,size: dynamicSize(.07)),
+                    ),
+                  )
+                      : Icon(LineAwesomeIcons.user,color: Colors.white,size: dynamicSize(.08)),
                 ),
-              )
-                  : Icon(LineAwesomeIcons.user,color: Colors.white,size: dynamicSize(.08)),
+                SizedBox(width: dynamicSize(.03)),
+                Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: StDecoration.normalTextStyle.copyWith(fontSize: dynamicSize(.035)),
+                        children: [
+                          TextSpan(text: '${model.name??''}\n',style: StDecoration.boldTextStyle.copyWith(color: AllColor.primaryColor)),
+                          model.personalPhone!=null
+                              ?TextSpan(text: model.personalPhone??'')
+                              :TextSpan(text: model.optionalPhone??''),
+
+                        ],
+                      ),
+                    )
+                )
+              ],
             ),
-            SizedBox(width: dynamicSize(.03)),
+            SizedBox(height: dynamicSize(.02)),
 
-            Expanded(
-              child: RichText(
-                text: TextSpan(
-                  style: StDecoration.normalTextStyle,
-                  children: [
-                    const TextSpan(text: 'আইডি: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.id}\n'),
-                    const TextSpan(text: 'নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.name}\n'),
-                    const TextSpan(text: 'ফোন: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.personalPhone??model.optionalPhone}\n'),
-                    const TextSpan(text: 'ঠিকানা: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.permanentAddress??model.presentAddress}\n'),
-                    const TextSpan(text: 'কোম্পানির নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.company!.companyName}\n'),
-                    const TextSpan(text: 'আগের বকেয়া: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    const TextSpan(text: 'No Data\n'),
-                    const TextSpan(text: 'মোট বাকি: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    const TextSpan(text: 'No Data'),
+            RichText(
+              text: TextSpan(
+                style: StDecoration.normalTextStyle,
+                children: [
+                  const TextSpan(text: 'আইডি: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: '${model.id}\n'),
+                  const TextSpan(text: 'ঠিকানা: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: '${model.permanentAddress??model.presentAddress}\n'),
+                  const TextSpan(text: 'কোম্পানির নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: '${model.company!.companyName}\n'),
+                  const TextSpan(text: 'আগের বকেয়া: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  const TextSpan(text: 'No Data\n'),
+                  const TextSpan(text: 'মোট বাকি: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  const TextSpan(text: 'No Data'),
 
-                  ],
-                ),
+                ],
               ),
             )
           ],

@@ -586,7 +586,7 @@ class DepositExpenseReportPDF{
                                   ///Title:::::::::::::::::::::::::::::::::::::::
                                   pw.Padding(
                                       padding: const pw.EdgeInsets.all(5),
-                                      child: pw.Text('খরচ',style: boldTextStyle,textAlign: pw.TextAlign.center)
+                                      child: pw.Text('Expanse',style: boldTextStyle,textAlign: pw.TextAlign.center)
                                   ),
                                   pw.Divider(thickness: 0.5,height: 0.0),
 
@@ -841,8 +841,8 @@ class DepositExpenseReportPDF{
                       mainAxisAlignment: pw.MainAxisAlignment.center,
                       crossAxisAlignment: pw.CrossAxisAlignment.center,
                       children: [
-                        pw.Text('মোট জমা: 195121/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
-                        pw.Text('মোট খরচ: 61530/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
+                        pw.Text('Total Asset: 195121/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
+                        pw.Text('Total Expanse: 61530/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
                         pw.Divider(thickness: 0.2),
                         pw.Text('Cash: 133591/=',style: boldTextStyle,textAlign: pw.TextAlign.center),
                       ]

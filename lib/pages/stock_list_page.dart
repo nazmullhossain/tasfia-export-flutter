@@ -22,7 +22,7 @@ class StockListPage extends StatefulWidget {
 
 class _StockListPageState extends State<StockListPage> {
 
-  DateTime _fromDate = DateTime.now().subtract(const Duration(days: 1));
+  DateTime _fromDate = DateTime.now();
   DateTime _toDate = DateTime.now();
   Supplier? _supplier;
   final TextEditingController _productName = TextEditingController(text: '');
@@ -219,7 +219,7 @@ class _StockListPageState extends State<StockListPage> {
                           setState((){});
                           Map<String,String> map = {
                             'from_date': DateFormat('yyyy-MM-dd').format(_fromDate),
-                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate),
+                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))),
                             'product_name': _productName.text,
                             'search_supplier_id': _supplier!=null? _supplier!.id!.toString():'',
                           };

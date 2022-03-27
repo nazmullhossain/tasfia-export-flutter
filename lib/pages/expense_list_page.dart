@@ -21,7 +21,7 @@ class ExpenseListPage extends StatefulWidget {
 }
 
 class _ExpenseListPageState extends State<ExpenseListPage> {
-  DateTime _fromDate = DateTime.now().subtract(const Duration(days: 1));
+  DateTime _fromDate = DateTime.now();
   DateTime _toDate = DateTime.now();
   CategoryModel? _categoryModel;
   final TextEditingController _name = TextEditingController(text: '');
@@ -221,7 +221,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                           setState((){});
                           Map<String,String> map = {
                             'from_date': DateFormat('yyyy-MM-dd').format(_fromDate),
-                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate),
+                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))),
                             'search_amount': _amount.text,
                             'search_name': _name.text,
                             'expenses_category': _categoryModel!=null? _categoryModel!.id!.toString():'',

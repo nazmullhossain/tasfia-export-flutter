@@ -23,7 +23,7 @@ class AllPurchasePage extends StatefulWidget {
 }
 
 class _AllPurchasePageState extends State<AllPurchasePage> {
-  DateTime _fromDate = DateTime.now().subtract(const Duration(days: 1));
+  DateTime _fromDate = DateTime.now();
   DateTime _toDate = DateTime.now();
   CompanyModel? _companyModel;
   Product? _product;
@@ -287,7 +287,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                           setState((){});
                           Map<String,String> map = {
                             'from_date': DateFormat('yyyy-MM-dd').format(_fromDate),
-                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate),
+                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))),
                             'search_company_id': _companyModel!=null? _companyModel!.id!.toString():'',
                             'product_name': _product!=null? _product!.id!.toString():'',
                             'search_supplier_id': _supplier!=null? _supplier!.id!.toString():'',

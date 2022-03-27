@@ -293,7 +293,7 @@ class _SalesPageState extends State<SalesPage> {
                           setState((){});
                           Map<String,String> map = {
                             'from_date': DateFormat('yyyy-MM-dd').format(_fromDate),
-                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate),
+                            'to_date': DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))),
                             'search_company_id': _companyModel!=null? _companyModel!.id!.toString():'',
                             'search_payment_status': _paymentStatus??'',
                             'search_customer_id': _customer!=null? _customer!.id!.toString():'',
