@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tashfia_export/controller/api_helper.dart';
 import 'package:tashfia_export/model/account_summery_model.dart';
+import 'package:tashfia_export/model/advance_sales_model.dart';
 import 'package:tashfia_export/model/asset_list_model.dart';
 import 'package:tashfia_export/model/category_list_model.dart';
 import 'package:tashfia_export/model/company_list_model.dart';
@@ -49,6 +50,7 @@ class PublicController extends GetxController{
   Rx<StockListModel> stockModel = StockListModel().obs;
   Rx<ExpenseListModel> expenseModel = ExpenseListModel().obs;
   Rx<AssetListModel> assetModel = AssetListModel().obs;
+  Rx<AdvanceSaleListModel> advanceSaleModel = AdvanceSaleListModel().obs;
 
   Future<void> initApp(BuildContext context) async {
     pref = await SharedPreferences.getInstance();
@@ -215,6 +217,17 @@ class PublicController extends GetxController{
   Future<void> searchAssetList(Map<String, String> map)async{
     loading(true);update();
     await helper.searchAssetListResponse(map);
+    loading(false);update();
+  }
+
+  Future<void> getAdvanceSaleList()async{
+    await helper.getAdvanceSaleResponse();
+    update();
+  }
+
+  Future<void> searchAdvanceSaleList(String fromDate, String toDate)async{
+    loading(true);update();
+    await helper.searchAdvanceSaleResponse(fromDate, toDate);
     loading(false);update();
   }
 }

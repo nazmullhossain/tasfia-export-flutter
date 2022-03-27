@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:tashfia_export/controller/public_controller.dart';
 import 'package:tashfia_export/model/account_summery_model.dart';
+import 'package:tashfia_export/model/advance_sales_model.dart';
 import 'package:tashfia_export/model/asset_list_model.dart';
 import 'package:tashfia_export/model/category_list_model.dart';
 import 'package:tashfia_export/model/company_list_model.dart';
@@ -123,13 +124,13 @@ class ApiHelper{
 
   Future<void> allCustomersResponse()async{
     try{
-      var response = await http.get(
-          Uri.parse(Variables.baseUrl+'customers'),
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_customer'),
           headers: Variables().authHeader
       );
       if(response.statusCode==200){
        PublicController.pc.customerModel(customerModelFromJson(response.body));
-       print('Customers: ${PublicController.pc.customerModel.value.customers!.length}');
+       print('Customers: ${PublicController.pc.customerModel.value.data!.length}');
       }else{showToast('Customer get Failed');}
     }on SocketException{
       showToast('No internet connection');
@@ -161,13 +162,13 @@ class ApiHelper{
 
   Future<void> allSuppliersResponse()async{
     try{
-      var response = await http.get(
-          Uri.parse(Variables.baseUrl+'suppliers'),
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_supplier'),
           headers: Variables().authHeader
       );
       if(response.statusCode==200){
         PublicController.pc.supplierModel(supplierModelFromJson(response.body));
-        print('Suppliers: ${PublicController.pc.supplierModel.value.suppliers!.length}');
+        print('Suppliers: ${PublicController.pc.supplierModel.value.data!.length}');
       }else{showToast('Suppliers get Failed');}
     }on SocketException{
       showToast('No internet connection');
@@ -481,6 +482,40 @@ class ApiHelper{
         PublicController.pc.assetModel(assetListModelFromJson(response.body));
         if(jsonData['data'].isEmpty) showToast('No Asset Found');
       }else{showToast('Failed to get asset');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> getAdvanceSaleResponse()async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_advance_sells'),
+          headers: Variables().authHeader
+      );
+      if(response.statusCode==200){
+        PublicController.pc.advanceSaleModel(advanceSaleListModelFromJson(response.body));
+      }else{showToast('Failed to get advance sell');}
+    }on SocketException{
+      showToast('No internet connection');
+    }catch(error){
+      showToast(error.toString());
+    }
+  }
+
+  Future<void> searchAdvanceSaleResponse(String fromDate, String toDate)async{
+    try{
+      var response = await http.post(
+          Uri.parse(Variables.baseUrl+'search_advance_sells?from_date=$fromDate&to_date=$toDate'),
+          headers: Variables().authHeader
+      );
+      if(response.statusCode==200){
+        var jsonData = jsonDecode(response.body);
+        PublicController.pc.advanceSaleModel(advanceSaleListModelFromJson(response.body));
+        if(jsonData['data'].isEmpty) showToast('Record not found');
+      }else{showToast('Failed to search advance sell');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){

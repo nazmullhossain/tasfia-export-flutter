@@ -32,8 +32,8 @@ class _SupplierListPageState extends State<SupplierListPage> {
     _initData();
   }
   Future<void> _initData()async{
-    if(PublicController.pc.supplierModel.value.suppliers==null
-        ||PublicController.pc.supplierModel.value.suppliers!.isEmpty){
+    if(PublicController.pc.supplierModel.value.data==null
+        ||PublicController.pc.supplierModel.value.data!.isEmpty){
       await PublicController.pc.getAllSupplier();
     }
   }
@@ -73,7 +73,7 @@ class _SupplierListPageState extends State<SupplierListPage> {
               child: Row(
                 children: [
                   Text('মোট সরবরাহকারী:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
-                  Expanded(child: Text('${pc.supplierModel.value.suppliers!=null? pc.supplierModel.value.suppliers!.length:''}',textAlign: TextAlign.end,
+                  Expanded(child: Text('${pc.supplierModel.value.data!=null? pc.supplierModel.value.data!.length:''}',textAlign: TextAlign.end,
                       style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
                 ],
               ),
@@ -88,12 +88,12 @@ class _SupplierListPageState extends State<SupplierListPage> {
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
     onRefresh: ()async=>await pc.getAllSupplier(),
     backgroundColor: Colors.white,
-    child: pc.supplierModel.value.suppliers!=null
+    child: pc.supplierModel.value.data!=null
         ?ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
-        itemCount: pc.supplierModel.value.suppliers!.length,
-        itemBuilder: (context, index)=> SupplierListTile(model: pc.supplierModel.value.suppliers![index]),
+        itemCount: pc.supplierModel.value.data!.length,
+        itemBuilder: (context, index)=> SupplierListTile(model: pc.supplierModel.value.data![index]),
         separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
   );
 

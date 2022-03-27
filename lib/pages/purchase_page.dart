@@ -39,8 +39,8 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
     if(PublicController.pc.purchaseListModel.value.data==null){
       await PublicController.pc.getAllPurchase();
     }
-    if(PublicController.pc.supplierModel.value.suppliers==null
-        ||PublicController.pc.supplierModel.value.suppliers!.isEmpty){
+    if(PublicController.pc.supplierModel.value.data==null
+        ||PublicController.pc.supplierModel.value.data!.isEmpty){
       await PublicController.pc.getAllSupplier();
     }
     if(PublicController.pc.productListModel.value.data==null){
@@ -269,7 +269,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                               setState(() {_supplier = model;});
                               setState((){});
                             },
-                            items: pc.supplierModel.value.suppliers!
+                            items: pc.supplierModel.value.data!
                                 .map<DropdownMenuItem<Supplier>>((Supplier model) {
                               return DropdownMenuItem<Supplier>(
                                 value: model,

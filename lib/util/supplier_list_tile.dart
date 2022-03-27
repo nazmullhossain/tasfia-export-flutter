@@ -19,7 +19,7 @@ class SupplierListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.to(()=>const SupplierDetailsPage());
+        Get.to(()=>SupplierDetailsPage(model: model));
       },
       child: Container(
         padding: EdgeInsets.all(dynamicSize(.02)),
@@ -66,7 +66,7 @@ class SupplierListTile extends StatelessWidget {
                     const TextSpan(text: 'ঠিকানা: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: '${model.permanentAddress??model.presentAddress}\n'),
                     const TextSpan(text: 'কোম্পানির নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.companyName}\n'),
+                    TextSpan(text: '${model.company!.companyName}\n'),
                     const TextSpan(text: 'আগের বকেয়া: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     const TextSpan(text: 'No Data\n'),
                     const TextSpan(text: 'মোট বাকি: ', style: TextStyle(fontWeight: FontWeight.bold)),

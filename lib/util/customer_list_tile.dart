@@ -18,7 +18,7 @@ class CustomerListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.to(()=>const CustomerDetailsPage());
+        Get.to(()=> CustomerDetailsPage(model: model));
       },
       child: Container(
         padding: EdgeInsets.all(dynamicSize(.02)),
@@ -56,31 +56,23 @@ class CustomerListTile extends StatelessWidget {
                 text: TextSpan(
                   style: StDecoration.normalTextStyle,
                   children: [
+                    const TextSpan(text: 'আইডি: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: '${model.id}\n'),
+                    const TextSpan(text: 'ধরন: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: '${model.type??''}\n'),
                     const TextSpan(text: 'নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.name}\n'),
+                    TextSpan(text: '${model.name??''}\n'),
                     const TextSpan(text: 'কোম্পানির নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: '${model.companyName??''}\n'),
                     const TextSpan(text: 'ফোন: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.personalPhone??model.optionalPhone}\n'),
-                    const TextSpan(text: 'ইমেইল: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.email}\n'),
-                    const TextSpan(text: 'এন.আইডি: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.nid}\n'),
-                    const TextSpan(text: 'ঠিকানা: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.permanentAddress??model.presentAddress}\n'),
-                    const TextSpan(text: 'ব্যালেন্স: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.balance}\n'),
-                    const TextSpan(text: 'পদবী: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.designation}\n'),
-                    const TextSpan(text: 'প্রতিষ্ঠানের নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.companyName??'Not added yet'}\n'),
-                    const TextSpan(text: 'ধরন: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.type}\n'),
-                    const TextSpan(text: 'রেফারেন্স: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.reference}\n'),
-                    const TextSpan(text: 'জাতীয়তা: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.nationality}\n'),
-                    const TextSpan(text: 'জয়েন ডেট: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: '${model.personalPhone??model.optionalPhone??''}\n'),
+                    const TextSpan(text: 'পূর্ববুর্তী বকেয়া: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: '${model.balance??0.0} টাকা\n'),
+                    const TextSpan(text: 'মোট বকেয়া: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: '${model.totalDue??0.0} টাকা\n'),
+                    const TextSpan(text: 'মোট পরিশোধ: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(text: '${model.totalPaymentAmount??0.0} টাকা\n'),
+                    const TextSpan(text: 'তারিখ: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: DateFormat('dd-MMM-yyyy').format(model.updatedAt!)),
                   ],
                 ),

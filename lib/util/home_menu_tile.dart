@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tashfia_export/pages/advance_sale_page.dart';
 import 'package:tashfia_export/pages/asset_list_page.dart';
 import 'package:tashfia_export/pages/employee_page.dart';
 import 'package:tashfia_export/pages/expense_list_page.dart';
@@ -51,6 +52,8 @@ class HomeMenuTile extends StatelessWidget {
                 Get.to(()=> const ExpenseListPage());
               }else if(model.title=='জমা হিসাব') {
                 Get.to(()=> const AssetListPage());
+              }else if(model.title=='অগ্রিম বিক্রয়') {
+                Get.to(()=> const AdvanceSalePage());
               }else if(model.title=='লগ আউট') {
                 await pc.logout();
               }

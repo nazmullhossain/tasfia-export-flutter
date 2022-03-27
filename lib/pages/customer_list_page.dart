@@ -32,8 +32,8 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
     _initData();
   }
   Future<void> _initData()async{
-    if(PublicController.pc.customerModel.value.customers==null
-        ||PublicController.pc.customerModel.value.customers!.isEmpty){
+    if(PublicController.pc.customerModel.value.data==null
+        ||PublicController.pc.customerModel.value.data!.isEmpty){
       await PublicController.pc.getAllCustomer();
     }
   }
@@ -72,7 +72,7 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
               child: Row(
                 children: [
                   Text('মোট কাস্টমার:',style: StDecoration.boldTextStyle.copyWith(color:Colors.white)),
-                  Expanded(child: Text('${pc.customerModel.value.customers!=null? pc.customerModel.value.customers!.length:''}',textAlign: TextAlign.end,
+                  Expanded(child: Text('${pc.customerModel.value.data!=null? pc.customerModel.value.data!.length:''}',textAlign: TextAlign.end,
                       style: StDecoration.boldTextStyle.copyWith(color:Colors.white)))
                 ],
               ),
@@ -87,12 +87,12 @@ class _AllCustomerPageState extends State<AllCustomerPage> {
   Widget _bodyUI(PublicController pc)=>RefreshIndicator(
     onRefresh: ()async=> await pc.getAllCustomer(),
     backgroundColor: Colors.white,
-    child: pc.customerModel.value.customers!=null
+    child: pc.customerModel.value.data!=null
         ?ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: dynamicSize(.04),vertical: dynamicSize(.02)),
-        itemCount: pc.customerModel.value.customers!.length,
-        itemBuilder: (context, index)=> CustomerListTile(model: pc.customerModel.value.customers![index]),
+        itemCount: pc.customerModel.value.data!.length,
+        itemBuilder: (context, index)=> CustomerListTile(model: pc.customerModel.value.data![index]),
         separatorBuilder: (context, index)=>SizedBox(height: dynamicSize(.04))):Container(),
   );
 

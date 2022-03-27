@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tashfia_export/model/customer_model.dart';
+import 'package:tashfia_export/pages/customer/due_payment_history_page.dart';
+import 'package:tashfia_export/pages/customer/sales_history_page.dart';
 import '../../controller/public_controller.dart';
 import '../../util/decoration.dart';
 import '../../variables/color_variable.dart';
@@ -7,7 +10,8 @@ import '../../variables/config.dart';
 import '../../widgets/loading_widget.dart';
 
 class CustomerDetailsPage extends StatefulWidget {
-  const CustomerDetailsPage({Key? key}) : super(key: key);
+  const CustomerDetailsPage({Key? key,required this.model}) : super(key: key);
+  final Customer model;
 
   @override
   State<CustomerDetailsPage> createState() => _CustomerDetailsPageState();
@@ -54,8 +58,8 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> with SingleTi
               controller: _tabController,
               physics:const BouncingScrollPhysics(),
               children: [
-                Text(""),
-                Text(""),
+                SalesHistoryPage(model: widget.model),
+                DuePaymentHistoryPage(model: widget.model),
               ],
             ),
           ),

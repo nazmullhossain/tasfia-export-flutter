@@ -43,8 +43,8 @@ class _SalesPageState extends State<SalesPage> {
     || PublicController.pc.sellModel.value.data!.isEmpty){
       await PublicController.pc.getSellList();
     }
-    if(PublicController.pc.customerModel.value.customers==null
-        || PublicController.pc.customerModel.value.customers!.isEmpty){
+    if(PublicController.pc.customerModel.value.data==null
+        || PublicController.pc.customerModel.value.data!.isEmpty){
       await PublicController.pc.getAllCustomer();
     }
     if(PublicController.pc.companyModel.value.data==null
@@ -240,7 +240,7 @@ class _SalesPageState extends State<SalesPage> {
                               setState(() {_customer = model;});
                               setState((){});
                             },
-                            items: pc.customerModel.value.customers!
+                            items: pc.customerModel.value.data!
                                 .map<DropdownMenuItem<Customer>>((Customer model) {
                               return DropdownMenuItem<Customer>(
                                 value: model,

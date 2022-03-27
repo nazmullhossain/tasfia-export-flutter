@@ -28,12 +28,12 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Future<void> _initData(PublicController pc)async{
-    if(PublicController.pc.customerModel.value.customers==null
-        ||PublicController.pc.customerModel.value.customers!.isEmpty){
+    if(PublicController.pc.customerModel.value.data==null
+        ||PublicController.pc.customerModel.value.data!.isEmpty){
       await PublicController.pc.getAllCustomer();
     }
-    if(PublicController.pc.supplierModel.value.suppliers==null
-        ||PublicController.pc.supplierModel.value.suppliers!.isEmpty){
+    if(PublicController.pc.supplierModel.value.data==null
+        ||PublicController.pc.supplierModel.value.data!.isEmpty){
       await PublicController.pc.getAllSupplier();
     }
     _dashboardDataList = [
@@ -43,8 +43,8 @@ class _DashboardPageState extends State<DashboardPage> {
       HomeMenuModel(title: 'বর্তমান মাসের মোট ক্রয়\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.currentMonthPurchaseQuantity}কেজি/${pc.dashboardModel.value.currentMonthPurchaseAmount}টাকা', icon: LineAwesomeIcons.shopping_cart, color: const Color(0xff343A40)),
       HomeMenuModel(title: 'আজকের মোট বকেয়া\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.todayDueQuantity}কেজি/${pc.dashboardModel.value.todayDueAmount}টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xffDF2DE3)),
       HomeMenuModel(title: 'বর্তমান মাসের মোট পাওনা\n(পরিমাণ/অর্থ)\n${pc.dashboardModel.value.currentMonthDueQuantity}কেজি/${pc.dashboardModel.value.currentMonthDueAmount}টাকা', icon: LineAwesomeIcons.dollar_sign, color: const Color(0xffFB6340)),
-      HomeMenuModel(title: 'মোট কাস্টমার\n${pc.customerModel.value.customers!.length}', icon: LineAwesomeIcons.users, color: const Color(0xffF5365C)),
-      HomeMenuModel(title: 'মোট সাপ্লায়ার\n${pc.supplierModel.value.suppliers!.length}', icon: LineAwesomeIcons.user_plus, color: const Color(0xffCAD900))];
+      HomeMenuModel(title: 'মোট কাস্টমার\n${pc.customerModel.value.data!.length}', icon: LineAwesomeIcons.users, color: const Color(0xffF5365C)),
+      HomeMenuModel(title: 'মোট সাপ্লায়ার\n${pc.supplierModel.value.data!.length}', icon: LineAwesomeIcons.user_plus, color: const Color(0xffCAD900))];
     setState(() {});
   }
 
