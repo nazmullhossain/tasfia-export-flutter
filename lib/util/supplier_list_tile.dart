@@ -84,9 +84,9 @@ class SupplierListTile extends StatelessWidget {
                   const TextSpan(text: 'কোম্পানির নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
                   TextSpan(text: '${model.company!.companyName}\n'),
                   const TextSpan(text: 'আগের বকেয়া: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                  const TextSpan(text: 'No Data\n'),
+                  TextSpan(text: '${model.balance??0.0}\n'),
                   const TextSpan(text: 'মোট বাকি: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                  const TextSpan(text: 'No Data'),
+                  TextSpan(text: '${model.totalDue??0.0}'),
 
                 ],
               ),

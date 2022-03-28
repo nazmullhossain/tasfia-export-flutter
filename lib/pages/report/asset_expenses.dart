@@ -9,14 +9,14 @@ import '../../util/decoration.dart';
 import '../../variables/config.dart';
 import '../../variables/variable.dart';
 
-class DepositExpenses extends StatefulWidget {
-  const DepositExpenses({Key? key}) : super(key: key);
+class AssetExpenses extends StatefulWidget {
+  const AssetExpenses({Key? key}) : super(key: key);
 
   @override
-  State<DepositExpenses> createState() => _DepositExpensesState();
+  State<AssetExpenses> createState() => _AssetExpensesState();
 }
 
-class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProviderStateMixin{
+class _AssetExpensesState extends State<AssetExpenses> with SingleTickerProviderStateMixin{
   DateTime _fromDate = DateTime.now();
   DateTime _toDate = DateTime.now();
 
@@ -60,7 +60,7 @@ class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProv
                   SizedBox(width: dynamicSize(.02)),
                   ElevatedButton(
                       onPressed: ()async{
-                        //await DepositExpenseReportPDF.generateDepositExpensePDFReport();
+                        //await AssetExpenseReportPDF.generateAssetExpensePDFReport();
                       },
                       child: Text('Print Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
                 ],
@@ -86,6 +86,7 @@ class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProv
 
                         Text('জমা',style: StDecoration.boldTextStyle,textAlign: TextAlign.center),
                         ///ক্যাশ ইজা
+                        if(pc.assetExpanseReportModel.value.openingBalance!=null)
                         Container(
                             margin: EdgeInsets.symmetric(horizontal:dynamicSize(.02)),
                             decoration: BoxDecoration(
@@ -100,7 +101,7 @@ class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProv
                                   ),
                                   Container(color: Colors.grey,height: 20,width: 0.5),
                                   Expanded(
-                                      child: Text('86621/=',style: StDecoration.normalTextStyle,textAlign: TextAlign.center)
+                                      child: Text('${pc.assetExpanseReportModel.value.openingBalance!.openingBalance} ৳',style: StDecoration.normalTextStyle,textAlign: TextAlign.center)
                                   )
                                 ]
                             )
@@ -152,8 +153,8 @@ class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProv
             ),
 
             ///Footer...
-            if(pc.accountSummery.value.profit!=null
-                && pc.accountSummery.value.expense!=null)Container(
+            if(pc.assetExpanseReportModel.value.totalAsset!=null
+                && pc.assetExpanseReportModel.value.totalExpense!=null)Container(
               color: Colors.white,
               padding: EdgeInsets.symmetric(horizontal:dynamicSize(.04),vertical: dynamicSize(.02)),
               child: Row(
@@ -165,9 +166,9 @@ class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProv
                       style: StDecoration.normalTextStyle,
                       children: [
                         const TextSpan(text: 'মোট জমা: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: '${pc.accountSummery.value.profit}\n'),
+                        TextSpan(text: '${pc.assetExpanseReportModel.value.totalAsset}\n'),
                         const TextSpan(text: 'মোট খরচ: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: '${pc.accountSummery.value.expense}'),
+                        TextSpan(text: '${pc.assetExpanseReportModel.value.totalExpense}'),
                       ],
                     ),
                   ),
@@ -179,7 +180,7 @@ class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProv
                         style: StDecoration.normalTextStyle,
                         children: [
                           const TextSpan(text: 'ক্যাশ: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: '${double.parse(pc.accountSummery.value.profit!.toString())-double.parse(pc.accountSummery.value.expense!.toString())}'),
+                          TextSpan(text: '${double.parse(pc.assetExpanseReportModel.value.totalAsset!.toString())-double.parse(pc.assetExpanseReportModel.value.totalExpense!.toString())}'),
                         ],
                       ),
                     ),
@@ -237,7 +238,7 @@ class _DepositExpensesState extends State<DepositExpenses> with SingleTickerProv
                         onTap: ()async{
                           await _selectToDate();
                           setState((){});
-                          await PublicController.pc.getAccountSummery(
+                          await PublicController.pc.getAssetExpenseReport(
                             DateFormat('yyyy-MM-dd').format(_fromDate),
                             DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))),
                           );

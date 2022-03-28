@@ -24,7 +24,7 @@ class ExpenseListTile extends StatelessWidget {
             const TextSpan(text: 'S/L নং: ', style: TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: '${index+1}\n'),
             const TextSpan(text: 'ক্যাটাগরী: ', style: TextStyle(fontWeight: FontWeight.bold)),
-            TextSpan(text: '${model.id}\n'),
+            TextSpan(text: '${model.expensesCategory!.name}\n'),
             const TextSpan(text: 'নাম: ', style: TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: '${model.name}\n'),
             const TextSpan(text: 'পরিমাণ: ', style: TextStyle(fontWeight: FontWeight.bold)),

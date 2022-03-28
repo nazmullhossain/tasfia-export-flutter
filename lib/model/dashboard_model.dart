@@ -4,32 +4,32 @@ DashboardModel dashboardModelFromJson(String str) => DashboardModel.fromJson(jso
 
 class DashboardModel {
   DashboardModel({
-    this.currentMonthDueAmount,
-    this.currentMonthDueQuantity,
-    this.currentMonthPurchaseAmount,
-    this.currentMonthPurchaseQuantity,
-    this.currentMonthSalesAmount,
+    this.todayTotalSalesQuantity,
+    this.todaySalesAmount,
     this.currentMonthTotalSalesQuantity,
+    this.currentMonthSalesAmount,
+    this.todayPurchaseQuantity,
+    this.todayPurchaseAmount,
+    this.currentMonthPurchaseQuantity,
+    this.currentMonthPurchaseAmount,
     this.todayDueAmount,
     this.todayDueQuantity,
-    this.todayPurchaseAmount,
-    this.todayPurchaseQuantity,
-    this.todaySalesAmount,
-    this.todayTotalSalesQuantity
+    this.currentMonthDueAmount,
+    this.currentMonthDueQuantity,
   });
 
-  final dynamic todayTotalSalesQuantity;
-  final dynamic todaySalesAmount;
-  final dynamic currentMonthTotalSalesQuantity;
-  final dynamic currentMonthSalesAmount;
-  final dynamic todayPurchaseQuantity;
-  final dynamic todayPurchaseAmount;
-  final dynamic currentMonthPurchaseQuantity;
-  final dynamic currentMonthPurchaseAmount;
-  final dynamic todayDueAmount;
-  final dynamic todayDueQuantity;
-  final dynamic currentMonthDueAmount;
-  final dynamic currentMonthDueQuantity;
+  final int? todayTotalSalesQuantity;
+  final int? todaySalesAmount;
+  final int? currentMonthTotalSalesQuantity;
+  final int? currentMonthSalesAmount;
+  final int? todayPurchaseQuantity;
+  final int? todayPurchaseAmount;
+  final String? currentMonthPurchaseQuantity;
+  final String? currentMonthPurchaseAmount;
+  final int? todayDueAmount;
+  final int? todayDueQuantity;
+  final int? currentMonthDueAmount;
+  final int? currentMonthDueQuantity;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
     todayTotalSalesQuantity: json["today_total_sales_quantity"],

@@ -26,7 +26,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
   DateTime _fromDate = DateTime.now();
   DateTime _toDate = DateTime.now();
   CompanyModel? _companyModel;
-  Product? _product;
+  Products? _product;
   Supplier? _supplier;
   double _totalQ=0.0, _totalAQ=0.0, _totalUP=0.0, _totalPaid=0.0, _totalDue=0.0;
 
@@ -225,7 +225,7 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                             border: Border.all(color: Colors.blueGrey,width: .5)
                         ),
                         child: DropdownButtonHideUnderline(
-                          child: DropdownButton<Product>(
+                          child: DropdownButton<Products>(
                             value: _product,
                             icon: Icon(LineAwesomeIcons.angle_down,size: dynamicSize(.04)),
                             elevation: 16,
@@ -238,8 +238,8 @@ class _AllPurchasePageState extends State<AllPurchasePage> {
                               setState((){});
                             },
                             items: pc.productListModel.value.data!
-                                .map<DropdownMenuItem<Product>>((Product model) {
-                              return DropdownMenuItem<Product>(
+                                .map<DropdownMenuItem<Products>>((Products model) {
+                              return DropdownMenuItem<Products>(
                                 value: model,
                                 child: Text(model.chalanNo!,style: StDecoration.normalTextStyle),
                               );

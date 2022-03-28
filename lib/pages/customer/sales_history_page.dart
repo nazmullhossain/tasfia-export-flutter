@@ -29,18 +29,18 @@ class SalesHistoryPage extends StatelessWidget {
                 text: TextSpan(
                   style: StDecoration.normalTextStyle,
                   children: [
-                    const TextSpan(text: 'SL: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                    const TextSpan(text: 'ক্রমিক নং: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: '${index+1}\n'),
                     const TextSpan(text: 'তারিখ: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: '${DateFormat('dd-MMM-yyyy').format(model.salesHistory![index].updatedAt!)}\n'),
                     const TextSpan(text: 'বিক্রয় কোড: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: '${model.salesHistory![index].salesCode??''}\n'),
                     const TextSpan(text: 'মোট চালানের মূল্য: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.salesHistory![index].totalPrice??''}\n'),
+                    TextSpan(text: '${model.salesHistory![index].totalPrice??''} ৳\n'),
                     const TextSpan(text: 'পরিশোধ পরিমান: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.salesHistory![index].paymentAmount??0.0} টাকা\n'),
+                    TextSpan(text: '${model.salesHistory![index].paymentAmount??0.0} ৳\n'),
                     const TextSpan(text: 'বকেয়া: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(text: '${model.salesHistory![index].due??0.0} টাকা\n'),
+                    TextSpan(text: '${model.salesHistory![index].due??0.0} ৳\n'),
                     const TextSpan(text: 'লেনদেনের অবস্থা: ', style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: model.salesHistory![index].status==0?'অপরিশোধিত':'পরিশোধিত'),
 

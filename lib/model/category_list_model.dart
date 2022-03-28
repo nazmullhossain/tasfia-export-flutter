@@ -18,6 +18,7 @@ class CategoryModel {
   CategoryModel({
     this.id,
     this.name,
+    this.remark,
     this.createdBy,
     this.createdAt,
     this.updatedAt,
@@ -25,6 +26,7 @@ class CategoryModel {
 
   final int? id;
   final String? name;
+  final String? remark;
   final int? createdBy;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -32,8 +34,10 @@ class CategoryModel {
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
     id: json["id"],
     name: json["name"],
+    remark: json["remark"],
     createdBy: json["created_by"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
+  
 }

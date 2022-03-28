@@ -6,7 +6,7 @@ import '../model/product_list_model.dart';
 
 class ProductListTile extends StatelessWidget {
   const ProductListTile({Key? key,required this.model}) : super(key: key);
-  final Product model;
+  final Products model;
 
   @override
   Widget build(BuildContext context) {

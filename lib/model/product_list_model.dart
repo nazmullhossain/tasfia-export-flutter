@@ -7,15 +7,15 @@ class ProductListModel {
     this.data,
   });
 
-  final List<Product>? data;
+  final List<Products>? data;
 
   factory ProductListModel.fromJson(Map<String, dynamic> json) => ProductListModel(
-    data: List<Product>.from(json["data"].map((x) => Product.fromJson(x))),
+    data: List<Products>.from(json["data"].map((x) => Products.fromJson(x))),
   );
 }
 
-class Product {
-  Product({
+class Products {
+  Products({
     this.id,
     this.productCategoryId,
     this.chalanNo,
@@ -73,7 +73,7 @@ class Product {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory Products.fromJson(Map<String, dynamic> json) => Products(
     id: json["id"],
     productCategoryId: json["product_category_id"],
     chalanNo: json["chalan_no"],

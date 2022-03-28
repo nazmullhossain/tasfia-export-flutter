@@ -34,12 +34,10 @@ class _StockListPageState extends State<StockListPage> {
     _initData();
   }
   Future<void> _initData()async{
-    if(PublicController.pc.stockModel.value.data==null
-        ||PublicController.pc.stockModel.value.data!.isEmpty){
+    if(PublicController.pc.stockModel.value.data==null){
       PublicController.pc.getStockList();
     }
-    if(PublicController.pc.supplierModel.value.data==null
-        ||PublicController.pc.supplierModel.value.data!.isEmpty){
+    if(PublicController.pc.supplierModel.value.data==null){
       await PublicController.pc.getAllSupplier();
     }_totalQuantityCount();
   }

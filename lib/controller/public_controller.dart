@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tashfia_export/controller/api_helper.dart';
-import 'package:tashfia_export/model/account_summery_model.dart';
 import 'package:tashfia_export/model/advance_sales_model.dart';
+import 'package:tashfia_export/model/asset_expense_report_model.dart';
 import 'package:tashfia_export/model/asset_list_model.dart';
 import 'package:tashfia_export/model/category_list_model.dart';
 import 'package:tashfia_export/model/company_list_model.dart';
@@ -36,7 +36,7 @@ class PublicController extends GetxController{
   Rx<LoginResponse> loginResponse = LoginResponse().obs;
   Rx<CustomerModel> customerModel = CustomerModel().obs;
   Rx<SupplierModel> supplierModel = SupplierModel().obs;
-  Rx<AccountSummeryModel> accountSummery = AccountSummeryModel().obs;
+  Rx<AssetExpenseReportModel> assetExpanseReportModel = AssetExpenseReportModel().obs;
   Rx<DashboardModel> dashboardModel = DashboardModel().obs;
   Rx<CompanyListModel> companyModel = CompanyListModel().obs;
   Rx<CategoryListModel> categoryModel = CategoryListModel().obs;
@@ -121,9 +121,9 @@ class PublicController extends GetxController{
     loading(false);update();
   }
 
-  Future<void> getAccountSummery(String fromDate, String toDate)async{
+  Future<void> getAssetExpenseReport(String fromDate, String toDate)async{
     loading(true);update();
-    await helper.accountSummeryResponse(fromDate,toDate);
+    await helper.accountAssetExpenseResponse(fromDate,toDate);
     loading(false);update();
   }
 

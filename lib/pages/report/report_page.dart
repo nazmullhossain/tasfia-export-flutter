@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tashfia_export/controller/public_controller.dart';
-import 'package:tashfia_export/pages/report/deposite_expenses.dart';
+import 'package:tashfia_export/pages/report/asset_expenses.dart';
 import 'package:tashfia_export/pages/report/sales_profit_loss.dart';
 import 'package:tashfia_export/variables/color_variable.dart';
 import 'package:tashfia_export/variables/config.dart';
@@ -30,7 +30,7 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
 
   Future<void> _initData()async{
     await Future.delayed(const Duration(milliseconds: 1));
-    await PublicController.pc.getAccountSummery(
+    await PublicController.pc.getAssetExpenseReport(
         DateFormat('yyyy-MM-dd').format(_fromDate),
         DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
 
@@ -72,7 +72,7 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
               controller: _tabController,
               physics:const BouncingScrollPhysics(),
               children:const [
-                DepositExpenses(),
+                AssetExpenses(),
                 SalesProfitLoss()
               ],
             ),

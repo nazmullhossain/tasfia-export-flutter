@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:tashfia_export/controller/public_controller.dart';
-import 'package:tashfia_export/model/account_summery_model.dart';
 import 'package:tashfia_export/model/advance_sales_model.dart';
+import 'package:tashfia_export/model/asset_expense_report_model.dart';
 import 'package:tashfia_export/model/asset_list_model.dart';
 import 'package:tashfia_export/model/category_list_model.dart';
 import 'package:tashfia_export/model/company_list_model.dart';
@@ -71,7 +71,7 @@ class ApiHelper{
   Future<void> getCategoryResponse()async{
     try{
       var response = await http.get(
-          Uri.parse(Variables.baseUrl+'category_list'),headers: Variables().authHeader);
+          Uri.parse(Variables.baseUrl+'assetExpenseCategory'),headers: Variables().authHeader);
       if(response.statusCode==200){
         var jsonData = jsonDecode(response.body);
         if(jsonData['data'].isNotEmpty){
@@ -199,15 +199,15 @@ class ApiHelper{
     }
   }
 
-  Future<void> accountSummeryResponse(String fromDate, String toDate)async{
+  Future<void> accountAssetExpenseResponse(String fromDate, String toDate)async{
     try{
       var response = await http.post(
-          Uri.parse(Variables.baseUrl+'account_summary?from_date=$fromDate&to_date=$toDate'),
+          Uri.parse(Variables.baseUrl+'expense_asset_report?from_date=$fromDate&to_date=$toDate'),
           headers: Variables().authHeader
       );
       if(response.statusCode==200){
-        PublicController.pc.accountSummery(accountSummeryModelFromJson(response.body));
-      }else{showToast('Failed to get report');}
+        PublicController.pc.assetExpanseReportModel(assetExpenseReportModelFromJson(response.body));
+      }else{showToast('Failed to get asset & expense report');}
     }on SocketException{
       showToast('No internet connection');
     }catch(error){
