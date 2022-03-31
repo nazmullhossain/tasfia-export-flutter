@@ -57,19 +57,21 @@ class _AssetExpensesState extends State<AssetExpenses> with SingleTickerProvider
                     ),
                   ),
 
-                  SizedBox(width: dynamicSize(.02)),
-                  ElevatedButton(
-                      onPressed: ()async{
-                        //await AssetExpenseReportPDF.generateAssetExpensePDFReport();
-                      },
-                      child: Text('Print Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
+                  // SizedBox(width: dynamicSize(.02)),
+                  // ElevatedButton(
+                  //     onPressed: ()async{
+                  //       //await AssetExpenseReportPDF.generateAssetExpensePDFReport();
+                  //     },
+                  //     child: Text('Print Report',style: StDecoration.boldTextStyle.copyWith(color: Colors.white)))
                 ],
               ),
             ),
 
             ///Data List
+            if(pc.assetExpanseReportModel.value.openingBalance!=null)
             Expanded(
               child: ListView(
+                physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal:dynamicSize(.04)),
                 shrinkWrap: true,
                 children: [
@@ -109,15 +111,37 @@ class _AssetExpensesState extends State<AssetExpenses> with SingleTickerProvider
                         SizedBox(height: dynamicSize(.02)),
 
                         const BlackContainer(title: 'বিক্রয়'),
-                        const TableHeaderWidget(title: 'বিল নং', title2: 'চেক নং'),
+                        const TableHeaderWidget(title3: 'বিল নং', title4: 'চেক নং',title5: 'মোট টাকা'),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: pc.assetExpanseReportModel.value.sales!.length,
+                          itemBuilder: (context,index)=>TableBodyWidget(title1: '${index+1}',
+                              title2: pc.assetExpanseReportModel.value.sales![index].customer!.name??'',
+                              title3: pc.assetExpanseReportModel.value.sales![index].referenceSale!.salesCode??'',
+                              title4: pc.assetExpanseReportModel.value.sales![index].paymentMode??'',
+                              title5: pc.assetExpanseReportModel.value.sales![index].amount!=null
+                                  ? pc.assetExpanseReportModel.value.sales![index].amount.toString():''),
+                        ),
 
                         const BlackContainer(title: 'সকল জমা'),
-                        const TableHeaderWidget(title: 'ক্যাটাগরি', title2: 'মন্তব্য'),
+                        const TableHeaderWidget(title3: 'ক্যাটাগরি', title4: 'মন্তব্য',title5: 'মোট টাকা'),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: pc.assetExpanseReportModel.value.asset!.length,
+                          itemBuilder: (context,index)=>TableBodyWidget(title1: '${index+1}',
+                              title2: pc.assetExpanseReportModel.value.asset![index].name??'',
+                              title3: pc.assetExpanseReportModel.value.asset![index].category!.name??'',
+                              title4: pc.assetExpanseReportModel.value.asset![index].remarks??'',
+                              title5: pc.assetExpanseReportModel.value.asset![index].amount!=null
+                                  ? pc.assetExpanseReportModel.value.asset![index].amount.toString():''),
+                        ),
 
                         const BlackContainer(title: 'অগ্রিম জমা'),
-                        const TableHeaderWidget(title: 'প্রোডাক্ট', title2: 'মন্তব্য'),
+                        const TableHeaderWidget(title3: 'প্রোডাক্ট', title4: 'মন্তব্য',title5: 'মোট টাকা'),
 
-                        const TotalWidget(title: 'মোট জমা', amount: '7610823/=')
+                        TotalWidget(title: 'মোট জমা', amount: '${pc.totalAsset}/=')
                       ],
                     ),
                   ),
@@ -138,12 +162,24 @@ class _AssetExpensesState extends State<AssetExpenses> with SingleTickerProvider
                         Text('খরচ',style: StDecoration.boldTextStyle,textAlign: TextAlign.center),
 
                         const BlackContainer(title: 'ক্রয়'),
-                        const TableHeaderWidget(title: 'বিল নং', title2: 'চেক নং'),
+                        const TableHeaderWidget(title3: 'বিল নং', title4: 'চেক নং',title5: 'মোট টাকা'),
 
                         const BlackContainer(title: 'সকল খরচ'),
-                        const TableHeaderWidget(title: 'ক্যাটাগরি', title2: 'মন্তব্য'),
+                        const TableHeaderWidget(title3: 'ক্যাটাগরি', title4: 'মন্তব্য',title5: 'মোট টাকা'),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: pc.assetExpanseReportModel.value.expense!.length,
+                          itemBuilder: (context,index)=>TableBodyWidget(title1: '${index+1}',
+                              title2: pc.assetExpanseReportModel.value.expense![index].name??'',
+                              title3: pc.assetExpanseReportModel.value.expense![index].category!=null
+                                  ?pc.assetExpanseReportModel.value.expense![index].category!.name??'':'',
+                              title4: pc.assetExpanseReportModel.value.expense![index].remarks??'',
+                              title5: pc.assetExpanseReportModel.value.expense![index].amount!=null
+                                  ? pc.assetExpanseReportModel.value.expense![index].amount.toString():''),
+                        ),
 
-                        const TotalWidget(title: 'মোট খরচ', amount: '7610823/=')
+                        TotalWidget(title: 'মোট খরচ', amount: '${pc.totalExpense.value}/=')
                       ],
                     ),
                   ),
@@ -242,6 +278,7 @@ class _AssetExpensesState extends State<AssetExpenses> with SingleTickerProvider
                             DateFormat('yyyy-MM-dd').format(_fromDate),
                             DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))),
                           );
+                          pc.totalExpenseAdvanceAssetCount();
                           setState((){});
                           Get.back();
                         },

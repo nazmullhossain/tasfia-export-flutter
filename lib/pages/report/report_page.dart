@@ -37,6 +37,7 @@ class _ReportPageState extends State<ReportPage> with SingleTickerProviderStateM
     await PublicController.pc.searchSalesProfitLoss(
         DateFormat('yyyy-MM-dd').format(_fromDate),
         DateFormat('yyyy-MM-dd').format(_toDate.add(const Duration(days: 1))));
+    PublicController.pc.totalExpenseAdvanceAssetCount();
   }
 
   @override

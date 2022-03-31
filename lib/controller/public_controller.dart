@@ -31,7 +31,9 @@ class PublicController extends GetxController{
   late SharedPreferences? pref;
   RxDouble size = 0.0.obs;
   RxBool loading=false.obs;
+
   RxDouble totalAsset=0.0.obs;
+  RxDouble totalExpense=0.0.obs;
 
   Rx<LoginResponse> loginResponse = LoginResponse().obs;
   Rx<CustomerModel> customerModel = CustomerModel().obs;
@@ -229,5 +231,47 @@ class PublicController extends GetxController{
     loading(true);update();
     await helper.searchAdvanceSaleResponse(fromDate, toDate);
     loading(false);update();
+  }
+
+  void totalExpenseAdvanceAssetCount(){
+    /// opening balance
+    totalAsset(0.0);
+    if(assetExpanseReportModel.value.openingBalance!=null && assetExpanseReportModel.value.openingBalance!.openingBalance!=null){
+      totalAsset.value = double.parse(assetExpanseReportModel.value.openingBalance!.openingBalance!);
+    }
+
+    ///sales
+    if(assetExpanseReportModel.value.sales!=null
+        && assetExpanseReportModel.value.sales!.isNotEmpty){
+      for(var element in assetExpanseReportModel.value.sales!) {
+        if (element.amount != null) {
+          totalAsset.value = totalAsset.value + double.parse(element.amount.toString());
+        }
+      }
+    }
+    ///all asset
+    if(assetExpanseReportModel.value.asset!=null
+        && assetExpanseReportModel.value.asset!.isNotEmpty){
+      for(var element in assetExpanseReportModel.value.asset!) {
+        if (element.amount != null) {
+          totalAsset.value = totalAsset.value + double.parse(element.amount.toString());
+        }
+      }
+    }
+    ///advance asset
+
+
+    totalExpense(0.0);
+    ///purchase will added later
+    ///Expense
+    if(assetExpanseReportModel.value.expense!=null
+        && assetExpanseReportModel.value.expense!.isNotEmpty){
+      for(var element in assetExpanseReportModel.value.expense!){
+        if(element.amount!=null){
+          totalExpense.value = totalExpense.value + double.parse(element.amount!);
+        }
+      }
+    }
+    update();
   }
 }
