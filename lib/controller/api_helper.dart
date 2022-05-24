@@ -30,7 +30,7 @@ class ApiHelper{
           Uri.parse(Variables.baseUrl+'login?email=$email&password=$password'));
       if(response.statusCode==200){
           PublicController.pc.loginResponse(loginResponseFromJson(response.body));
-          PublicController.pc.pref!.setString('email', email);
+          PublicController.pc.pref!.setString('email', email);  // auto login
           PublicController.pc.pref!.setString('password', password);
           print(PublicController.pc.loginResponse.value.token);
           return true;
@@ -38,7 +38,8 @@ class ApiHelper{
         showToast('Invalid email or password');
         return false;
       }
-    }on SocketException{
+    }
+    on SocketException{
       showToast('No internet connection');
       return false;
     }catch(error){
@@ -50,7 +51,8 @@ class ApiHelper{
   Future<void> getCompanyResponse()async{
     try{
       var response = await http.get(
-          Uri.parse(Variables.baseUrl+'company_list'),headers: Variables().authHeader);
+          Uri.parse(Variables.baseUrl+'company_list'),
+          headers: Variables().authHeader);
       if(response.statusCode==200){
         var jsonData = jsonDecode(response.body);
         if(jsonData['data'].isNotEmpty){
